@@ -1,0 +1,13 @@
+name: 文件完整性
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 檢查必要文件與本地連結
+        run: python3 scripts/check_docs.py
