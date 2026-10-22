@@ -1,0 +1,86 @@
+// 人物資產資料檢查：不開瀏覽器、不渲染，數秒內涵蓋全部角色。
+// 取代逐角色在 SwiftShader 中實際走路的瀏覽器測試（每位 2–4 分鐘）。
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { existsSync, readFileSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { characters } from '../../src/character/catalog.ts';
+import { anatomicalForward, boneMap, footContact, footOf, loadCharacterGlb, normalizeHeight, sanitize } from './support/load-glb.ts';
+
+const pub = (path: string) => new URL(`../../public/${path}`, import.meta.url).pathname;
+const MAX_MODEL_BYTES = 15 * 1024 * 1024; // MASTER_PLAN 首次傳輸 < 25 MB，單一人物取 15 MB 上限
+const assetCatalog = JSON.parse(readFileSync(new URL('../../docs/asset-catalog/catalog.json', import.meta.url), 'utf8')) as {
+  assets: { id: string; status: string; source: { author: string }; license: { name: string }; outputs?: { path: string; sha256: string }[] }[];
+};
+
+test('人物 id 唯一，每位都有模型、來源聲明且模型不超過 15 MB', () => {
+  assert.equal(new Set(characters.map(c => c.id)).size, characters.length);
+  for (const c of characters) {
+    assert.ok(existsSync(pub(c.file)), `${c.id} 缺模型 ${c.file}`);
+    assert.ok(existsSync(pub(c.notice)), `${c.id} 缺來源聲明 ${c.notice}`);
+    assert.ok(statSync(pub(c.file)).size <= MAX_MODEL_BYTES, `${c.id} 模型 ${statSync(pub(c.file)).size} bytes 超過上限`);
+  }
+});
+
+test('Sketchfab 人物在素材總表有紀錄，遊戲用檔雜湊與總表一致，聲明含作者與授權', () => {
+  for (const c of characters.filter(c => c.file.startsWith('models/sketchfab/'))) {
+    const entry = assetCatalog.assets.find(a => a.id === c.id.toUpperCase());
+    assert.ok(entry, `${c.id} 未登記於 docs/asset-catalog/catalog.json`);
+    assert.ok(['tested', 'adopted'].includes(entry.status), `${c.id} 狀態為 ${entry.status}`);
+    const output = entry.outputs?.find(o => o.path === `public/${c.file}`);
+    assert.ok(output, `${c.id} 總表缺遊戲用檔紀錄`);
+    const sha = createHash('sha256').update(readFileSync(pub(c.file))).digest('hex');
+    assert.equal(sha, output.sha256, `${c.id} 模型已變更但素材總表未更新`);
+    const notice = readFileSync(pub(c.notice), 'utf8');
+    assert.ok(notice.includes(entry.source.author.split(' ')[0]) && notice.includes(entry.license.name), `${c.id} NOTICE 缺作者或授權`);
+  }
+});
+
+for (const c of characters) {
+  test(`${c.id}：骨頭與動畫齊全、正面朝 +Z、走跑時腳步向前`, async () => {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    const model = gltf.scene;
+    normalizeHeight(model);
+    const bones = boneMap(model);
+    for (const name of [c.hand, c.arm, c.forearm, c.chest, ...Object.values(c.legs)]) {
+      assert.ok(bones.has(sanitize(name)), `${c.id} 缺骨頭 ${name}（hero.ts 會在載入時丟錯）`);
+    }
+    const clips = new Map(gltf.animations.map(clip => [clip.name, clip]));
+    for (const name of [c.idle, c.walk, c.run, c.jump, c.fall]) assert.ok(clips.has(name), `${c.id} 缺動畫 ${name}`);
+
+    const bone = (name: string) => bones.get(sanitize(name))!;
+    const forward = anatomicalForward(bone(c.legs.thighL), bone(c.legs.thighR));
+    assert.ok(forward.z > Math.cos(Math.PI / 12), `${c.id} 靜止正面偏離 +Z：${forward.toArray().map(v => v.toFixed(2))}`);
+
+    for (const clipName of new Set([c.walk, c.run])) {
+      for (const calf of [c.legs.calfL, c.legs.calfR]) {
+        const { contactVz, lift } = footContact(model, clips.get(clipName)!, footOf(bone(calf)));
+        assert.ok(lift > 0.05, `${c.id} ${clipName} 腳沒有抬起`);
+        assert.ok(contactVz < 0, `${c.id} ${clipName} ${calf} 著地腳向前滑（${contactVz.toFixed(2)}），會像倒退走`);
+      }
+    }
+  });
+}
+
+test('重新綁定角色的走跑播放倍率與移動速度一致（著地腳速度誤差 < 20%，避免滑步）', async () => {
+  for (const c of characters.filter(c => c.file.startsWith('models/sketchfab/'))) {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    normalizeHeight(gltf.scene);
+    const bones = boneMap(gltf.scene);
+    const clips = new Map(gltf.animations.map(clip => [clip.name, clip]));
+    for (const [clip, scale, speed] of [[c.walk, c.walkScale, c.walkSpeed], [c.run, c.runScale, c.runSpeed]] as const) {
+      const feet = [c.legs.calfL, c.legs.calfR].map(n => footContact(gltf.scene, clips.get(clip)!, footOf(bones.get(sanitize(n))!)).contactVz);
+      const groundSpeed = -Math.max(...feet) * scale; // 取較慢的一腳，偏保守
+      const fastest = -Math.min(...feet) * scale;
+      const best = Math.abs(groundSpeed - speed) < Math.abs(fastest - speed) ? groundSpeed : fastest;
+      assert.ok(Math.abs(best - speed) / speed < 0.2, `${c.id} ${clip}：腳速 ${best.toFixed(2)} vs 移動 ${speed}`);
+    }
+  }
+});
+
+test('素材總表：ID 唯一、必填欄位齊全、CATALOG.md 與 catalog.json 同步', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const script = new URL('../../scripts/assets/catalog.py', import.meta.url).pathname;
+  const output = execFileSync('python3', [script, 'check'], { encoding: 'utf8' });
+  assert.match(output, /通過/);
+});

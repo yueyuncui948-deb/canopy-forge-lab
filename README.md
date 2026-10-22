@@ -54,6 +54,8 @@ npm run build -- --base=/canopy/
 
 ## 瀏覽器回歸
 
+分兩層：`npm run test:browser:smoke`（4 項標記 @smoke，約 3 分鐘）供開發時檢查；`npm run test:browser`（全部 9 項，雲端軟體渲染約 11 分鐘）於推送前或 CI 執行。人物資產（骨頭、動畫、朝向、步態、揮劍方向、素材總表同步）由 `npm test` 在 Node 中檢查，數秒涵蓋全部角色。
+
 ```bash
 # 一般開發機首次準備瀏覽器（Linux 可能需要系統依賴權限）
 npx playwright install --with-deps chromium

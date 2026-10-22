@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { createSword } from './sword';
 import { findCharacter, type Character } from './catalog';
+import { applySwing, createPoseGuard, swingPose } from './swing';
 
 export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack';
 
@@ -69,6 +70,8 @@ export async function loadHero(config: Character = findCharacter(null)) {
   const calfL = bone(config.legs.calfL), calfR = bone(config.legs.calfR);
   const leftHip = new THREE.Vector3(), rightHip = new THREE.Vector3(), forward = new THREE.Vector3();
   let motion: HeroMotion = 'idle';
+  const poseGuard = createPoseGuard();
+  const fingers = config.id === 'sophia' ? ['index', 'middle', 'ring', 'pinky'].flatMap(d => [bone(`DEF-f_${d}.01.R`), bone(`DEF-f_${d}.02.R`)]) : [];
 
   function setAction(name: string, timeScale = 1) {
     const next = actions.get(name)!;
@@ -111,27 +114,19 @@ export async function loadHero(config: Character = findCharacter(null)) {
       if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
       else if (moving) setAction(running ? config.run : config.walk, running ? config.runScale : config.walkScale);
       else setAction(config.idle);
+      poseGuard.restore(); // 先還原上一幀的程序疊加，再讓 Mixer 寫入本幀姿勢
       mixer.update(dt);
+      poseGuard.remember(chest, upperArm, forearm, hand, thighL, thighR, calfL, calfR, ...fingers);
       if (config.proceduralJump && jumpHeight > 0.02) {
         thighL.rotateX(-0.35);
         thighR.rotateX(-0.5);
         calfL.rotateX(0.65);
         calfR.rotateX(0.8);
       }
-      // 在原始骨架姿態上疊加揮劍，不再旋轉獨立於手臂的武器。
-      if (attackTime > 0) {
-        const phase = 1 - attackTime / 0.32;
-        const swing = Math.sin(phase * Math.PI);
-        upperArm.rotateX(-1.5 * swing);
-        upperArm.rotateZ(0.85 * Math.sin(phase * Math.PI * 2));
-        forearm.rotateX(-0.6 * swing);
-        chest.rotateY(-0.35 * Math.sin(phase * Math.PI * 2));
-      }
+      // 揮劍以角色座標定義、換算到各骨頭，不依賴骨架本地軸向（task-006）。
+      if (attackTime > 0) applySwing(swingPose(1 - attackTime / 0.32), { root, chest, upperArm, forearm, hand });
       // 握劍手指採輕度彎曲，基礎姿態每幀由 Mixer 還原，不累加。
-      if (config.id === 'sophia') for (const digit of ['index', 'middle', 'ring', 'pinky']) {
-        bone(`DEF-f_${digit}.01.R`).rotateX(0.6);
-        bone(`DEF-f_${digit}.02.R`).rotateX(0.7);
-      }
+      for (let i = 0; i < fingers.length; i++) fingers[i].rotateX(i % 2 ? 0.7 : 0.6);
       root.updateMatrixWorld(true);
     },
     snapshot() {

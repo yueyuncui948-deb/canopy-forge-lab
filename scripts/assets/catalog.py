@@ -5,6 +5,7 @@
   python3 scripts/assets/catalog.py verify   掃描 asset-library/raw/<id>/，記錄檔名、大小、SHA-256；
                                              已記錄的檔案若雜湊不符則報錯
   python3 scripts/assets/catalog.py find 字詞 依名稱、作者、授權、狀態、風格搜尋
+  python3 scripts/assets/catalog.py check    檢查 CATALOG.md 是否與 catalog.json 同步、ID 是否唯一（不寫檔）
 """
 import hashlib
 import json
@@ -49,7 +50,7 @@ def cell(text):
     return str(text or '').replace('|', '\\|').replace('\n', ' ')
 
 
-def render(data):
+def render(data, write=True):
     lines = [
         '# 素材總表',
         '',
@@ -99,8 +100,37 @@ def render(data):
             for t in a['tests']:
                 lines.append(f'  - {t}')
         lines.append('')
-    MARKDOWN.write_text('\n'.join(lines), encoding='utf-8')
+    text = '\n'.join(lines)
+    if not write:
+        return text
+    MARKDOWN.write_text(text, encoding='utf-8')
     print(f'已寫入 {MARKDOWN.relative_to(ROOT)}（{len(data["assets"])} 項）')
+    return text
+
+
+def check(data):
+    problems = []
+    ids = [a['id'] for a in data['assets']]
+    if len(ids) != len(set(ids)):
+        problems.append('ID 重複：' + ', '.join(sorted({i for i in ids if ids.count(i) > 1})))
+    for a in data['assets']:
+        for key in ('name', 'kind', 'status', 'source', 'license'):
+            if not a.get(key):
+                problems.append(f'{a["id"]} 缺 {key}')
+        if a.get('status') not in STATUS:
+            problems.append(f'{a["id"]} 狀態不明：{a.get("status")}')
+        if not a['license'].get('name') or not a['source'].get('url'):
+            problems.append(f'{a["id"]} 缺授權名稱或來源網址')
+    expected = render(data, write=False)
+    current = MARKDOWN.read_text(encoding='utf-8') if MARKDOWN.exists() else ''
+    # 日期列允許不同（render 時才寫入）
+    strip = lambda t: '\n'.join(l for l in t.splitlines() if not l.startswith('> 最後更新'))
+    if strip(expected) != strip(current):
+        problems.append('CATALOG.md 與 catalog.json 不同步，請執行 render')
+    for p in problems:
+        print(p)
+    print('通過' if not problems else f'{len(problems)} 項問題')
+    return len(problems)
 
 
 def verify(data):
@@ -145,6 +175,8 @@ if __name__ == '__main__':
         render(catalog)
     elif command == 'verify':
         sys.exit(1 if verify(catalog) else 0)
+    elif command == 'check':
+        sys.exit(1 if check(catalog) else 0)
     elif command == 'find' and len(sys.argv) > 2:
         find(catalog, sys.argv[2])
     else:

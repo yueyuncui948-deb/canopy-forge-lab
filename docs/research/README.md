@@ -9,6 +9,7 @@
 | task-003 | 骨架人物質感與近距離鏡頭 | [計畫](task-003/PLAN.md)、[執行](task-003/EXECUTION.md)、[測試](task-003/TEST_REPORT.md)、[審查](task-003/REVIEW.md)、[摘要](task-003/SUMMARY.md) |
 
 | task-004 | 寫實男女、三角色選擇與人物展示 | [計畫](task-004/PLAN.md)、[執行](task-004/EXECUTION.md)、[測試](task-004/TEST_REPORT.md)、[審查](task-004/REVIEW.md)、[摘要](task-004/SUMMARY.md) |
+| task-006 | 測試分層、人物資料測試與揮劍修正 | [計畫](task-006/PLAN.md)、[執行](task-006/EXECUTION.md)、[測試](task-006/TEST_REPORT.md)、[審查](task-006/REVIEW.md)、[摘要](task-006/SUMMARY.md) |
 | task-005 | Sketchfab 候選人物導入與移動方向校正 | [計畫](task-005/PLAN.md)、[執行](task-005/EXECUTION.md)、[測試](task-005/TEST_REPORT.md)、[審查](task-005/REVIEW.md)、[摘要](task-005/SUMMARY.md) |
 
 模板：[PLAN](templates/PLAN.md)、[EXECUTION](templates/EXECUTION.md)、[TEST_REPORT](templates/TEST_REPORT.md)、[REVIEW](templates/REVIEW.md)、[SUMMARY](templates/SUMMARY.md)。模板中的「待填」不代表已完成；正式任務必須填入事實或未執行理由。

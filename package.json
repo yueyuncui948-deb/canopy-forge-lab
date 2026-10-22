@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/unit/*.test.ts",
     "test:browser": "playwright test",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "test:browser:smoke": "playwright test --grep @smoke"
   },
   "dependencies": {
     "three": "^0.180.0"
