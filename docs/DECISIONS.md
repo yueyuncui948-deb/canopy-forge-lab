@@ -89,3 +89,8 @@ task-002 將怪物 HP 與重生排程從無型別 userData 抽出為小型模組
 
 - 握法在 X Bot 手上依手指骨算出，經重新綁定關係換算為各骨架 SwordGrip 節點；不再用載入姿勢的世界方向。
 - 攻擊段數與擊中時刻一律以刀尖速度峰值判定，不用手部速度。
+
+## 移除 GitHub Actions（2026-10-23）
+
+- 使用者決定不在 GitHub 雲端機器跑測試（無實益且耗用每月分鐘數）；刪除 game.yml、docs.yml。
+- 推送前於開發環境執行 `npm run check`、對應的瀏覽器測試與 `python3 scripts/check_docs.py`；部署與上線驗證改由自有 VPS 處理。

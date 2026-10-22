@@ -54,7 +54,7 @@ npm run build -- --base=/canopy/
 
 ## 瀏覽器回歸
 
-分兩層：`npm run test:browser:smoke`（4 項標記 @smoke，約 3 分鐘）供開發時檢查；`npm run test:browser`（全部 9 項，雲端軟體渲染約 11 分鐘）於推送前或 CI 執行。人物資產（骨頭、動畫、朝向、步態、揮劍方向、素材總表同步）由 `npm test` 在 Node 中檢查，數秒涵蓋全部角色。
+分兩層：`npm run test:browser:smoke`（4 項標記 @smoke，約 3 分鐘）供開發時檢查；`npm run test:browser`（全部 9 項，雲端軟體渲染約 11 分鐘）於推送前執行。人物資產（骨頭、動畫、朝向、步態、揮劍方向、素材總表同步）由 `npm test` 在 Node 中檢查，數秒涵蓋全部角色。
 
 ```bash
 # 一般開發機首次準備瀏覽器（Linux 可能需要系統依賴權限）
@@ -72,7 +72,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:browser
 ## 正式輸出與限制
 
 npm run build 產生 dist/，可由支援靜態檔案的 HTTP 伺服器提供；npm run preview 用於本機驗證，非正式部署服務。預設部署網站根目錄；若使用子路徑，需設定 Vite base 後重建並驗證。尚未公開部署。
-遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。目前 9 項瀏覽器回歸涵蓋原有操作、人物與鏡頭，以及載入失敗處理。詳見 [task-004 測試報告](docs/research/task-004/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
+不使用 GitHub Actions：測試在開發環境與自有 VPS 執行（推送前 `npm run check` ＋瀏覽器回歸）。目前 9 項瀏覽器回歸涵蓋原有操作、人物與鏡頭，以及載入失敗處理。詳見 [task-004 測試報告](docs/research/task-004/TEST_REPORT.md)。
 
 ## 文件檢查
 
@@ -82,7 +82,7 @@ Python 3 標準函式庫即可執行，無須安裝套件：
 python3 scripts/check_docs.py
 ```
 
-文件 CI 只證明必要文件及本地連結有效；遊戲檢查另由遊戲 CI 執行，兩者都不自動代表人物美術品質達標。
+文件檢查只證明必要文件及本地連結有效；遊戲檢查由上述測試負責，兩者都不自動代表人物美術品質達標。
 
 ## 取得研究歷史
 
