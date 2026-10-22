@@ -1,0 +1,82 @@
+{
+  "source": {
+    "repository": "https://github.com/gdquest-demos/godot-4-3D-Characters.git",
+    "commit": "43e578402131fd4a5624bbfdc9e9b86a7b081bbf",
+    "url": "https://raw.githubusercontent.com/gdquest-demos/godot-4-3D-Characters/43e578402131fd4a5624bbfdc9e9b86a7b081bbf/src/addons/gdquest_sophia/model/sophia.glb"
+  },
+  "download_date": "2026-10-22",
+  "glb_bytes": 2635436,
+  "sha256": "0f46e5b6621ee0c9889d8caa9a010264575f4bdf5800b10d89023b40ce9b95d2",
+  "triangles": 19086,
+  "joints": 93,
+  "animations": [
+    "EdgeGrab",
+    "Fall",
+    "Idle",
+    "Jump",
+    "Run",
+    "RunTiltL",
+    "RunTiltR",
+    "WallSlide"
+  ],
+  "images": [
+    {
+      "name": "normal",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 452332
+    },
+    {
+      "name": "diffuse",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "bytes": 231585
+    },
+    {
+      "name": "roughness",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 129371
+    },
+    {
+      "name": "eye_open_normal",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 84421
+    },
+    {
+      "name": "eye_open_diffuse",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 9417
+    },
+    {
+      "name": "mouth_smile_normal",
+      "dimensions": [
+        512,
+        256
+      ],
+      "bytes": 8554
+    },
+    {
+      "name": "mouth_smile_diffuse",
+      "dimensions": [
+        512,
+        256
+      ],
+      "bytes": 2955
+    }
+  ],
+  "license": "CC BY-NC-SA 4.0",
+  "modifications": "Original GLB unchanged; runtime normalization, environment lighting, animation blending, hand-attached procedural sword and skeletal attack overlay."
+}

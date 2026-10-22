@@ -1,0 +1,190 @@
+{
+  "idle": {
+    "time": 0.22499999999999998,
+    "frame": 6,
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "z": 3,
+      "hp": 100
+    },
+    "monster": {
+      "x": 4.885797936618959,
+      "y": 0,
+      "z": -0.9086383492951657,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "idle",
+      "clip": "Idle",
+      "animationTime": 0.22499999999999998,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -0.33290339324773194,
+        "y": 0.67759111362771,
+        "z": 2.943107369960371
+      },
+      "upperArm": [
+        -0.3118743118234294,
+        -0.6520333541639443,
+        0.40805710684759067,
+        0.5577421608568318
+      ]
+    },
+    "camera": {
+      "distance": 7.5,
+      "desiredDistance": 7.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  },
+  "walk": {
+    "time": 1.0350000000000004,
+    "frame": 24,
+    "hero": {
+      "x": -1.391532625798699,
+      "y": 0,
+      "z": 0.45281661411319307,
+      "hp": 100
+    },
+    "monster": {
+      "x": 4.42017027803004,
+      "y": 0,
+      "z": -0.6775894088852067,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "walk",
+      "clip": "Run",
+      "animationTime": 0.4859999999999998,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -1.1200154858683278,
+        "y": 0.7771091724255258,
+        "z": 0.1483848699647605
+      },
+      "upperArm": [
+        -0.13236765095475875,
+        -0.6817131636767351,
+        0.34777619951659255,
+        0.6299188269068183
+      ]
+    },
+    "camera": {
+      "distance": 7.5,
+      "desiredDistance": 7.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  },
+  "jump": {
+    "time": 1.7549999999999992,
+    "frame": 40,
+    "hero": {
+      "x": -3.9135506716261097,
+      "y": 1.4300999999999995,
+      "z": -4.1637064527111125,
+      "hp": 100
+    },
+    "monster": {
+      "x": 3.9647779020147063,
+      "y": 0,
+      "z": -0.7431794762249224,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "jump",
+      "clip": "Jump",
+      "animationTime": 0.31499999999999995,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -3.536701900941946,
+        "y": 2.162501444271617,
+        "z": -4.106355801219269
+      },
+      "upperArm": [
+        -0.39842366238559657,
+        -0.6893564159620833,
+        0.006420980070567401,
+        0.6049835718862595
+      ]
+    },
+    "camera": {
+      "distance": 7.5,
+      "desiredDistance": 7.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  },
+  "attack": {
+    "time": 2.9699999999999975,
+    "frame": 67,
+    "hero": {
+      "x": -5.812075804498754,
+      "y": 0,
+      "z": -7.638933397796993,
+      "hp": 100
+    },
+    "monster": {
+      "x": 3.8604044785249143,
+      "y": 0,
+      "z": -0.795970261954029,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0.1850000000000001,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "attack",
+      "clip": "Idle",
+      "animationTime": 0.7200000000000001,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -5.50160011415499,
+        "y": 0.6653549372132266,
+        "z": -7.698420055228518
+      },
+      "upperArm": [
+        -0.3569866157696988,
+        -0.6886453980326487,
+        0.29268225488659233,
+        0.5591647291171543
+      ]
+    },
+    "camera": {
+      "distance": 7.5,
+      "desiredDistance": 7.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  }
+}

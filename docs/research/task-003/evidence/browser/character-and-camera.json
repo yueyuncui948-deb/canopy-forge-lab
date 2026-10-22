@@ -1,0 +1,143 @@
+{
+  "start": {
+    "time": 0.22499999999999998,
+    "frame": 6,
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "z": 3,
+      "hp": 100
+    },
+    "monster": {
+      "x": 4.885797936618959,
+      "y": 0,
+      "z": -0.9086383492951657,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "idle",
+      "clip": "Idle",
+      "animationTime": 0.22499999999999998,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -0.33290339324773194,
+        "y": 0.67759111362771,
+        "z": 2.943107369960371
+      },
+      "upperArm": [
+        -0.3118743118234294,
+        -0.6520333541639443,
+        0.40805710684759067,
+        0.5577421608568318
+      ]
+    },
+    "camera": {
+      "distance": 7.5,
+      "desiredDistance": 7.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  },
+  "close": {
+    "time": 1.5299999999999996,
+    "frame": 35,
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "z": 3,
+      "hp": 100
+    },
+    "monster": {
+      "x": 4.223425969008918,
+      "y": 0,
+      "z": -0.3787407752071266,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "idle",
+      "clip": "Idle",
+      "animationTime": 1.5299999999999996,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -0.16751928309740388,
+        "y": 0.7274875272245117,
+        "z": 3.301968550271131
+      },
+      "upperArm": [
+        -0.15803951365601032,
+        -0.6168055955150882,
+        0.5449054660923845,
+        0.5455753795058678
+      ]
+    },
+    "camera": {
+      "distance": 2.507669053396622,
+      "desiredDistance": 2.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": 0.5
+    }
+  },
+  "orbit": {
+    "time": 2.744999999999998,
+    "frame": 62,
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "z": 3,
+      "hp": 100
+    },
+    "monster": {
+      "x": 3.6067348267512864,
+      "y": 0,
+      "z": 0.11461213859897897,
+      "hp": 3,
+      "visible": true,
+      "respawnAt": null
+    },
+    "attackCooldown": 0,
+    "character": {
+      "loaded": true,
+      "skinnedMeshes": 4,
+      "bones": 93,
+      "triangles": 19086,
+      "animation": "idle",
+      "clip": "Idle",
+      "animationTime": 0.7449999999999991,
+      "swordAttachedTo": "DEF-handR",
+      "hand": {
+        "x": -0.29074025858890706,
+        "y": 0.6534161617047505,
+        "z": 2.9436027440979053
+      },
+      "upperArm": [
+        -0.36188612755742355,
+        -0.6606428411799206,
+        0.3446505836726101,
+        0.5601834417272439
+      ]
+    },
+    "camera": {
+      "distance": 2.5000000035704932,
+      "desiredDistance": 2.5,
+      "minDistance": 2.5,
+      "maxDistance": 24,
+      "azimuth": -0.5800000000000001
+    }
+  }
+}

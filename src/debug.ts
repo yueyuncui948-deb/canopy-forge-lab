@@ -4,6 +4,8 @@ export interface GameSnapshot {
   hero: { x: number; y: number; z: number; hp: number };
   monster: { x: number; y: number; z: number; hp: number; visible: boolean; respawnAt: number | null };
   attackCooldown: number;
+  character: { loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
+  camera: { distance: number; desiredDistance: number; minDistance: number; maxDistance: number; azimuth: number };
 }
 
 // 明確開啟 ?debug=1 才提供唯讀快照；不提供改位置、扣血或推進時間的方法。

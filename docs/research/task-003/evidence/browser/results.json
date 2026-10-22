@@ -1,0 +1,355 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/canopy-forge-lab/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/workspace/canopy-forge-lab/playwright.config.ts",
+    "rootDir": "/workspace/canopy-forge-lab/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "snapshotDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "viewport": {
+            "width": 960,
+            "height": 540
+          },
+          "deviceScaleFactor": 1,
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--enable-unsafe-swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "game.spec.ts",
+      "file": "game.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18222,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:29:51.296Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "renderer",
+                      "contentType": "application/json",
+                      "body": "ewogICJ2ZXJzaW9uIjogIldlYkdMIDIuMCAoT3BlbkdMIEVTIDMuMCBDaHJvbWl1bSkiLAogICJyZW5kZXJlciI6ICJBTkdMRSAoR29vZ2xlLCBWdWxrYW4gMS4zLjAgKFN3aWZ0U2hhZGVyIERldmljZSAoU3ViemVybykgKDB4MDAwMEMwREUpKSwgU3dpZnRTaGFkZXIgZHJpdmVyKSIsCiAgImxvc3QiOiBmYWxzZQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-f88d690e753c43ce8212",
+          "file": "game.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "鍵盤可移動、Shift 跑得更快、Space 跳躍後落地",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 39288,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:30:09.838Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-7f5a2422ed6b0b0bb48e",
+          "file": "game.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 55799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:30:49.171Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "lifecycle",
+                      "contentType": "application/json",
+                      "body": "ewogICJkZWFkIjogewogICAgInRpbWUiOiAzLjY0NDk5OTk5OTk5OTk5NjUsCiAgICAiZnJhbWUiOiA4MiwKICAgICJoZXJvIjogewogICAgICAieCI6IDMuNTY2MDU2NzQwMjQxNTMsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAxLjA1MTg1NDMyMzg4MTgyMSwKICAgICAgImhwIjogMTAwCiAgICB9LAogICAgIm1vbnN0ZXIiOiB7CiAgICAgICJ4IjogNC41MDIzNDQ1OTA2ODczMDgsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAtMC41NDkzMzM0MzM2NDk2NjE3LAogICAgICAiaHAiOiAwLAogICAgICAidmlzaWJsZSI6IGZhbHNlLAogICAgICAicmVzcGF3bkF0IjogNi41MDk5OTk5OTk5OTk5OTYKICAgIH0sCiAgICAiYXR0YWNrQ29vbGRvd24iOiAwLjE4NTAwMDAwMDAwMDAwMDEsCiAgICAiY2hhcmFjdGVyIjogewogICAgICAibG9hZGVkIjogdHJ1ZSwKICAgICAgInNraW5uZWRNZXNoZXMiOiA0LAogICAgICAiYm9uZXMiOiA5MywKICAgICAgInRyaWFuZ2xlcyI6IDE5MDg2LAogICAgICAiYW5pbWF0aW9uIjogImF0dGFjayIsCiAgICAgICJjbGlwIjogIklkbGUiLAogICAgICAiYW5pbWF0aW9uVGltZSI6IDAuNDI5OTk5OTk5OTk5OTk4OTQsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAzLjU3NjUwMDY5ODE2MDEwOTUsCiAgICAgICAgInkiOiAwLjY3MzI2MDYyNjgwOTIwMTIsCiAgICAgICAgInoiOiAxLjM4NjY0MjgwNzA4MjI0OTQKICAgICAgfSwKICAgICAgInVwcGVyQXJtIjogWwogICAgICAgIC0wLjM1MDM0ODM1NTc5OTQ2MjU1LAogICAgICAgIC0wLjY4NzY5NzI3NTYwNDM5OTMsCiAgICAgICAgMC4zMDIwNTcwMzUwMTAzODg2LAogICAgICAgIDAuNTU5NTQ0NTE1OTMyNjg1MwogICAgICBdCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogNy41LAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogNy41LAogICAgICAibWluRGlzdGFuY2UiOiAyLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgInN0aWxsRGVhZCI6IHsKICAgICJ0aW1lIjogNC45OTQ5OTk5OTk5OTk5OTUsCiAgICAiZnJhbWUiOiAxMTIsCiAgICAiaGVybyI6IHsKICAgICAgIngiOiAzLjU2NjA1Njc0MDI0MTUzLAogICAgICAieSI6IDAsCiAgICAgICJ6IjogMS4wNTE4NTQzMjM4ODE4MjEsCiAgICAgICJocCI6IDEwMAogICAgfSwKICAgICJtb25zdGVyIjogewogICAgICAieCI6IDQuNTAyMzQ0NTkwNjg3MzA4LAogICAgICAieSI6IDAsCiAgICAgICJ6IjogLTAuNTQ5MzMzNDMzNjQ5NjYxNywKICAgICAgImhwIjogMCwKICAgICAgInZpc2libGUiOiBmYWxzZSwKICAgICAgInJlc3Bhd25BdCI6IDYuNTA5OTk5OTk5OTk5OTk2CiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMCwKICAgICJjaGFyYWN0ZXIiOiB7CiAgICAgICJsb2FkZWQiOiB0cnVlLAogICAgICAic2tpbm5lZE1lc2hlcyI6IDQsCiAgICAgICJib25lcyI6IDkzLAogICAgICAidHJpYW5nbGVzIjogMTkwODYsCiAgICAgICJhbmltYXRpb24iOiAiaWRsZSIsCiAgICAgICJjbGlwIjogIklkbGUiLAogICAgICAiYW5pbWF0aW9uVGltZSI6IDEuNzc5OTk5OTk5OTk5OTk4LAogICAgICAic3dvcmRBdHRhY2hlZFRvIjogIkRFRi1oYW5kUiIsCiAgICAgICJoYW5kIjogewogICAgICAgICJ4IjogMy44OTQ5MTI4ODA3NDQyMjQsCiAgICAgICAgInkiOiAwLjcyODQ5MDQ3MDcyNDQzNzcsCiAgICAgICAgInoiOiAxLjE3MjUwNDk5NzUyOTA2MzYKICAgICAgfSwKICAgICAgInVwcGVyQXJtIjogWwogICAgICAgIC0wLjE3NjA1MzEwMTg5NTgwMDM3LAogICAgICAgIC0wLjYyMTQzOTk2MTI5MDkzMDQsCiAgICAgICAgMC41MzIyNzA1NjYwMzQxNDA3LAogICAgICAgIDAuNTQ3MjcxMjIwNDYzODkxNgogICAgICBdCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogNy41LAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogNy41LAogICAgICAibWluRGlzdGFuY2UiOiAyLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgInJldml2ZWQiOiB7CiAgICAidGltZSI6IDYuNzk0OTk5OTk5OTk5OTkyLAogICAgImZyYW1lIjogMTUyLAogICAgImhlcm8iOiB7CiAgICAgICJ4IjogMy41NjYwNTY3NDAyNDE1MywKICAgICAgInkiOiAwLAogICAgICAieiI6IDEuMDUxODU0MzIzODgxODIxLAogICAgICAiaHAiOiAxMDAKICAgIH0sCiAgICAibW9uc3RlciI6IHsKICAgICAgIngiOiA0LjUwMjM0NDU5MDY4NzMwOCwKICAgICAgInkiOiAwLAogICAgICAieiI6IC0wLjU0OTMzMzQzMzY0OTY2MTcsCiAgICAgICJocCI6IDMsCiAgICAgICJ2aXNpYmxlIjogdHJ1ZSwKICAgICAgInJlc3Bhd25BdCI6IG51bGwKICAgIH0sCiAgICAiYXR0YWNrQ29vbGRvd24iOiAwLAogICAgImNoYXJhY3RlciI6IHsKICAgICAgImxvYWRlZCI6IHRydWUsCiAgICAgICJza2lubmVkTWVzaGVzIjogNCwKICAgICAgImJvbmVzIjogOTMsCiAgICAgICJ0cmlhbmdsZXMiOiAxOTA4NiwKICAgICAgImFuaW1hdGlvbiI6ICJpZGxlIiwKICAgICAgImNsaXAiOiAiSWRsZSIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMS41Nzk5OTk5OTk5OTk5OTcyLAogICAgICAic3dvcmRBdHRhY2hlZFRvIjogIkRFRi1oYW5kUiIsCiAgICAgICJoYW5kIjogewogICAgICAgICJ4IjogMy45MTI5NTQyMTc4NjUwODEsCiAgICAgICAgInkiOiAwLjczMDU2MTExNjkwMTE4MDQsCiAgICAgICAgInoiOiAxLjA2ODE3NDgxMzA2NDA1NgogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMTU0OTE2NDAxMDQyMDk4NDQsCiAgICAgICAgLTAuNjE1OTkxMTA0NTU1MTcwNSwKICAgICAgICAwLjU0NzAxOTQxMzg5MTAwNzIsCiAgICAgICAgMC41NDUyNzU3NTIxNDQ1NjM2CiAgICAgIF0KICAgIH0sCiAgICAiY2FtZXJhIjogewogICAgICAiZGlzdGFuY2UiOiA3LjUsCiAgICAgICJkZXNpcmVkRGlzdGFuY2UiOiA3LjUsCiAgICAgICJtaW5EaXN0YW5jZSI6IDIuNSwKICAgICAgIm1heERpc3RhbmNlIjogMjQsCiAgICAgICJhemltdXRoIjogMC41CiAgICB9CiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-cb0dc8fe0739527960e8",
+          "file": "game.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸發攻擊",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 50266,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:31:44.999Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "character-and-camera",
+                      "contentType": "application/json",
+                      "body": "ewogICJzdGFydCI6IHsKICAgICJ0aW1lIjogMC4yMjQ5OTk5OTk5OTk5OTk5OCwKICAgICJmcmFtZSI6IDYsCiAgICAiaGVybyI6IHsKICAgICAgIngiOiAwLAogICAgICAieSI6IDAsCiAgICAgICJ6IjogMywKICAgICAgImhwIjogMTAwCiAgICB9LAogICAgIm1vbnN0ZXIiOiB7CiAgICAgICJ4IjogNC44ODU3OTc5MzY2MTg5NTksCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAtMC45MDg2MzgzNDkyOTUxNjU3LAogICAgICAiaHAiOiAzLAogICAgICAidmlzaWJsZSI6IHRydWUsCiAgICAgICJyZXNwYXduQXQiOiBudWxsCiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMCwKICAgICJjaGFyYWN0ZXIiOiB7CiAgICAgICJsb2FkZWQiOiB0cnVlLAogICAgICAic2tpbm5lZE1lc2hlcyI6IDQsCiAgICAgICJib25lcyI6IDkzLAogICAgICAidHJpYW5nbGVzIjogMTkwODYsCiAgICAgICJhbmltYXRpb24iOiAiaWRsZSIsCiAgICAgICJjbGlwIjogIklkbGUiLAogICAgICAiYW5pbWF0aW9uVGltZSI6IDAuMjI0OTk5OTk5OTk5OTk5OTgsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAtMC4zMzI5MDMzOTMyNDc3MzE5NCwKICAgICAgICAieSI6IDAuNjc3NTkxMTEzNjI3NzEsCiAgICAgICAgInoiOiAyLjk0MzEwNzM2OTk2MDM3MQogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMzExODc0MzExODIzNDI5NCwKICAgICAgICAtMC42NTIwMzMzNTQxNjM5NDQzLAogICAgICAgIDAuNDA4MDU3MTA2ODQ3NTkwNjcsCiAgICAgICAgMC41NTc3NDIxNjA4NTY4MzE4CiAgICAgIF0KICAgIH0sCiAgICAiY2FtZXJhIjogewogICAgICAiZGlzdGFuY2UiOiA3LjUsCiAgICAgICJkZXNpcmVkRGlzdGFuY2UiOiA3LjUsCiAgICAgICJtaW5EaXN0YW5jZSI6IDIuNSwKICAgICAgIm1heERpc3RhbmNlIjogMjQsCiAgICAgICJhemltdXRoIjogMC41CiAgICB9CiAgfSwKICAiY2xvc2UiOiB7CiAgICAidGltZSI6IDEuNTI5OTk5OTk5OTk5OTk5NiwKICAgICJmcmFtZSI6IDM1LAogICAgImhlcm8iOiB7CiAgICAgICJ4IjogMCwKICAgICAgInkiOiAwLAogICAgICAieiI6IDMsCiAgICAgICJocCI6IDEwMAogICAgfSwKICAgICJtb25zdGVyIjogewogICAgICAieCI6IDQuMjIzNDI1OTY5MDA4OTE4LAogICAgICAieSI6IDAsCiAgICAgICJ6IjogLTAuMzc4NzQwNzc1MjA3MTI2NiwKICAgICAgImhwIjogMywKICAgICAgInZpc2libGUiOiB0cnVlLAogICAgICAicmVzcGF3bkF0IjogbnVsbAogICAgfSwKICAgICJhdHRhY2tDb29sZG93biI6IDAsCiAgICAiY2hhcmFjdGVyIjogewogICAgICAibG9hZGVkIjogdHJ1ZSwKICAgICAgInNraW5uZWRNZXNoZXMiOiA0LAogICAgICAiYm9uZXMiOiA5MywKICAgICAgInRyaWFuZ2xlcyI6IDE5MDg2LAogICAgICAiYW5pbWF0aW9uIjogImlkbGUiLAogICAgICAiY2xpcCI6ICJJZGxlIiwKICAgICAgImFuaW1hdGlvblRpbWUiOiAxLjUyOTk5OTk5OTk5OTk5OTYsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAtMC4xNjc1MTkyODMwOTc0MDM4OCwKICAgICAgICAieSI6IDAuNzI3NDg3NTI3MjI0NTExNywKICAgICAgICAieiI6IDMuMzAxOTY4NTUwMjcxMTMxCiAgICAgIH0sCiAgICAgICJ1cHBlckFybSI6IFsKICAgICAgICAtMC4xNTgwMzk1MTM2NTYwMTAzMiwKICAgICAgICAtMC42MTY4MDU1OTU1MTUwODgyLAogICAgICAgIDAuNTQ0OTA1NDY2MDkyMzg0NSwKICAgICAgICAwLjU0NTU3NTM3OTUwNTg2NzgKICAgICAgXQogICAgfSwKICAgICJjYW1lcmEiOiB7CiAgICAgICJkaXN0YW5jZSI6IDIuNTA3NjY5MDUzMzk2NjIyLAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogMi41LAogICAgICAibWluRGlzdGFuY2UiOiAyLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgIm9yYml0IjogewogICAgInRpbWUiOiAyLjc0NDk5OTk5OTk5OTk5OCwKICAgICJmcmFtZSI6IDYyLAogICAgImhlcm8iOiB7CiAgICAgICJ4IjogMCwKICAgICAgInkiOiAwLAogICAgICAieiI6IDMsCiAgICAgICJocCI6IDEwMAogICAgfSwKICAgICJtb25zdGVyIjogewogICAgICAieCI6IDMuNjA2NzM0ODI2NzUxMjg2NCwKICAgICAgInkiOiAwLAogICAgICAieiI6IDAuMTE0NjEyMTM4NTk4OTc4OTcsCiAgICAgICJocCI6IDMsCiAgICAgICJ2aXNpYmxlIjogdHJ1ZSwKICAgICAgInJlc3Bhd25BdCI6IG51bGwKICAgIH0sCiAgICAiYXR0YWNrQ29vbGRvd24iOiAwLAogICAgImNoYXJhY3RlciI6IHsKICAgICAgImxvYWRlZCI6IHRydWUsCiAgICAgICJza2lubmVkTWVzaGVzIjogNCwKICAgICAgImJvbmVzIjogOTMsCiAgICAgICJ0cmlhbmdsZXMiOiAxOTA4NiwKICAgICAgImFuaW1hdGlvbiI6ICJpZGxlIiwKICAgICAgImNsaXAiOiAiSWRsZSIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMC43NDQ5OTk5OTk5OTk5OTkxLAogICAgICAic3dvcmRBdHRhY2hlZFRvIjogIkRFRi1oYW5kUiIsCiAgICAgICJoYW5kIjogewogICAgICAgICJ4IjogLTAuMjkwNzQwMjU4NTg4OTA3MDYsCiAgICAgICAgInkiOiAwLjY1MzQxNjE2MTcwNDc1MDUsCiAgICAgICAgInoiOiAyLjk0MzYwMjc0NDA5NzkwNTMKICAgICAgfSwKICAgICAgInVwcGVyQXJtIjogWwogICAgICAgIC0wLjM2MTg4NjEyNzU1NzQyMzU1LAogICAgICAgIC0wLjY2MDY0Mjg0MTE3OTkyMDYsCiAgICAgICAgMC4zNDQ2NTA1ODM2NzI2MTAxLAogICAgICAgIDAuNTYwMTgzNDQxNzI3MjQzOQogICAgICBdCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogMi41MDAwMDAwMDM1NzA0OTMyLAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogMi41LAogICAgICAibWluRGlzdGFuY2UiOiAyLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IC0wLjU4MDAwMDAwMDAwMDAwMDEKICAgIH0KICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-d076a1f47e2b60cd2517",
+          "file": "game.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "真實輸入驅動骨架走跑跳與手臂揮劍",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:32:35.325Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "animation-states",
+                      "contentType": "application/json",
+                      "body": "ewogICJpZGxlIjogewogICAgInRpbWUiOiAwLjIyNDk5OTk5OTk5OTk5OTk4LAogICAgImZyYW1lIjogNiwKICAgICJoZXJvIjogewogICAgICAieCI6IDAsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAzLAogICAgICAiaHAiOiAxMDAKICAgIH0sCiAgICAibW9uc3RlciI6IHsKICAgICAgIngiOiA0Ljg4NTc5NzkzNjYxODk1OSwKICAgICAgInkiOiAwLAogICAgICAieiI6IC0wLjkwODYzODM0OTI5NTE2NTcsCiAgICAgICJocCI6IDMsCiAgICAgICJ2aXNpYmxlIjogdHJ1ZSwKICAgICAgInJlc3Bhd25BdCI6IG51bGwKICAgIH0sCiAgICAiYXR0YWNrQ29vbGRvd24iOiAwLAogICAgImNoYXJhY3RlciI6IHsKICAgICAgImxvYWRlZCI6IHRydWUsCiAgICAgICJza2lubmVkTWVzaGVzIjogNCwKICAgICAgImJvbmVzIjogOTMsCiAgICAgICJ0cmlhbmdsZXMiOiAxOTA4NiwKICAgICAgImFuaW1hdGlvbiI6ICJpZGxlIiwKICAgICAgImNsaXAiOiAiSWRsZSIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMC4yMjQ5OTk5OTk5OTk5OTk5OCwKICAgICAgInN3b3JkQXR0YWNoZWRUbyI6ICJERUYtaGFuZFIiLAogICAgICAiaGFuZCI6IHsKICAgICAgICAieCI6IC0wLjMzMjkwMzM5MzI0NzczMTk0LAogICAgICAgICJ5IjogMC42Nzc1OTExMTM2Mjc3MSwKICAgICAgICAieiI6IDIuOTQzMTA3MzY5OTYwMzcxCiAgICAgIH0sCiAgICAgICJ1cHBlckFybSI6IFsKICAgICAgICAtMC4zMTE4NzQzMTE4MjM0Mjk0LAogICAgICAgIC0wLjY1MjAzMzM1NDE2Mzk0NDMsCiAgICAgICAgMC40MDgwNTcxMDY4NDc1OTA2NywKICAgICAgICAwLjU1Nzc0MjE2MDg1NjgzMTgKICAgICAgXQogICAgfSwKICAgICJjYW1lcmEiOiB7CiAgICAgICJkaXN0YW5jZSI6IDcuNSwKICAgICAgImRlc2lyZWREaXN0YW5jZSI6IDcuNSwKICAgICAgIm1pbkRpc3RhbmNlIjogMi41LAogICAgICAibWF4RGlzdGFuY2UiOiAyNCwKICAgICAgImF6aW11dGgiOiAwLjUKICAgIH0KICB9LAogICJ3YWxrIjogewogICAgInRpbWUiOiAxLjAzNTAwMDAwMDAwMDAwMDQsCiAgICAiZnJhbWUiOiAyNCwKICAgICJoZXJvIjogewogICAgICAieCI6IC0xLjM5MTUzMjYyNTc5ODY5OSwKICAgICAgInkiOiAwLAogICAgICAieiI6IDAuNDUyODE2NjE0MTEzMTkzMDcsCiAgICAgICJocCI6IDEwMAogICAgfSwKICAgICJtb25zdGVyIjogewogICAgICAieCI6IDQuNDIwMTcwMjc4MDMwMDQsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAtMC42Nzc1ODk0MDg4ODUyMDY3LAogICAgICAiaHAiOiAzLAogICAgICAidmlzaWJsZSI6IHRydWUsCiAgICAgICJyZXNwYXduQXQiOiBudWxsCiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMCwKICAgICJjaGFyYWN0ZXIiOiB7CiAgICAgICJsb2FkZWQiOiB0cnVlLAogICAgICAic2tpbm5lZE1lc2hlcyI6IDQsCiAgICAgICJib25lcyI6IDkzLAogICAgICAidHJpYW5nbGVzIjogMTkwODYsCiAgICAgICJhbmltYXRpb24iOiAid2FsayIsCiAgICAgICJjbGlwIjogIlJ1biIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMC40ODU5OTk5OTk5OTk5OTk4LAogICAgICAic3dvcmRBdHRhY2hlZFRvIjogIkRFRi1oYW5kUiIsCiAgICAgICJoYW5kIjogewogICAgICAgICJ4IjogLTEuMTIwMDE1NDg1ODY4MzI3OCwKICAgICAgICAieSI6IDAuNzc3MTA5MTcyNDI1NTI1OCwKICAgICAgICAieiI6IDAuMTQ4Mzg0ODY5OTY0NzYwNQogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMTMyMzY3NjUwOTU0NzU4NzUsCiAgICAgICAgLTAuNjgxNzEzMTYzNjc2NzM1MSwKICAgICAgICAwLjM0Nzc3NjE5OTUxNjU5MjU1LAogICAgICAgIDAuNjI5OTE4ODI2OTA2ODE4MwogICAgICBdCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogNy41LAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogNy41LAogICAgICAibWluRGlzdGFuY2UiOiAyLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgImp1bXAiOiB7CiAgICAidGltZSI6IDEuNzU0OTk5OTk5OTk5OTk5MiwKICAgICJmcmFtZSI6IDQwLAogICAgImhlcm8iOiB7CiAgICAgICJ4IjogLTMuOTEzNTUwNjcxNjI2MTA5NywKICAgICAgInkiOiAxLjQzMDA5OTk5OTk5OTk5OTUsCiAgICAgICJ6IjogLTQuMTYzNzA2NDUyNzExMTEyNSwKICAgICAgImhwIjogMTAwCiAgICB9LAogICAgIm1vbnN0ZXIiOiB7CiAgICAgICJ4IjogMy45NjQ3Nzc5MDIwMTQ3MDYzLAogICAgICAieSI6IDAsCiAgICAgICJ6IjogLTAuNzQzMTc5NDc2MjI0OTIyNCwKICAgICAgImhwIjogMywKICAgICAgInZpc2libGUiOiB0cnVlLAogICAgICAicmVzcGF3bkF0IjogbnVsbAogICAgfSwKICAgICJhdHRhY2tDb29sZG93biI6IDAsCiAgICAiY2hhcmFjdGVyIjogewogICAgICAibG9hZGVkIjogdHJ1ZSwKICAgICAgInNraW5uZWRNZXNoZXMiOiA0LAogICAgICAiYm9uZXMiOiA5MywKICAgICAgInRyaWFuZ2xlcyI6IDE5MDg2LAogICAgICAiYW5pbWF0aW9uIjogImp1bXAiLAogICAgICAiY2xpcCI6ICJKdW1wIiwKICAgICAgImFuaW1hdGlvblRpbWUiOiAwLjMxNDk5OTk5OTk5OTk5OTk1LAogICAgICAic3dvcmRBdHRhY2hlZFRvIjogIkRFRi1oYW5kUiIsCiAgICAgICJoYW5kIjogewogICAgICAgICJ4IjogLTMuNTM2NzAxOTAwOTQxOTQ2LAogICAgICAgICJ5IjogMi4xNjI1MDE0NDQyNzE2MTcsCiAgICAgICAgInoiOiAtNC4xMDYzNTU4MDEyMTkyNjkKICAgICAgfSwKICAgICAgInVwcGVyQXJtIjogWwogICAgICAgIC0wLjM5ODQyMzY2MjM4NTU5NjU3LAogICAgICAgIC0wLjY4OTM1NjQxNTk2MjA4MzMsCiAgICAgICAgMC4wMDY0MjA5ODAwNzA1Njc0MDEsCiAgICAgICAgMC42MDQ5ODM1NzE4ODYyNTk1CiAgICAgIF0KICAgIH0sCiAgICAiY2FtZXJhIjogewogICAgICAiZGlzdGFuY2UiOiA3LjUsCiAgICAgICJkZXNpcmVkRGlzdGFuY2UiOiA3LjUsCiAgICAgICJtaW5EaXN0YW5jZSI6IDIuNSwKICAgICAgIm1heERpc3RhbmNlIjogMjQsCiAgICAgICJhemltdXRoIjogMC41CiAgICB9CiAgfSwKICAiYXR0YWNrIjogewogICAgInRpbWUiOiAyLjk2OTk5OTk5OTk5OTk5NzUsCiAgICAiZnJhbWUiOiA2NywKICAgICJoZXJvIjogewogICAgICAieCI6IC01LjgxMjA3NTgwNDQ5ODc1NCwKICAgICAgInkiOiAwLAogICAgICAieiI6IC03LjYzODkzMzM5Nzc5Njk5MywKICAgICAgImhwIjogMTAwCiAgICB9LAogICAgIm1vbnN0ZXIiOiB7CiAgICAgICJ4IjogMy44NjA0MDQ0Nzg1MjQ5MTQzLAogICAgICAieSI6IDAsCiAgICAgICJ6IjogLTAuNzk1OTcwMjYxOTU0MDI5LAogICAgICAiaHAiOiAzLAogICAgICAidmlzaWJsZSI6IHRydWUsCiAgICAgICJyZXNwYXduQXQiOiBudWxsCiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMC4xODUwMDAwMDAwMDAwMDAxLAogICAgImNoYXJhY3RlciI6IHsKICAgICAgImxvYWRlZCI6IHRydWUsCiAgICAgICJza2lubmVkTWVzaGVzIjogNCwKICAgICAgImJvbmVzIjogOTMsCiAgICAgICJ0cmlhbmdsZXMiOiAxOTA4NiwKICAgICAgImFuaW1hdGlvbiI6ICJhdHRhY2siLAogICAgICAiY2xpcCI6ICJJZGxlIiwKICAgICAgImFuaW1hdGlvblRpbWUiOiAwLjcyMDAwMDAwMDAwMDAwMDEsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAtNS41MDE2MDAxMTQxNTQ5OSwKICAgICAgICAieSI6IDAuNjY1MzU0OTM3MjEzMjI2NiwKICAgICAgICAieiI6IC03LjY5ODQyMDA1NTIyODUxOAogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMzU2OTg2NjE1NzY5Njk4OCwKICAgICAgICAtMC42ODg2NDUzOTgwMzI2NDg3LAogICAgICAgIDAuMjkyNjgyMjU0ODg2NTkyMzMsCiAgICAgICAgMC41NTkxNjQ3MjkxMTcxNTQzCiAgICAgIF0KICAgIH0sCiAgICAiY2FtZXJhIjogewogICAgICAiZGlzdGFuY2UiOiA3LjUsCiAgICAgICJkZXNpcmVkRGlzdGFuY2UiOiA3LjUsCiAgICAgICJtaW5EaXN0YW5jZSI6IDIuNSwKICAgICAgIm1heERpc3RhbmNlIjogMjQsCiAgICAgICJhemltdXRoIjogMC41CiAgICB9CiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-252ccbdc2fe3780b2bfe",
+          "file": "game.spec.ts",
+          "line": 150,
+          "column": 1
+        },
+        {
+          "title": "模型載入失敗有明確訊息，不退回積木人物",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:33:02.821Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-a299cdf8d965ef3be712",
+          "file": "game.spec.ts",
+          "line": 177,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T09:29:49.654Z",
+    "duration": 201800.75199999998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

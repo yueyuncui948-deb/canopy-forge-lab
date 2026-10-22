@@ -2,7 +2,7 @@
 
 這是一項自主 AI 軟體工程實驗：用小型桌面瀏覽器 3D ARPG，研究 Agent 如何規劃、實作、測試、修正及留下可追溯的證據。工作流程與遊戲同為交付成果。
 
-**目前是研究流程母版 v0.1，遊戲角色仍為幾何占位模型，已完成首次建置與走跑跳、攻擊、死亡重生測試；精緻人物與完整操作品質尚未驗收。**
+**目前是研究流程母版 v0.1，主角已替換為有臉髮、服裝材質與骨架動畫的 Sophia 風格化人物；怪物與環境仍為占位模型，寫實人物與完整美術品質尚未驗收。**
 
 ## 閱讀入口
 
@@ -22,12 +22,29 @@
 
 ```bash
 npm ci
-npm run check  # 型別、5 項生命週期測試、正式建置
+npm run check  # 型別、8 項單元測試、正式建置
 npm run dev
 # 如需檢查正式建置：npm run preview
 ```
 
-控制規格：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。已測試走跑跳、攻擊及怪物重生；鏡頭相對方向、場景碰撞與玩家死亡流程仍待後續任務。
+控制：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。滾輪可拉近／拉遠，右鍵拖曳環視，R 重設視角。預設鏡頭距離 7.5，最近 2.5，可近看臉部與服裝；移動方向依鏡頭方位計算。場景碰撞與玩家死亡流程仍待後續任務。
+
+## 本機展示與 XAMPP
+
+開發展示執行 npm ci、npm run dev，再用瀏覽器開啟終端機顯示的本機網址。
+若放在 XAMPP 的 htdocs/canopy，先執行：
+
+```bash
+npm run build -- --base=/canopy/
+```
+
+將 dist 裡的所有內容（包括 assets 與 models 資料夾）放進 htdocs/canopy，再經 Apache 開啟 /canopy/。不要只複製 index.html。已以靜態 HTTP 伺服器驗證相同子目錄路徑，未在雲端直接執行 XAMPP／Apache。
+
+## 人物與鏡頭預覽
+
+[近距離臉部／服裝](docs/research/task-003/evidence/browser/character-close.png) · [右鍵環視](docs/research/task-003/evidence/browser/character-orbit.png) · [遊戲視角](docs/research/task-003/evidence/browser/character-default.png)
+
+Sophia by GDQuest，CC BY-NC-SA 4.0；來源與修改見 [資產紀錄](docs/ASSETS.md)。本次為非商業研究展示。原始模型約 2.6 MB，隨專案提供，不需執行時連外下載。這版是風格化／Q 版人物；步行暫用跑步 clip 降速，攻擊為骨架疊加，後續仍需專門動作與更高品質美術評估。
 
 ## 瀏覽器回歸
 
@@ -47,7 +64,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:browser
 ## 正式輸出與限制
 
 npm run build 產生 dist/，可由支援靜態檔案的 HTTP 伺服器提供；npm run preview 用於本機驗證，非正式部署服務。預設部署網站根目錄；若使用子路徑，需設定 Vite base 後重建並驗證。尚未公開部署。
-遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。詳見 [task-002 測試報告](docs/research/task-002/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
+遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。目前 6 項瀏覽器回歸涵蓋原有操作、人物與鏡頭，以及載入失敗處理。詳見 [task-003 測試報告](docs/research/task-003/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
 
 ## 文件檢查
 

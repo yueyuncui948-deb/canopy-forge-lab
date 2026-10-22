@@ -1,0 +1,13 @@
+Sophia — GDQuest / godot-4-3D-Characters
+Source: https://github.com/gdquest-demos/godot-4-3D-Characters
+Source commit: 43e578402131fd4a5624bbfdc9e9b86a7b081bbf
+Original file: src/addons/gdquest_sophia/model/sophia.glb
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+See LICENSE.txt for the upstream license text.
+
+本專案為非商業研究展示。原始模型保持不變。
+整合修改：執行時正規化尺寸、材質環境光、骨架動畫切換、手部掛劍及揮劍／握姿疊加。
+這些人物衍生視覺／姿態依相同 CC BY-NC-SA 4.0 條款提供。
+來源署名不表示 GDQuest 對本專案背書。
+其他專案複用時，請保留署名及授權，勿將此模型視為可無限制商業使用的母版資產。

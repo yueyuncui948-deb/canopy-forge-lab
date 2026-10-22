@@ -111,3 +111,72 @@ test('鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作', as
   expect(errors).toEqual([]);
   await info.attach('lifecycle', { body: JSON.stringify({dead,stillDead,revived},null,2), contentType:'application/json' });
 });
+
+test('人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸發攻擊', async ({ page }, info) => {
+  const start = await snapshot(page);
+  expect(start.time).toBeGreaterThanOrEqual(0);
+  expect(start.attackCooldown).toBe(0);
+  expect(start.character.skinnedMeshes).toBe(4);
+  expect(start.character.bones).toBeGreaterThan(50);
+  expect(start.character.triangles).toBeGreaterThan(10000);
+  expect(start.character.swordAttachedTo).toBe('DEF-handR');
+  const modelResponse = await page.request.get('/models/sophia/sophia.glb');
+  expect(modelResponse.status()).toBe(200);
+  expect((await modelResponse.body()).byteLength).toBe(2635436);
+  await page.screenshot({ path: info.outputPath('character-default.png') });
+  await page.mouse.move(600, 250);
+  await page.mouse.wheel(0, -3000);
+  await expect.poll(async () => (await snapshot(page)).camera.distance).toBeLessThan(2.6);
+  const close = await snapshot(page);
+  expect(close.camera.desiredDistance).toBe(close.camera.minDistance);
+  expect(close.camera.distance).toBeGreaterThanOrEqual(close.camera.minDistance);
+  await page.screenshot({ path: info.outputPath('character-close.png') });
+  await page.mouse.down({ button: 'right' });
+  await page.mouse.move(780, 280, { steps: 8 });
+  await page.mouse.up({ button: 'right' });
+  const orbit = await snapshot(page);
+  expect(Math.abs(orbit.camera.azimuth - close.camera.azimuth)).toBeGreaterThan(0.8);
+  expect(orbit.attackCooldown).toBe(0);
+  expect(distance(orbit.hero, close.hero)).toBeLessThan(0.001);
+  await page.screenshot({ path: info.outputPath('character-orbit.png') });
+  await page.mouse.wheel(0, 6000);
+  await expect.poll(async () => (await snapshot(page)).camera.distance).toBeGreaterThan(23.9);
+  expect((await snapshot(page)).camera.desiredDistance).toBe(24);
+  await page.keyboard.press('r');
+  await expect.poll(async () => Math.abs((await snapshot(page)).camera.distance - 7.5)).toBeLessThan(0.1);
+  await info.attach('character-and-camera', { body: JSON.stringify({start,close,orbit},null,2), contentType:'application/json' });
+});
+
+test('真實輸入驅動骨架走跑跳與手臂揮劍', async ({ page }, info) => {
+  const idle = await snapshot(page);
+  expect(idle.character.animation).toBe('idle');
+  await page.keyboard.down('w');
+  await expect.poll(async () => (await snapshot(page)).character.animation).toBe('walk');
+  await advance(page, 0.2);
+  const walk = await snapshot(page);
+  expect(walk.character.upperArm).not.toEqual(idle.character.upperArm);
+  await page.keyboard.down('Shift');
+  await expect.poll(async () => (await snapshot(page)).character.animation).toBe('run');
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await snapshot(page)).hero.y, { intervals: [30] }).toBeGreaterThan(0.5);
+  const jump = await snapshot(page);
+  expect(['jump','fall']).toContain(jump.character.animation);
+  await page.screenshot({ path: info.outputPath('character-jump.png') });
+  await page.keyboard.up('w');
+  await page.keyboard.up('Shift');
+  await expect.poll(async () => (await snapshot(page)).character.animation).toBe('idle');
+  await page.keyboard.press('j');
+  await expect.poll(async () => (await snapshot(page)).character.animation, { intervals: [20] }).toBe('attack');
+  const attack = await snapshot(page);
+  expect(attack.character.upperArm).not.toEqual(idle.character.upperArm);
+  expect(attack.character.swordAttachedTo).toBe('DEF-handR');
+  await page.screenshot({ path: info.outputPath('character-attack.png') });
+  await info.attach('animation-states', { body: JSON.stringify({idle,walk,jump,attack},null,2), contentType:'application/json' });
+});
+
+test('模型載入失敗有明確訊息，不退回積木人物', async ({ page }) => {
+  await page.route('**/models/sophia/sophia.glb', route => route.abort());
+  await page.reload();
+  await expect(page.getByRole('alert')).toContainText('人物載入失敗');
+  expect(await page.evaluate(() => '__CANOPY_DEBUG__' in window)).toBe(false);
+});

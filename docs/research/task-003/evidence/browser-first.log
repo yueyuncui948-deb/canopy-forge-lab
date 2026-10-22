@@ -1,0 +1,26 @@
+
+> canopy-forge-lab@0.1.0 test:browser
+> playwright test
+
+[WebServer] (node:9146) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9159) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:9191) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/game.spec.ts:18:1 › 正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤 (18.2s)
+  ✓  2 tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 (39.3s)
+  ✓  3 tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 (55.8s)
+  ✓  4 tests/browser/game.spec.ts:115:1 › 人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸發攻擊 (50.3s)
+  ✓  5 tests/browser/game.spec.ts:150:1 › 真實輸入驅動骨架走跑跳與手臂揮劍 (27.5s)
+  ✓  6 tests/browser/game.spec.ts:177:1 › 模型載入失敗有明確訊息，不退回積木人物 (8.5s)
+
+  6 passed (3.4m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

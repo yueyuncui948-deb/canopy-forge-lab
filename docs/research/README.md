@@ -6,5 +6,6 @@
 |---|---|---|
 | task-001 | 研究流程母版 v0.1 | [計畫](task-001/PLAN.md)、[執行](task-001/EXECUTION.md)、[測試](task-001/TEST_REPORT.md)、[審查](task-001/REVIEW.md)、[摘要](task-001/SUMMARY.md) |
 | task-002 | 建置與怪物重生回歸 | [計畫](task-002/PLAN.md)、[執行](task-002/EXECUTION.md)、[測試](task-002/TEST_REPORT.md)、[審查](task-002/REVIEW.md)、[摘要](task-002/SUMMARY.md) |
+| task-003 | 骨架人物質感與近距離鏡頭 | [計畫](task-003/PLAN.md)、[執行](task-003/EXECUTION.md)、[測試](task-003/TEST_REPORT.md)、[審查](task-003/REVIEW.md)、[摘要](task-003/SUMMARY.md) |
 
 模板：[PLAN](templates/PLAN.md)、[EXECUTION](templates/EXECUTION.md)、[TEST_REPORT](templates/TEST_REPORT.md)、[REVIEW](templates/REVIEW.md)、[SUMMARY](templates/SUMMARY.md)。模板中的「待填」不代表已完成；正式任務必須填入事實或未執行理由。

@@ -1,0 +1,76 @@
+{
+  "subpath": "/canopy/",
+  "character": {
+    "loaded": true,
+    "skinnedMeshes": 4,
+    "bones": 93,
+    "triangles": 19086,
+    "animation": "idle",
+    "clip": "Idle",
+    "animationTime": 0.18,
+    "swordAttachedTo": "DEF-handR",
+    "hand": {
+      "x": -0.34080860112681727,
+      "y": 0.6824559631948255,
+      "z": 2.9676967555989884
+    },
+    "upperArm": [
+      -0.29850605310057543,
+      -0.6494374751888896,
+      0.42302401266474177,
+      0.5569343079106683
+    ]
+  },
+  "requests": [
+    {
+      "path": "/canopy/?debug=1",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/index-D0_FyTm4.css",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/index-BBeufbaZ.js",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/GLTFLoader-C_wq51gW.js",
+      "status": 200
+    },
+    {
+      "path": "/canopy/models/sophia/sophia.glb",
+      "status": 200
+    },
+    {
+      "path": "/ebb6576f-30d5-433b-8369-c4302f28df10",
+      "status": 200
+    },
+    {
+      "path": "/a3712838-6b3c-4b59-a879-e309ba2d0f54",
+      "status": 200
+    },
+    {
+      "path": "/64db04a2-7796-48e3-abda-bf4ccd1fe1ce",
+      "status": 200
+    },
+    {
+      "path": "/d2f6a496-b873-4270-a049-f5426ac5a27d",
+      "status": 200
+    },
+    {
+      "path": "/4b724385-6972-442e-ad6e-03963d8451a0",
+      "status": 200
+    },
+    {
+      "path": "/9ded3c99-15e4-4bec-8998-93ce3d4a8e2d",
+      "status": 200
+    },
+    {
+      "path": "/6a8a143b-0fa4-4de6-a86f-977ee84a1346",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "note": "Python 靜態 HTTP server 模擬 XAMPP 路徑；未直接啟動 Apache。"
+}
