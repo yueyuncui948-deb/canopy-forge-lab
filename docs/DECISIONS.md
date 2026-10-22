@@ -1,14 +1,31 @@
-# Architecture Decision Log
+# 技術與流程決策紀錄
 
-## ADR-001 — Web first
-Decision: Desktop browser via TypeScript/Three.js/Vite before Unreal Engine.
-Reason: Quick iteration for Codex and direct evaluation of interactive realtime graphics.
-Trade-off: Lower practical visual ceiling than high-end native Unreal projects, particularly for sophisticated lighting.
+原始英文紀錄保留於初始 commit；以下為保留原意的繁體中文版本，新增決策以新編號追加。
 
-## ADR-002 — Placeholder first
-Decision: Use primitive mock humanoid for P1; replace with high-quality licensed rigged GLB in P3.
-Reason: Separate technical success in movement/combat from model creation and art polish. Placeholder is not accepted as final art.
+## ADR-001：Web 優先（既有決策）
 
-## ADR-003 — Git as memory, not entire conversation
-Decision: Keep immutable commits and explicit `AGENTS.md`, `MASTER_PLAN.md`, `PROGRESS.md`, `DECISIONS.md`.
-Reason: Codex sessions may not share complete context. GitHub stores checked-in artifacts, not an automatic complete memory of assistant reasoning.
+採 TypeScript／Three.js／Vite 桌面瀏覽器，先於 Unreal。理由是快速迭代與互動驗證；取捨為高階光影的實際上限低於大型原生引擎。
+
+## ADR-002：先占位驗證（既有決策）
+
+P1 使用幾何人物，P3 換成合法高品質骨架 GLB。分開操作驗證與美術資產工作，占位人物不作最終品質驗收。
+
+## ADR-003：Git 保存工程記憶（既有決策）
+
+以 commits、AGENTS 與規格／進度／決策文件延續工作。Git 不會自動保存全部聊天與內部思考。
+
+## ADR-004：通用流程與遊戲規格分開（2026-10-22）
+
+採 WORKFLOW 與研究模板作可複用制度，MASTER_PLAN 保留遊戲範圍。比單一巨型 AGENTS 更便於複用；代價是需檢查跨文件一致性。初版稱 v0.1，完成實際遊戲任務閉環後才評估 v1.0。
+
+## ADR-005：可追溯證據與繁體中文（2026-10-22）
+
+先提交計畫，保存失敗、更正及受測版本；中文 Commit 說明、PR 與報告方便研究者閱讀。保留原始技術訊息與英文識別字便於搜尋。採 merge commit 保留中間 commits，不 squash 研究歷史。
+
+## ADR-006：分階段啟用 CI（2026-10-22）
+
+本任務先驗證無第三方依賴的文件檢查。遊戲缺依賴與 lockfile，且有已知重生程式問題；遊戲 CI 在 task-002 實測後加入，文件綠燈不代表遊戲完成。禁止以略過失敗檢查偽裝完整 CI。
+
+## ADR-007：依工作大小簡化流程（2026-10-22）
+
+使用者要求本次直接更新，避免制度過重。文件整理與小修改可直接提交 main，只需清楚的變更說明與相關驗證；正式遊戲任務保留研究紀錄，較大功能使用分支／PR。使用者的明確範圍與授權優先，不為流程本身製造工作。

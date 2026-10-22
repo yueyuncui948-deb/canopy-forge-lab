@@ -1,33 +1,32 @@
-# Instructions for Codex — Canopy Forge Lab
+# Agent 工作規則
 
-## Mission
-Develop a REAL-TIME, INTERACTIVE, browser-based 3D ARPG prototype with Diablo/PoE-style angled camera, nighttime tropical jungle, one controllable premium-quality humanoid hero, and one monster. This is an AI game development workflow evaluation, not a commercial game.
+## 每次任務開始
 
-## Priorities
-1. Playable and verifiable functionality before visual polish.
-2. Character visual quality is the main later-stage evaluation target.
-3. Keep browser download / runtime costs modest: five showcase trees, limited foliage, no giant landscapes, lazy loading and compressed GLBs.
-4. TypeScript + Three.js + Vite; Blender only for asset preparation; NO Unreal Engine for v1.
-5. Absolutely no prerendered video masquerading as 3D interaction.
+依序閱讀 README.md、docs/WORKFLOW.md、docs/MASTER_PLAN.md、docs/DECISIONS.md、docs/PROGRESS.md，以及進行中的 docs/research/task-NNN/。檢查 Git 狀態並保護既有使用者變更。
+雲端任務已有隔離環境，使用現有 checkout；除非使用者明確要求，不建立 Git worktree。
 
-## Working rules
-- Read `docs/MASTER_PLAN.md`, `docs/DECISIONS.md`, and `docs/PROGRESS.md` at start of each task.
-- Complete ONE milestone at a time, run `npm run build`, report test evidence and blockers.
-- Update `docs/PROGRESS.md`, `docs/DECISIONS.md` and asset provenance before each commit.
-- Don't mark any feature as verified unless it was actually tested; rendering/controls require browser testing.
-- Do not introduce a backend, authentication, multiplayer, database or monetization.
-- Don't commit unlicensed or unknown-license character meshes, textures or sounds.
-- Never silently swap the high-quality real character acceptance target for a primitive placeholder.
-- Keep code modular as features mature; avoid giant all-in-one files after bootstrap.
-- Git commit per accepted milestone; branch + PR optional. Never commit node_modules or huge unoptimized models.
-- When GUI or GPU is not available, state that manual local validation remains necessary.
+## 核心目標
 
-## Acceptance criteria for final visual milestone
-- Authentic independent third-person control: walk, run, jump and sword attack.
-- Real skinned mesh humanoid, proper animations, transitions, and attached sword.
-- Monster receives hit response, HP decrements, eventually dies or respawns.
-- At least five trees and small amount of vegetation, moonlit rain forest; FPS overlay and network transfer report.
-- Tested in recent Chrome desktop at ~1080p, with documented FPS observed (never invented).
+本專案同時交付小型即時 3D ARPG 與可重現、可驗證、可追溯的高品質開發流程。避免大型場景。先驗證功能，再提升人物品質；幾何占位人物不能作為最終人物驗收成果。
+TypeScript + Three.js + Vite，桌面 WebGL2。Blender 僅作資產準備。第一版不加入 Unreal、後端、登入、資料庫、多人或商業化系統。禁止以預錄影片冒充互動 3D。
 
-## Immediate next step
-Current `src/main.ts` is a *primitive placeholder test harness*, not a polished or final game. First refactor it into camera/input/character/combat/world modules, then validate controls and resolve camera-relative directional motion. Follow phases in MASTER_PLAN.md.
+## 自主執行與界線
+
+可在授權任務內拆解工作、建立分支、實作、測試、修正、提交、建立 PR，符合規則時合併，不必逐步詢問。每次只完成一項有明確驗收範圍的任務；不把母版整理自動擴張為遊戲開發。
+不得建立付費資源、公開私人專案、洩漏憑證、改寫重要歷史、強制推送或繞過分支保護。新增重大範圍或需要外部權限時，記錄阻塞及必要動作。
+
+## 必須遵守
+
+- 正式遊戲任務使用 task-NNN 編號及五份研究紀錄；實作前記錄計畫。文件整理與小修改可直接提交 main，較大功能才使用分支與 PR。
+- 任務循環與合併門檻依 docs/WORKFLOW.md；同一問題最多三次有新診斷依據的修正嘗試。
+- Commit 類型與分支名稱用英文，其餘說明以繁體中文為主；程式識別字、指令與原始錯誤保留原文。
+- 保留失敗證據；不得杜撰結果、降低斷言、將零測試或未執行項目寫成通過。
+- 遊戲程式變更需型別檢查、建置及適當回歸測試；渲染與控制需實際瀏覽器測試。純文件變更可只執行文件檢查，並列出未執行項目。
+- 自我審查與獨立審查分開記錄；軟體 WebGL 渲染不能代表實體 GPU 效能。
+- 每次提交檢查 PROGRESS、DECISIONS、ASSETS 是否需更新；有新進度、決策或資產才修改，不製造無意義變更。
+- 不提交 node_modules、dist、憑證、授權不明資產或巨大未最佳化模型。正式資產需來源與授權紀錄。
+- 隨功能成熟拆分 camera/input/character/combat/world 等責任，避免單一巨型檔案。
+
+## 當前入口
+
+研究流程母版 v0.1。遊戲仍為尚未完成驗收的占位原型；下一個遊戲任務先完成 P0 建置、修正既有重生阻斷並驗證啟動，再逐步處理 P1/P2。

@@ -1,54 +1,28 @@
-# Canopy Forge Lab — Master Plan
+# Canopy Forge Lab — 專案規格與階段
 
-## Goal
-Use Codex to iteratively build a real, browser-playable 3D ARPG scene. Camera: angled follow-cam inspired by Path of Exile, not a first-person view. Theme: compact nighttime Amazon-inspired humid jungle. Character: polished human, sword attacks, agile jumping/running, combat against one creature.
+## 目標與範圍
 
-## Technical decision
-- TypeScript + Vite + Three.js, desktop-first, WebGL2 baseline.
-- Asset authoring may use Blender and Blender Python/MCP. Export glTF/GLB, optimize assets before delivery.
-- No Unreal Engine / backend in the first version.
-- Keep possibility to migrate later; 3D assets in neutral GLB format.
+建立真正即時、可互動的桌面瀏覽器 3D ARPG，並留下自主軟體工程研究證據。採類似 Path of Exile 的斜俯跟隨鏡頭；目前操作規格為 WASD／方向鍵，不預設加入點地移動。
+小型夜晚熱帶雨林，約 30–40 公尺活動範圍、五棵主樹、少量植被與石頭，一位精緻骨架人類主角、一把劍、一隻怪物。現有地板 46 公尺、活動邊界約 36 公尺屬占位實作，後續按構圖調整，避免擴大地圖。
+先驗證功能，再提升人物與視覺；不以擴張場景取代品質。不加入開放世界、多人、後端、登入、資料庫或商業化。
 
-## MVP visual budget (targets, measure later)
-- Terrain 30–40 meters, 5 main trees, sparse foliage/rocks.
-- Aim at 60fps desktop on a mid-range GPU; record measured 1% lows/average and device info; do not promise actual FPS.
-- Aim first-load compressed payload < 25MB and document actual size; increase only with justification if hero quality requires it.
-- One premium hero (rigged GLB), one enemy, sword, three to six essential animation clips.
-- Asset license manifest required.
+## 技術與預算
 
-## Phases
-### P0 Project foundation
-Repository, lint/typecheck/build, README, AGENTS.md, milestone docs, static deployment instructions.
-Acceptance: `npm install` and `npm run build` pass; `npm run dev` launches.
-### P1 Interaction proof (placeholder visuals)
-Angled-follow camera; keyboard movement; sprint, jump, attack; simple target enemy and HP; few trees. Validate browser interaction.
-Acceptance: no prerecorded animation/video; controls responsive and actual hit/HP change.
-### P2 Systems quality
-Split scene/camera/control/physics/combat, correct delta time, jumping and grounded checks, attack cooldown, hit detection based on direction and attack timing, enemy feedback, simple debug overlay and regression tests.
-Acceptance: movement smooth and repeatable, no attack spam bug, collisions stable.
-### P3 Premium character
-Find a LEGALLY licensed, rigged realistic human asset; wire idle/walk/run/jump/attack/hit and correct transitions; sword connected to hand bone. Document sourcing, commercial restrictions and credits.
-Acceptance: visually credible character with no sliding feet or visibly broken joints during normal movement.
-### P4 Night jungle artistry
-5 trees, a few vines, stones, damp ground using PBR roughness variation, fog, moonlight, contact shadows and restrained vegetation. Create composition emphasizing hero. Optimize texture, shadow, LOD and draw calls.
-Acceptance: playable atmosphere, not just background screenshot.
-### P5 Monster combat
-Creature skinned model, chase/attack/hit/death, proximity checks, hero health, cooldowns and reaction VFX. Optional simple blade trails. No complex AI.
-Acceptance: repeatable encounter from spawn to enemy death/respawn.
-### P6 Profiling and visual polish
-Record GPU / browser / dimensions / average FPS / asset bytes, compare quality before/after, remove stutters and memory leaks, improve animation blending, display user-selectable graphics presets.
-Acceptance: publish measured facts and a short screen recording with test instructions.
-### P7 Review
-Document Codex prompts used, tool calls where available, change rationale, commits, failure cases, manual intervention required, and reproducibility steps.
-Acceptance: complete experiment report answering what AI completed autonomously.
+TypeScript + Three.js + Vite、WebGL2、桌面優先。Blender 可作資產準備，交付中立 GLB，按需壓縮與延遲載入。第一版不用 Unreal。
+目標為中階實體 GPU 約 1080p、平均 60 FPS；記錄 1% low 與實際設備，不保證未測得數字。首次壓縮傳輸以小於 25 MB 為目標；任何調整需提出人物品質需求與量測依據。
+動畫先涵蓋 idle／walk／run／jump／attack／hit；死亡動作依戰鬥階段補足。所有正式資產須具明確合法授權。
 
-## Definition of done per task
-- Code committed (once GitHub connection/configuration exists).
-- Build/typecheck passes.
-- Browser interaction tested or marked UNVERIFIED.
-- docs/PROGRESS.md updated with files changed, results, blockers, and next task.
-- docs/DECISIONS.md updated for architecture choices.
-- docs/ASSETS.md updated for downloaded assets.
+## 階段與驗收
 
-## Codex start prompt
-Read AGENTS.md and docs/*.md. Continue from first unverified milestone. Do NOT skip to realistic character before stabilizing interaction. Make the smallest testable change, run available checks, update progress and decisions. Report exactly which checks ran and what requires local visual inspection.
+| 階段 | 工作 | 驗收 |
+|---|---|---|
+| P0 基礎 | 依賴與 lockfile、型別／建置、lint 規則、CI、啟動與部署說明 | 安裝與建置成功，開發頁載入，無未處理錯誤；檢查須實測 |
+| P1 操作證明 | 占位人物、鏡頭相對移動、跑跳攻擊、怪物 HP | 瀏覽器實測響應、命中、死亡及重生 |
+| P2 系統穩定 | camera/input/character/physics/combat/world 模組、時間步進、冷卻、朝向與碰撞 | 不同更新頻率行為合理，單次攻擊不重複扣血，碰撞穩定，有回歸證據 |
+| P3 精緻人物 | 合法 rigged GLB、動畫混合、手骨掛劍 | 正常操作無明顯滑步或關節破損，來源與限制完整 |
+| P4 夜晚叢林 | 五棵主樹、少量藤蔓石頭、濕地 PBR、霧與月光 | 人物清晰、氛圍可玩；記錄 draw calls 與資產大小 |
+| P5 怪物戰鬥 | 骨架怪物、追逐／攻擊／受擊／死亡、玩家 HP 與重置 | 可重複完成出生、遭遇、擊殺／玩家死亡與重新開始 |
+| P6 效能與品質 | 真實 GPU 量測、畫質選項、動畫與載入優化 | 記錄設備、解析度、平均 FPS、1% low、傳輸量及操作影片 |
+| P7 研究回顧 | 決策、工具、失敗、人工介入、重現方式 | 能從 Repository 說明 AI 完成範圍與未驗證限制 |
+
+研究紀錄從每項任務開始，不等 P7 才補寫。每次只推進一項可驗收任務；通用流程見 [WORKFLOW](WORKFLOW.md)。

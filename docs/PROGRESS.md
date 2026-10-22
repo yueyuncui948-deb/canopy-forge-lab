@@ -1,14 +1,26 @@
-# Development Progress
+# 開發進度
 
-## Bootstrap (generated in ChatGPT)
-- Status: **Prepared, not browser-verified**.
-- TypeScript/Vite/Three.js starter and placeholder 3D scene are authored.
-- Demo controls: WASD/arrows movement, Shift run, Space jump, left mouse/J sword, monster HP.
-- Placeholder humanoid is **not** a premium realistic human; model sourcing is P3.
-- Not yet connected to the user's GitHub repository.
+## 目前狀態
 
-## Next Codex task
-P0: install dependencies, run `npm run build`, start dev server, test in Chrome locally, fix any issues. Then refactor in P2 while preserving behavior.
+研究流程母版 v0.1；遊戲仍是 bootstrap 占位原型，P0／P1 尚未驗收。原始進度中的「尚未連接 GitHub」已過時：2026-10-22 唯讀查詢確認 origin 指向 yueyuncui948-deb/canopy-forge-lab，當時本地 HEAD 與遠端 main 均為 09937fb773974b7bace164a56f4d0cf0d183d2ef。
 
-## Task log template
-Date / commit / changed files / commands executed / actual test result / screenshot reference / known issues / next step.
+## 既有唯讀檢查（本任務前，聊天觀察摘要）
+
+Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 154.0.8037.57、Python Playwright 1.62.0、Blender 4.3.2 可用。
+獨立測試頁曾成功建立 WebGL2、讀回預期像素與取得記憶體截圖；renderer 為 SwiftShader。該次未保存截圖檔，也未測試遊戲；此摘要不能充作本任務重新執行的原始證據。實體 GPU 效能與遊戲視覺品質未驗證。
+
+## 已知遊戲問題（靜態分析）
+
+- src/main.ts 使用不存在的 monster.userData，應檢查 monster.root.userData；預期阻斷型別檢查並在死亡時產生執行錯誤，尚待實跑確認。
+- 移動使用固定旋轉，待驗證鏡頭相對方向。
+- 攻擊僅依距離判斷；怪物扣血窗口受幀率影響。
+- 缺少場景碰撞、玩家死亡／重新開始、骨架人物與正式動畫。
+- 缺少遊戲測試套件、lint、效能 overlay、傳輸統計與正式部署說明。
+
+## 任務
+
+- [task-001：研究流程母版](research/task-001/SUMMARY.md)：文件、模板與文件 CI；以任務報告記錄實際驗證及 Git 交付狀態。
+- 下一項 task-002：準備依賴與 lockfile，重現並修復建置阻斷，驗證啟動及怪物重生，建立實測過的遊戲 CI。
+- 後續 task-003：鏡頭相對操作、模組拆分與戰鬥／碰撞回歸；依 task-002 發現再細分。
+
+母版整理不等同已完成環境設定，也不自動開始下一項遊戲任務。

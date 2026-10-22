@@ -1,4 +1,17 @@
-# Asset registry
-No third-party assets have been added. Current objects are generated using Three.js primitives.
+# 資產來源與授權
 
-Whenever importing an asset, record: source URL, creator, license, downloaded date, GLB bytes, triangles, animation names, attribution obligations, and changes.
+目前沒有第三方美術資產。角色、樹木、石頭與武器均由 Three.js 幾何圖形產生；不代表正式人物品質已達標。
+
+每個下載資產必須追加以下資訊：
+
+| 欄位 | 要求 |
+|---|---|
+| 名稱／用途 | 人物、怪物、動畫、貼圖、音效等 |
+| 來源與作者 | 原始 URL、創作者、取得日期 |
+| 授權 | 授權名稱、可保存的依據、商業／再散布限制、署名要求 |
+| 檔案 | 相對路徑、原始與最佳化 bytes、SHA-256 |
+| 技術資料 | 三角形數、貼圖尺寸、骨架與動畫名稱 |
+| 修改 | 轉檔、壓縮、重綁骨架等操作與工具版本 |
+| 任務 | task 編號與相關 commit |
+
+不提交未知授權或未取得散布權的資產。不得把套件授權推論為任意模型的授權。
