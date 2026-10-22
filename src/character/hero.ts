@@ -91,15 +91,19 @@ export async function loadHero(config: Character = findCharacter(null)) {
 
   // 動作層（Mixamo 角色）：攻擊、施法、受擊、倒地播放一次，期間暫停移動動畫。
   const moves = config.moves;
-  let performing: { kind: HeroAction; elapsed: number; duration: number } | null = null;
+  let performing: { kind: HeroAction; elapsed: number; duration: number; rootPrev: THREE.Vector3 | null } | null = null;
+  // 一次性動作的水平根位移（重新綁定時存於 RootMotion 節點，角色座標 +Z 為前）
+  const rootMotion = model.getObjectByName('RootMotion') ?? null;
   let preview: PreviewMotion | null = null;
   let airborne = false;
-  function startOnce(kind: HeroAction) {
-    const clip = actions.get(moves!.clips[kind])!.getClip();
+  function startOnce(kind: HeroAction, segment?: { clip: string; from: number; to: number; hits: number[] }) {
+    const name = segment?.clip ?? moves!.clips[kind];
+    const clip = actions.get(name)!.getClip();
+    const from = segment?.from ?? 0, to = segment?.to ?? clip.duration;
     const scale = kind === 'death' || kind === 'hit' ? 1 : moves!.actionScale;
-    setAction(moves!.clips[kind], scale, true);
-    performing = { kind, elapsed: 0, duration: clip.duration / scale };
-    return { duration: performing.duration, hits: moves!.hits[kind].map(t => t / scale) };
+    setAction(name, scale, true, from);
+    performing = { kind, elapsed: 0, duration: (to - from) / scale, rootPrev: null };
+    return { duration: performing.duration, hits: (segment?.hits ?? moves!.hits[kind]).map(t => (t - from) / scale) };
   }
 
   return {
@@ -136,6 +140,14 @@ export async function loadHero(config: Character = findCharacter(null)) {
       return startOnce(kind);
     },
     get performing() { return performing?.kind ?? null; },
+    /** J 連段第 stage 段（0 起算）；回傳 null 表示沒有該段。 */
+    performChain(stage: number) {
+      const segment = moves?.chain[stage];
+      if (!segment || performing?.kind === 'death') return null;
+      return startOnce('attack', segment);
+    },
+    /** 提早結束目前動作（收招時移動取消），交回移動狀態機淡出。 */
+    cancel() { if (performing?.kind !== 'death') performing = null; },
     /** 展示模式循環預覽；null 回到一般狀態機。 */
     preview(kind: PreviewMotion | null) {
       preview = moves ? kind : null; performing = null;
@@ -165,6 +177,12 @@ export async function loadHero(config: Character = findCharacter(null)) {
       airborne = jumpHeight > 0.02;
       poseGuard.restore(); // 先還原上一幀的程序疊加，再讓 Mixer 寫入本幀姿勢
       mixer.update(dt);
+      // 根位移：只在一次性動作期間把 RootMotion 的變化量套到角色位置（淡出時不套，避免往回拉）
+      if (performing && rootMotion && !preview) {
+        const now = rootMotion.position.clone().multiplyScalar(model.scale.x);
+        if (performing.rootPrev) root.position.add(now.clone().sub(performing.rootPrev).setY(0).applyQuaternion(root.quaternion));
+        performing.rootPrev = now;
+      }
       poseGuard.remember(chest, upperArm, forearm, hand, thighL, thighR, calfL, calfR, ...fingers);
       if (config.proceduralJump && jumpHeight > 0.02) {
         thighL.rotateX(-0.35);

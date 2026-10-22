@@ -9,6 +9,7 @@
 | task-003 | 骨架人物質感與近距離鏡頭 | [計畫](task-003/PLAN.md)、[執行](task-003/EXECUTION.md)、[測試](task-003/TEST_REPORT.md)、[審查](task-003/REVIEW.md)、[摘要](task-003/SUMMARY.md) |
 
 | task-004 | 寫實男女、三角色選擇與人物展示 | [計畫](task-004/PLAN.md)、[執行](task-004/EXECUTION.md)、[測試](task-004/TEST_REPORT.md)、[審查](task-004/REVIEW.md)、[摘要](task-004/SUMMARY.md) |
+| task-008 | 動作手感：面向、根位移、連段、取消 | [計畫](task-008/PLAN.md)、[執行](task-008/EXECUTION.md)、[測試](task-008/TEST_REPORT.md)、[審查](task-008/REVIEW.md)、[摘要](task-008/SUMMARY.md) |
 | task-007 | Mixamo 動作庫導入與動作層 | [計畫](task-007/PLAN.md)、[執行](task-007/EXECUTION.md)、[測試](task-007/TEST_REPORT.md)、[審查](task-007/REVIEW.md)、[摘要](task-007/SUMMARY.md) |
 | task-006 | 測試分層、人物資料測試與揮劍修正 | [計畫](task-006/PLAN.md)、[執行](task-006/EXECUTION.md)、[測試](task-006/TEST_REPORT.md)、[審查](task-006/REVIEW.md)、[摘要](task-006/SUMMARY.md) |
 | task-005 | Sketchfab 候選人物導入與移動方向校正 | [計畫](task-005/PLAN.md)、[執行](task-005/EXECUTION.md)、[測試](task-005/TEST_REPORT.md)、[審查](task-005/REVIEW.md)、[摘要](task-005/SUMMARY.md) |

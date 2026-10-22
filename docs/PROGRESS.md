@@ -37,3 +37,5 @@ Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 1
 - [task-006](research/task-006/SUMMARY.md)：測試瘦身與補齊（瀏覽器 15 項約 30 分鐘 → 9 項約 11 分鐘、smoke 約 3 分鐘；單元 8 → 32 項、約 3 秒）；修正揮劍在新骨架上往後甩與疊加累加問題。
 
 - [task-007](research/task-007/SUMMARY.md)：Mixamo 17 段動作整理入素材總表並套用到 6 位人物；新增連擊、施法、蹲走、受擊、倒地與重生操作。
+
+- [task-008](research/task-008/SUMMARY.md)：動作手感改善（自動面向、根位移、J 三段連擊、收招取消），修正一次性動作片尾跳回首格。

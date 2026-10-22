@@ -14,7 +14,7 @@ async function boot() {
 
 // 主角使用正式骨架模型；怪物與場景暫時保留簡單原型。
 const app = document.querySelector<HTMLDivElement>('#app')!;
-app.innerHTML = `<div class="hud"><div class="badge">CANOPY FORGE · CHARACTER STUDY</div><strong>夜林行者</strong><p>WASD 移動 · Shift 跑步 · C 蹲走 · Space 跳躍<br>左鍵 / J 揮劍 · K 二連擊 · L 三連擊 · Q 施法</p><div class="hp"><div id="hp-bar"></div></div><p id="status" role="status">載入人物與材質中…</p></div><div class="camera-help">滾輪 拉近 / 拉遠 · 右鍵拖曳 環視 · R 重設</div><div class="foot">Sophia by GDQuest · CC BY-NC-SA 4.0<br>風格化人物研究 · <a href="${import.meta.env.BASE_URL}models/sophia/NOTICE.txt" target="_blank" rel="noopener">角色來源</a></div>`;
+app.innerHTML = `<div class="hud"><div class="badge">CANOPY FORGE · CHARACTER STUDY</div><strong>夜林行者</strong><p>WASD 移動 · Shift 跑步 · C 蹲走 · Space 跳躍<br>左鍵 / J 揮劍（連按三段）· K 二連擊 · L 三連擊 · Q 施法</p><div class="hp"><div id="hp-bar"></div></div><p id="status" role="status">載入人物與材質中…</p></div><div class="camera-help">滾輪 拉近 / 拉遠 · 右鍵拖曳 環視 · R 重設</div><div class="foot">Sophia by GDQuest · CC BY-NC-SA 4.0<br>風格化人物研究 · <a href="${import.meta.env.BASE_URL}models/sophia/NOTICE.txt" target="_blank" rel="noopener">角色來源</a></div>`;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#06131a');
@@ -81,7 +81,7 @@ const monsterLife = createMonsterLife();
 let renderedFrames = 0;
 let showcase = false, previewMotion: HeroMotion = 'idle', previewTime = 0, loadRequest = 0;
 // Mixamo 動作層：一次性動作期間鎖定移動，依擊中時刻判定傷害（task-007）
-let heroAction: { kind: HeroAction; t: number; duration: number; hits: number[]; next: number } | null = null;
+let heroAction: { kind: HeroAction; t: number; duration: number; hits: number[]; next: number; stage: number | null; queued: boolean; faceYaw: number | null } | null = null;
 let heroDead = false, reviveAt = 0;
 createGallery(app, hero.config, {
  async select(character) {
@@ -117,7 +117,7 @@ installDebugSnapshot(() => ({
  monster: { x: monster.root.position.x, y: monster.root.position.y, z: monster.root.position.z,
    hp: monsterLife.hp, visible: monster.root.visible, respawnAt: monsterLife.respawnAt },
  attackCooldown,
- heroAction: heroAction?.kind ?? null, heroDead,
+ heroAction: heroAction?.kind ?? null, heroStage: heroAction?.stage ?? null, heroDead,
  character: hero.snapshot(),
  showcase,
  resources: { geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures },
@@ -125,15 +125,26 @@ installDebugSnapshot(() => ({
 }));
 const status=document.getElementById('status')!; const hpBar=document.getElementById('hp-bar')!;
 const normKey=(v:string)=>v.toLowerCase();
-window.addEventListener('keydown',e=>{if(showcase || (e.target instanceof HTMLElement && e.target.closest('input:not([type=checkbox]),select') || e.target instanceof HTMLElement && e.target.closest('button,input[type=checkbox]') && [' ', 'Enter'].includes(e.key)))return;const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(heroDead||heroAction)return;if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();if(k==='k')startAction('combo2');if(k==='l')startAction('combo3');if(k==='q')startAction('cast');});
+window.addEventListener('keydown',e=>{if(showcase || (e.target instanceof HTMLElement && e.target.closest('input:not([type=checkbox]),select') || e.target instanceof HTMLElement && e.target.closest('button,input[type=checkbox]') && [' ', 'Enter'].includes(e.key)))return;const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(heroDead)return;if(heroAction){if(k==='j'&&heroAction.stage!==null&&heroAction.next>0)heroAction.queued=true;return;}if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();if(k==='k')startAction('combo2');if(k==='l')startAction('combo3');if(k==='q')startAction('cast');});
 window.addEventListener('keyup',e=>keys.delete(normKey(e.key)));
 window.addEventListener('blur',()=>keys.clear());
 renderer.domElement.addEventListener('pointerdown',e=>{if(e.button===0)startAttack();});
-function startAttack(){if(showcase || attackCooldown>0 || heroDead || heroAction)return;if(hero.supports()){startAction('attack');return;}attackT=.32;attackCooldown=.5;hitDone=false;}
+function startAttack(){
+ if(showcase||heroDead)return;
+ if(hero.supports()){ if(heroAction){ if(heroAction.stage!==null&&heroAction.next>0)heroAction.queued=true; return; } startChain(0); return; }
+ if(attackCooldown>0||heroAction)return;attackT=.32;attackCooldown=.5;hitDone=false;}
+/** 攻擊時若怪物在 7 公尺內，轉向怪物（ARPG 軟鎖定）。 */
+function targetYaw(){ if(!monster.root.visible)return null; const dx=monster.root.position.x-hero.root.position.x, dz=monster.root.position.z-hero.root.position.z; return Math.hypot(dx,dz)<7?Math.atan2(dx,dz):null; }
+function startChain(stage:number){
+ if(showcase||heroDead||jumpY>0.02)return false;
+ const timing=hero.performChain(stage); if(!timing)return false;
+ heroAction={kind:'attack',t:0,duration:timing.duration,hits:timing.hits,next:0,stage,queued:false,faceYaw:targetYaw()};
+ attackCooldown=timing.duration; return true;
+}
 function startAction(kind: HeroAction){
  if(showcase || (heroDead && kind!=='death') || (heroAction && kind!=='hit' && kind!=='death') || jumpY>0.02)return false;
  const timing=hero.perform(kind); if(!timing)return false;
- heroAction={kind,t:0,duration:timing.duration,hits:timing.hits,next:0};
+ heroAction={kind,t:0,duration:timing.duration,hits:timing.hits,next:0,stage:null,queued:false,faceYaw:kind==='hit'||kind==='death'?null:targetYaw()};
  if(kind!=='hit'&&kind!=='death')attackCooldown=timing.duration;
  return timing.duration;
 }
@@ -152,12 +163,20 @@ function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,la
  hero.root.position.y=jumpY;
  attackCooldown=Math.max(0,attackCooldown-dt);attackT=Math.max(0,attackT-dt);
  if(heroAction){heroAction.t+=dt;
+   // 起手 0.12 秒內轉向目標
+   if(heroAction.faceYaw!==null){const diff=Math.atan2(Math.sin(heroAction.faceYaw-hero.root.rotation.y),Math.cos(heroAction.faceYaw-hero.root.rotation.y));hero.root.rotation.y+=diff*Math.min(1,dt*18);if(Math.abs(diff)<0.01)heroAction.faceYaw=null;}
    while(heroAction.next<heroAction.hits.length&&heroAction.t>=heroAction.hits[heroAction.next]){heroAction.next++;
      const dist=hero.root.position.distanceTo(monster.root.position);
      if(dist<3.2&&hitMonster(monsterLife,gameT)){status.textContent=monsterLife.hp===0?'成功擊敗怪物！3 秒後重新生成':`命中怪物！剩餘生命：${monsterLife.hp}`;monster.root.scale.x=1.4;}}
-   if(heroAction.t>=heroAction.duration&&heroAction.kind!=='death')heroAction=null;}
+   const lastHit=heroAction.hits.at(-1)??0;
+   // J 連段：最後一刀後 0.12 秒接下一段
+   if(heroAction.stage!==null&&heroAction.queued&&heroAction.t>=lastHit+0.12&&heroAction.stage<2){const s=heroAction.stage+1;heroAction=null;startChain(s);}
+   // 收招取消：最後一刀後 0.25 秒按方向即可移動
+   else if(heroAction.kind!=='death'&&heroAction.kind!=='hit'&&heroAction.next>=heroAction.hits.length&&heroAction.t>=lastHit+0.25&&(dx!==0||dz!==0)){hero.cancel();heroAction=null;attackCooldown=0;}
+   else if(heroAction.t>=heroAction.duration&&heroAction.kind!=='death')heroAction=null;}
  if(heroDead&&gameT>=reviveAt){heroDead=false;heroAction=null;heroHP=100;hpBar.style.width='100%';hero.revive();hero.root.position.set(0,0,3);status.textContent='已重生';}
  hero.update(dt,moving,run,jumpY,jumpV,attackT,crouch);
+ hero.root.position.x=THREE.MathUtils.clamp(hero.root.position.x,-limit,limit);hero.root.position.z=THREE.MathUtils.clamp(hero.root.position.z,-limit,limit);
  if(attackT>0&&!hitDone&&attackT<.18){hitDone=true;const dist=hero.root.position.distanceTo(monster.root.position);if(dist<3.2 && hitMonster(monsterLife,gameT)){status.textContent=monsterLife.hp===0?'成功擊敗怪物！3 秒後重新生成':`命中怪物！剩餘生命：${monsterLife.hp}`; monster.root.scale.x=1.4;}}
  monster.root.scale.x=THREE.MathUtils.lerp(monster.root.scale.x,1.25,.12);
  if(updateMonsterLife(monsterLife,gameT))status.textContent='怪物已重新出現';

@@ -39,16 +39,26 @@ test('Sketchfab 人物（A3）前後移動朝向正確、跑步、Mixamo 下劈�
   await page.keyboard.down('Shift'); await page.keyboard.down('w');
   await expect.poll(async () => (await snapshot(page)).character.clip).toBe('Run');
   await page.keyboard.up('w'); await page.keyboard.up('Shift');
-  // task-007：Mixamo 動作。J 單擊播放真實下劈，動作期間鎖定移動
+  // task-007／008：J 播放真實下劈。出招到擊中前，方向鍵不能改變面向（輸入不能操控攻擊）；
+  // 擊中後按住方向會提早取消收招（不必等完整動作 1.25 秒）。
   await expect.poll(async () => (await snapshot(page)).character.clip).toBe('Idle');
   await page.keyboard.press('j');
   await expect.poll(async () => (await snapshot(page)).character.clip, { intervals: [30] }).toBe('SlashDown');
-  const swingStart = await snapshot(page);
-  expect(swingStart.heroAction).toBe('attack');
-  await page.keyboard.down('d'); await advance(page, 0.3); await page.keyboard.up('d');
-  const swinging = await snapshot(page);
-  expect(Math.hypot(swinging.hero.x - swingStart.hero.x, swinging.hero.z - swingStart.hero.z), '攻擊中不應移動').toBeLessThan(0.01);
-  await expect.poll(async () => (await snapshot(page)).heroAction).toBe(null);
+  await advance(page, 0.15); // 讓自動轉向（若怪物在範圍內）完成
+  const attackStart = await snapshot(page);
+  expect(attackStart.heroAction).toBe('attack');
+  await page.keyboard.down('d');
+  let lastAttack = attackStart;
+  await expect.poll(async () => {
+    const s = await snapshot(page);
+    if (s.heroAction === 'attack') {
+      if (s.time - attackStart.time < 0.3) expect(Math.abs(s.character.rootYaw - attackStart.character.rootYaw), '擊中前方向鍵不應改變面向').toBeLessThan(0.05);
+      lastAttack = s;
+    }
+    return s.heroAction;
+  }, { intervals: [30], timeout: 30_000 }).toBe(null);
+  await page.keyboard.up('d');
+  expect(lastAttack.time - attackStart.time + 0.15, '按住方向應在完整動作（1.25 秒）前取消收招').toBeLessThan(1.15);
   // C 蹲走：速度約 1.5、播放蹲走動畫
   await page.keyboard.down('c'); await page.keyboard.down('w');
   await advance(page, 0.2);

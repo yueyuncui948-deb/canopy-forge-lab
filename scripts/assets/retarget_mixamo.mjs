@@ -122,7 +122,8 @@ const srcNode = (canon) => canon;
 const sources = new Map();
 function srcPose(file, time) {
   if (!sources.has(file)) { const obj = loadFbx(file); const mixer = new THREE.AnimationMixer(obj); mixer.clipAction(obj.animations[0]).play(); sources.set(file, { obj, mixer, clip: obj.animations[0] }); }
-  const { obj, mixer } = sources.get(file); mixer.setTime(time); obj.updateMatrixWorld(true); return worldOf(obj);
+  // 取樣終點時夾在片尾前一點：循環模式在 t = duration 會繞回第 0 格，造成一次性動作最後一格跳回起始姿勢
+  const { obj, mixer, clip } = sources.get(file); mixer.setTime(Math.min(time, clip.duration - 1e-4)); obj.updateMatrixWorld(true); return worldOf(obj);
 }
 const duration = (file) => { srcPose(file, 0); return sources.get(file).clip.duration; };
 
@@ -179,6 +180,11 @@ for (const n of follow.keys()) { const mark = (x) => { deferred.add(x); x.listCh
 const order = [...graph.order.filter((n) => !deferred.has(n)), ...graph.order.filter((n) => deferred.has(n))];
 
 for (const a of doc.getRoot().listAnimations()) a.dispose(); // 移除原本的展示動畫
+// 根位移：攻擊、施法、受擊、倒地保留水平位移，存到獨立節點 RootMotion（角色座標，+Z 為前），骨盆仍原地。
+const ROOT_MOTION = /^(Slash|Combo|Cast|Hit|Death)/;
+const rootMotionNode = doc.createNode('RootMotion');
+for (const sc of doc.getRoot().listScenes()) sc.addChild(rootMotionNode);
+const toCharacter = new THREE.Quaternion().setFromUnitVectors(fTgt, new THREE.Vector3(0, 0, 1));
 const buffer = doc.getRoot().listBuffers()[0];
 
 for (const [srcClip, outName] of CLIPS) {
@@ -187,10 +193,15 @@ for (const [srcClip, outName] of CLIPS) {
   const times = new Float32Array(frames);
   const tracks = new Map(); // node -> {r:[], t:[]}
   const srcHipRest = pos(srcRest, srcNode('hips'));
+  const rootTrack = [];
   for (let f = 0; f < frames; f++) {
     const time = (f / (frames - 1)) * dur;
     times[f] = time;
     const sw = srcPose(srcClip, time);
+    if (ROOT_MOTION.test(outName)) {
+      const d = pos(sw, srcNode('hips')).sub(srcHipRest).setY(0).applyQuaternion(Ry).multiplyScalar(heightRatio).applyQuaternion(toCharacter);
+      rootTrack.push(d.x, 0, d.z);
+    }
     const world = new Map();
     for (const n of order) {
       const p = graph.parent.get(n);
@@ -236,11 +247,16 @@ for (const [srcClip, outName] of CLIPS) {
     addChannel('rotation', tr.r, 'VEC4');
     if (canonOf.get(n) === 'hips' || follow.has(n)) addChannel('translation', tr.t, 'VEC3');
   }
+  if (rootTrack.length) {
+    const s2 = doc.createAnimationSampler().setInput(input).setInterpolation('LINEAR')
+      .setOutput(doc.createAccessor().setType('VEC3').setArray(new Float32Array(rootTrack)).setBuffer(buffer));
+    anim.addSampler(s2).addChannel(doc.createAnimationChannel().setTargetNode(rootMotionNode).setTargetPath('translation').setSampler(s2));
+  }
 }
 
 // 全域朝向：讓角色正面朝 +Z（遊戲用 atan2(vx, vz) 轉向）
 const toPlusZ = yawTo(fTgt, new THREE.Vector3(0, 0, 1));
-for (const s of doc.getRoot().listScenes()) for (const n of s.listChildren()) {
+for (const s of doc.getRoot().listScenes()) for (const n of s.listChildren()) { if (n === rootMotionNode) continue;
   n.setRotation(toPlusZ.clone().multiply(new THREE.Quaternion().fromArray(n.getRotation())).toArray());
   n.setTranslation(new THREE.Vector3().fromArray(n.getTranslation()).applyQuaternion(toPlusZ).toArray());
 }

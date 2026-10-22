@@ -58,9 +58,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a1/model.glb",
-          "bytes": 8031584,
-          "sha256": "e87c707dd7bb580c4c467c6641dbf7cde5c93bc2bf42e9a68213dc139f5f1528",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 8041872,
+          "sha256": "99380c53cb956425c48966342ba8b40b62c539628bba7f6bb3959403d4aaf845",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },
@@ -121,9 +121,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a2/model.glb",
-          "bytes": 6232220,
-          "sha256": "6078e5880cabcec513b1c87d367c52fdf882d3726352135453988b5864fc1e58",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 6241740,
+          "sha256": "4197bb038c5398b2fd1181c231622c6892045b8645d2e27d58bb6bed39d52941",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },
@@ -184,9 +184,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a3/model.glb",
-          "bytes": 3376188,
-          "sha256": "02737b539c66f5beb83a753dff0a0da9d1f594219a5ea3c04608ea7629c8839d",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 3385436,
+          "sha256": "15e713558b71722633a93429e6b523b427ba127c616b2e5dbf43051a7fb85221",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },
@@ -245,9 +245,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a4/model.glb",
-          "bytes": 9172448,
-          "sha256": "20b5ce4e5c5ea7c12eb1fca9180772ff5fdcffea5b50520acec3dba93b19614f",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 9182408,
+          "sha256": "bc719c6b775768657c85b570cd30ed94d0c1a1ecd3fef9323fe6d7eb67ecd9aa",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },
@@ -306,9 +306,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b1/model.glb",
-          "bytes": 5552116,
-          "sha256": "53249eb907ac6d8f281213605a765f03a7967561d550f0eb9ca5c2f1d4d36842",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 5562368,
+          "sha256": "2697fefb35d7d330865bf7066d8d20b5e72ec3ca90c269ebb2b8d313a4763012",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },
@@ -367,9 +367,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b2/model.glb",
-          "bytes": 13151052,
-          "sha256": "aa5d1efd9cc387e5c37f50a7e218d3f69ca2cad7fb1ba6c4eda682be5fa20c78",
-          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
+          "bytes": 13159012,
+          "sha256": "2d67815eb7b1441bbd8502fabb4051a3a7f84a9e78b864ead6818d8e8e4e0f36",
+          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
         }
       ]
     },

@@ -94,18 +94,46 @@ test('Mixamo 攻擊擊中時刻落在揮劍高峰（右手相對骨盆速度 ≥
     normalizeHeight(gltf.scene);
     const bones = boneMap(gltf.scene);
     const hand = bones.get(sanitize(c.hand))!, hips = bones.get(sanitize(c.legs.thighL))!.parent!;
-    for (const kind of ['attack', 'combo2', 'combo3'] as const) {
-      const clip = gltf.animations.find(a => a.name === c.moves!.clips[kind])!;
+    const cases = [
+      ...(['attack', 'combo2', 'combo3'] as const).map(kind => ({ label: kind, clip: c.moves!.clips[kind], from: 0, to: Infinity, hits: c.moves!.hits[kind] })),
+      ...c.moves!.chain.map((seg, i) => ({ label: `J 連段第 ${i + 1} 段`, ...seg })),
+    ];
+    for (const { label: kind, clip: clipName, from, to, hits } of cases) {
+      const clip = gltf.animations.find(a => a.name === clipName)!;
       const mixer = new THREE.AnimationMixer(gltf.scene); mixer.clipAction(clip).play();
       const at = (t: number) => { mixer.setTime(t); gltf.scene.updateMatrixWorld(true); return hand.getWorldPosition(new THREE.Vector3()).sub(hips.getWorldPosition(new THREE.Vector3())); };
       const speed = (t: number) => at(t + 1 / 60).distanceTo(at(t - 1 / 60)) * 30;
       const samples = Array.from({ length: Math.floor(clip.duration * 30) - 2 }, (_, i) => speed((i + 1) / 30)).sort((a, b) => a - b);
       const peak = samples[Math.floor(samples.length * 0.95)];
-      for (const t of c.moves!.hits[kind]) {
-        assert.ok(t < clip.duration, `${c.id} ${kind} 擊中時刻 ${t} 超出動作長度 ${clip.duration.toFixed(2)}`);
+      for (const t of hits) {
+        assert.ok(t < clip.duration && t > from && t < to, `${c.id} ${kind} 擊中時刻 ${t} 不在播放區間內`);
         const best = Math.max(...[-0.1, -0.05, 0, 0.05, 0.1].map(d => speed(t + d)));
         assert.ok(best >= 0.45 * peak, `${c.id} ${kind} 在 ${t}s 手未在揮動（${best.toFixed(2)} / 峰值 ${peak.toFixed(2)}）`);
       }
+      mixer.stopAllAction(); mixer.uncacheRoot(gltf.scene);
+    }
+  }
+});
+
+test('倒地動畫最後停在倒下的姿勢（不會在最後一格跳回站姿），根位移與倒向一致', async () => {
+  const THREE = await import('three');
+  for (const c of characters.filter(c => c.moves)) {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    normalizeHeight(gltf.scene);
+    const bones = boneMap(gltf.scene);
+    const hips = bones.get(sanitize(c.legs.thighL))!.parent!;
+    const root = gltf.scene.getObjectByName('RootMotion');
+    for (const [name, direction] of [[c.moves!.clips.death, 1], ['DeathBack', -1]] as const) {
+      const clip = gltf.animations.find(a => a.name === name)!;
+      const mixer = new THREE.AnimationMixer(gltf.scene);
+      const action = mixer.clipAction(clip); action.setLoop(THREE.LoopOnce, 1); action.clampWhenFinished = true; action.play();
+      mixer.setTime(0); gltf.scene.updateMatrixWorld(true);
+      const standing = hips.getWorldPosition(new THREE.Vector3()).y;
+      mixer.setTime(clip.duration); gltf.scene.updateMatrixWorld(true);
+      const lying = hips.getWorldPosition(new THREE.Vector3()).y;
+      assert.ok(lying < standing * 0.5, `${c.id} ${name} 最後一格骨盆高度 ${lying.toFixed(2)}（站姿 ${standing.toFixed(2)}），未倒下`);
+      assert.ok(root, `${c.id} 缺 RootMotion 節點`);
+      assert.ok(root!.position.z * direction > 0.3, `${c.id} ${name} 根位移方向不對（z=${root!.position.z.toFixed(2)}）`);
       mixer.stopAllAction(); mixer.uncacheRoot(gltf.scene);
     }
   }

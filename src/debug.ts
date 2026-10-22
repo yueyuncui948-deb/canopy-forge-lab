@@ -5,6 +5,7 @@ export interface GameSnapshot {
   monster: { x: number; y: number; z: number; hp: number; visible: boolean; respawnAt: number | null };
   attackCooldown: number;
   heroAction: string | null;
+  heroStage: number | null;
   heroDead: boolean;
   showcase: boolean;
   resources: { geometries: number; textures: number };

@@ -8,6 +8,8 @@ export interface Moves {
   actionScale: number;
   /** 原地起跳略過蹲伏預備的起點（秒） */
   jumpStandOffset: number;
+  /** J 連按的連段：每段取 clip 的 from–to 區間，hits 為原 clip 時間（秒） */
+  chain: { clip: string; from: number; to: number; hits: number[] }[];
 }
 
 export interface Character {
@@ -46,6 +48,12 @@ export const MIXAMO_MOVES: Moves = {
   hits: { attack: [0.57], combo2: [0.47, 0.8], combo3: [0.6, 1.3, 2.23], cast: [], hit: [], death: [] },
   actionScale: 1.2,
   jumpStandOffset: 0.3,
+  // 下劈 → 交叉二連斬（略過起手）→ 雙手連擊的最後一刀收尾
+  chain: [
+    { clip: 'SlashDown', from: 0, to: 1.5, hits: [0.57] },
+    { clip: 'SlashCross', from: 0.15, to: 1.667, hits: [0.47, 0.8] },
+    { clip: 'Combo2H', from: 1.75, to: 3.267, hits: [2.23] },
+  ],
 };
 /** 走、跑、蹲走的著地腳速度（高度 2.35 下，task-007 量測）換算播放倍率，減少滑步。 */
 const retargeted = (walk: number, run: number, crouch: number) => ({
