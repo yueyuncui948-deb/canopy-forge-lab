@@ -1,0 +1,58 @@
+
+> canopy-forge-lab@0.1.0 check
+> npm run typecheck && npm test && npm run build
+
+
+> canopy-forge-lab@0.1.0 typecheck
+> tsc --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> canopy-forge-lab@0.1.0 test
+> node --test tests/unit/*.test.ts
+
+✔ 新怪物三點 HP，活著時不會重生 (2.199306ms)
+✔ 每次有效命中只扣一點，第三次命中排定重生 (0.220655ms)
+✔ 死後連續攻擊不會扣成負血或推遲重生 (0.267787ms)
+✔ 三秒之前不重生，到期恢復 HP 並清除排程 (0.186122ms)
+✔ 跨越到期時間仍可重生，第二次生命可再次死亡重生 (0.125593ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.030088
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> canopy-forge-lab@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 8 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:   0.28 kB
+dist/assets/index-ewosy4gd.css    0.77 kB │ gzip:   0.45 kB
+dist/assets/index-B7xHYIzu.js   489.33 kB │ gzip: 125.00 kB
+✓ built in 1.37s
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -1,0 +1,315 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/canopy-forge-lab/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/workspace/canopy-forge-lab/playwright.config.ts",
+    "rootDir": "/workspace/canopy-forge-lab/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "snapshotDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "viewport": {
+            "width": 960,
+            "height": 540
+          },
+          "deviceScaleFactor": 1,
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--enable-unsafe-swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "game.spec.ts",
+      "file": "game.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4360,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:51:23.494Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "renderer",
+                      "contentType": "application/json",
+                      "body": "ewogICJ2ZXJzaW9uIjogIldlYkdMIDIuMCAoT3BlbkdMIEVTIDMuMCBDaHJvbWl1bSkiLAogICJyZW5kZXJlciI6ICJBTkdMRSAoR29vZ2xlLCBWdWxrYW4gMS4zLjAgKFN3aWZ0U2hhZGVyIERldmljZSAoU3ViemVybykgKDB4MDAwMEMwREUpKSwgU3dpZnRTaGFkZXIgZHJpdmVyKSIsCiAgImxvc3QiOiBmYWxzZQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-f88d690e753c43ce8212",
+          "file": "game.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "鍵盤可移動、Shift 跑得更快、Space 跳躍後落地",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4533,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m3.5\u001b[39m\nReceived:   \u001b[31m3.2249999999999983\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m3.5\u001b[39m\nReceived:   \u001b[31m3.2249999999999983\u001b[39m\n    at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:46:21",
+                    "location": {
+                      "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                      "column": 21,
+                      "line": 46
+                    },
+                    "snippet": "  44 |   const walked = await snapshot(page);\n  45 |   const walkSpeed = distance(before.hero, walked.hero)/(walked.time-before.time);\n> 46 |   expect(walkSpeed).toBeGreaterThan(3.5);\n     |                     ^\n  47 |   expect(walkSpeed).toBeLessThan(5);\n  48 |   await page.keyboard.down('Shift');\n  49 |   await page.keyboard.down('a');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                        "column": 21,
+                        "line": 46
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m3.5\u001b[39m\nReceived:   \u001b[31m3.2249999999999983\u001b[39m\n\n  44 |   const walked = await snapshot(page);\n  45 |   const walkSpeed = distance(before.hero, walked.hero)/(walked.time-before.time);\n> 46 |   expect(walkSpeed).toBeGreaterThan(3.5);\n     |                     ^\n  47 |   expect(walkSpeed).toBeLessThan(5);\n  48 |   await page.keyboard.down('Shift');\n  49 |   await page.keyboard.down('a');\n    at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:46:21"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:51:28.288Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                    "column": 21,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-7f5a2422ed6b0b0bb48e",
+          "file": "game.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6393,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:75:45",
+                    "location": {
+                      "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                      "column": 45,
+                      "line": 75
+                    },
+                    "snippet": "  73 |   await expect.poll(async () => (await snapshot(page)).monster.hp, { intervals: [30] }).toBe(2);\n  74 |   for (let i = 0; i < 3; i++) await page.keyboard.press('j');\n> 75 |   expect((await snapshot(page)).monster.hp).toBe(2);\n     |                                             ^\n  76 |   await expect.poll(async () => (await snapshot(page)).attackCooldown).toBe(0);\n  77 |   await page.locator('canvas').click({ position: { x: 500, y: 300 } });\n  78 |   await expect.poll(async () => (await snapshot(page)).monster.hp).toBe(1);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                        "column": 45,
+                        "line": 75
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  73 |   await expect.poll(async () => (await snapshot(page)).monster.hp, { intervals: [30] }).toBe(2);\n  74 |   for (let i = 0; i < 3; i++) await page.keyboard.press('j');\n> 75 |   expect((await snapshot(page)).monster.hp).toBe(2);\n     |                                             ^\n  76 |   await expect.poll(async () => (await snapshot(page)).attackCooldown).toBe(0);\n  77 |   await page.locator('canvas').click({ position: { x: 500, y: 300 } });\n  78 |   await expect.poll(async () => (await snapshot(page)).monster.hp).toBe(1);\n    at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:75:45"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:51:33.536Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/canopy-forge-lab/test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/canopy-forge-lab/tests/browser/game.spec.ts",
+                    "column": 45,
+                    "line": 75
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-cb0dc8fe0739527960e8",
+          "file": "game.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T08:51:22.074Z",
+    "duration": 18435.69,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,89 @@
+
+> canopy-forge-lab@0.1.0 test:browser
+> playwright test
+
+[WebServer] (node:3882) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:3909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/game.spec.ts:18:1 › 正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤 (4.4s)
+  ✘  2 tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 (4.5s)
+(node:4087) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 (6.4s)
+
+
+  1) tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 ────────────────────────────────
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 3.5
+    Received:   3.2249999999999983
+
+      44 |   const walked = await snapshot(page);
+      45 |   const walkSpeed = distance(before.hero, walked.hero)/(walked.time-before.time);
+    > 46 |   expect(walkSpeed).toBeGreaterThan(3.5);
+         |                     ^
+      47 |   expect(walkSpeed).toBeLessThan(5);
+      48 |   await page.keyboard.down('Shift');
+      49 |   await page.keyboard.down('a');
+        at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:46:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-鍵盤可移動、Shift-跑得更快、Space-跳躍後落地/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 ─────────────────────────────────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      73 |   await expect.poll(async () => (await snapshot(page)).monster.hp, { intervals: [30] }).toBe(2);
+      74 |   for (let i = 0; i < 3; i++) await page.keyboard.press('j');
+    > 75 |   expect((await snapshot(page)).monster.hp).toBe(2);
+         |                                             ^
+      76 |   await expect.poll(async () => (await snapshot(page)).attackCooldown).toBe(0);
+      77 |   await page.locator('canvas').click({ position: { x: 500, y: 300 } });
+      78 |   await expect.poll(async () => (await snapshot(page)).monster.hp).toBe(1);
+        at /workspace/canopy-forge-lab/tests/browser/game.spec.ts:75:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 ─────────────────────────────────
+    tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 ──────────────────────────────────────
+  1 passed (18.4s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

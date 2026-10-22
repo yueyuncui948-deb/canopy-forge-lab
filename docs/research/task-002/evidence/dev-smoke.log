@@ -1,0 +1,11 @@
+{
+  "url": "development server /",
+  "http_status": 200,
+  "webgl2": {
+    "available": true,
+    "lost": false
+  },
+  "debug_disabled_by_default": true,
+  "page_errors": [],
+  "browser": "154.0.8037.57"
+}

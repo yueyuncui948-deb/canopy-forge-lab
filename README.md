@@ -2,7 +2,7 @@
 
 這是一項自主 AI 軟體工程實驗：用小型桌面瀏覽器 3D ARPG，研究 Agent 如何規劃、實作、測試、修正及留下可追溯的證據。工作流程與遊戲同為交付成果。
 
-**目前是研究流程母版 v0.1，遊戲角色仍為幾何占位模型，遊戲建置與互動尚未驗收。**
+**目前是研究流程母版 v0.1，遊戲角色仍為幾何占位模型，已完成首次建置與走跑跳、攻擊、死亡重生測試；精緻人物與完整操作品質尚未驗收。**
 
 ## 閱讀入口
 
@@ -16,20 +16,38 @@
 
 約 30–40 公尺的小型夜晚熱帶雨林、五棵主樹、少量植被、一位精緻骨架主角與一隻怪物。重點是人物、移動、跑步、跳躍及持刀攻擊，不製作大型地圖。
 
-## 開發指令（待 task-002 實測）
+## 開發指令
 
-需要近期 Node.js LTS、npm、支援 WebGL2 的 Chrome 或 Edge。目前宣告 TypeScript ~5.9.3、Three.js ^0.180.0、Vite ^7.1.0。
-目前尚無 lockfile；首次依賴準備使用 npm install 並檢視產生的 lockfile，之後使用 npm ci。不要把以下指令當成已通過的測試紀錄。
+使用 Node.js 24、npm、支援 WebGL2 的 Chrome 或 Edge。已提交 package-lock.json，請使用 npm ci 重現依賴。實測版本：TypeScript 5.9.3、Three.js 0.180.0、Vite 7.3.7。
 
 ```bash
-npm install
-npm run typecheck
-npm run build
+npm ci
+npm run check  # 型別、5 項生命週期測試、正式建置
 npm run dev
 # 如需檢查正式建置：npm run preview
 ```
 
-控制規格：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。實際遊戲行為尚待瀏覽器驗證。
+控制規格：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。已測試走跑跳、攻擊及怪物重生；鏡頭相對方向、場景碰撞與玩家死亡流程仍待後續任務。
+
+## 瀏覽器回歸
+
+```bash
+# 一般開發機首次準備瀏覽器（Linux 可能需要系統依賴權限）
+npx playwright install --with-deps chromium
+npm run build
+npm run test:browser
+
+# 本雲端已有 Chromium，無須重複下載
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:browser
+```
+
+測試自行啟動 4173 正式預覽，使用真實瀏覽器與遊戲時間；不模擬 WebGL、不快轉遊戲時鐘。冷卻壓力檢查在命中影格內派送重複鍵盤事件，其餘操作使用 Playwright 鍵盤／滑鼠輸入。
+加上 ?debug=1 才會提供唯讀遊戲狀態供測試使用，沒有改位置或扣血的測試捷徑。畫面截圖與 trace 放在忽略的 test-results/，正式研究證據另外保存於任務目錄。
+
+## 正式輸出與限制
+
+npm run build 產生 dist/，可由支援靜態檔案的 HTTP 伺服器提供；npm run preview 用於本機驗證，非正式部署服務。預設部署網站根目錄；若使用子路徑，需設定 Vite base 後重建並驗證。尚未公開部署。
+遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。詳見 [task-002 測試報告](docs/research/task-002/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
 
 ## 文件檢查
 
@@ -39,7 +57,7 @@ Python 3 標準函式庫即可執行，無須安裝套件：
 python3 scripts/check_docs.py
 ```
 
-文件 CI 只證明必要文件及本地連結有效，不證明遊戲可建置或視覺品質達標。
+文件 CI 只證明必要文件及本地連結有效；遊戲檢查另由遊戲 CI 執行，兩者都不自動代表人物美術品質達標。
 
 ## 取得研究歷史
 

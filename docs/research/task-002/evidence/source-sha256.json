@@ -1,0 +1,15 @@
+{
+  ".github/workflows/game.yml": "2aaa47fb4e3bd1a90a96d48ecdd78468749b7adc61c9afbbafdc766f43f905c2",
+  ".node-version": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53",
+  "index.html": "e91d9edcdbbd8e9c47b11fe1811193a186aa9e304711dbb7407cfad7baaca6aa",
+  "package-lock.json": "be3a21942520616ff9148d90f7404f6fdc3af15a781d004e4c0ba6f7ba8fc5eb",
+  "package.json": "c4d7b0c845f0387e467e78e05f6e78c955f50d0998643a30fb562eb42d18bdbc",
+  "playwright.config.ts": "731dde79c1bc4c0d0aca2c8c2919a7b3bc6f3203435b683d482e9171a141f9b6",
+  "src/combat/monster-life.ts": "6441b03aa7ed8008061cdef221e8cdfed927d1f3b7525c2c709d844ceac505d2",
+  "src/debug.ts": "f28691316577571718a9e53601063ebdd7c6ed77b829a3c62afbc057a6ba4698",
+  "src/main.ts": "b9da7578f7d99c0515e2f4ca608651982a9ee47467c202eddb7c455682172f79",
+  "src/style.css": "8747db38a03da5a21d4f912eef4d592268b20f1e3852690815805e4c03cd76ba",
+  "tests/browser/game.spec.ts": "72f20ec620e5dc76d48dec263bd0fb46a9892b8cb0974181b7fce468333cac7a",
+  "tests/unit/monster-life.test.ts": "e1d6adb05a1d8ce5cf2bfb23a40746b0d86a32b54876eb19006df1bfaad4b9b4",
+  "tsconfig.json": "b0f506f6aa7e16c95ea44f5ff69ece7bdc122144a30a641248c84cbe42282650"
+}

@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import './style.css';
+import { createMonsterLife, hitMonster, updateMonsterLife } from './combat/monster-life';
+import { installDebugSnapshot } from './debug';
 
 // Phase-1 placeholder demo. Replace primitive meshes with licensed GLB characters in Phase 3.
 const app = document.querySelector<HTMLDivElement>('#app')!;
@@ -53,7 +55,15 @@ function humanoid(color:string,blade=false){
 }
 const hero=humanoid('#526d70',true);scene.add(hero.root);hero.root.position.set(0,0,3);
 const monster=humanoid('#79423f');monster.root.scale.set(1.25,1.2,1.25);monster.root.position.set(5,0,-1);scene.add(monster.root);
-const keys=new Set<string>();let jumpV=0, jumpY=0,attackT=0,attackCooldown=0,monsterHP=3,hitDone=false,heroHP=100,gameT=0;
+const keys=new Set<string>();let jumpV=0, jumpY=0,attackT=0,attackCooldown=0,hitDone=false,heroHP=100,gameT=0;
+const monsterLife = createMonsterLife();
+installDebugSnapshot(() => ({
+ time: gameT, frame: renderer.info.render.frame,
+ hero: { x: hero.root.position.x, y: jumpY, z: hero.root.position.z, hp: heroHP },
+ monster: { x: monster.root.position.x, y: monster.root.position.y, z: monster.root.position.z,
+   hp: monsterLife.hp, visible: monster.root.visible, respawnAt: monsterLife.respawnAt },
+ attackCooldown,
+}));
 const status=document.getElementById('status')!; const hpBar=document.getElementById('hp-bar')!;
 const normKey=(v:string)=>v.toLowerCase();
 window.addEventListener('keydown',e=>{const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();});
@@ -76,11 +86,11 @@ function tick(now:number){requestAnimationFrame(tick);const dt=Math.min((now-las
  hero.limbs[1].rotation.x=-swing;hero.limbs[3].rotation.x=swing;
  attackCooldown=Math.max(0,attackCooldown-dt);attackT=Math.max(0,attackT-dt);
  hero.weaponPivot.rotation.z=attackT>0?-Math.sin((.32-attackT)/.32*Math.PI)*1.9:0;
- if(attackT>0&&!hitDone&&attackT<.18){hitDone=true;const dist=hero.root.position.distanceTo(monster.root.position);if(dist<3.2){monsterHP--;status.textContent=`命中怪物！剩餘生命：${Math.max(0,monsterHP)}`; monster.root.scale.x=1.4;}}
+ if(attackT>0&&!hitDone&&attackT<.18){hitDone=true;const dist=hero.root.position.distanceTo(monster.root.position);if(dist<3.2 && hitMonster(monsterLife,gameT)){status.textContent=monsterLife.hp===0?'成功擊敗怪物！3 秒後重新生成':`命中怪物！剩餘生命：${monsterLife.hp}`; monster.root.scale.x=1.4;}}
  monster.root.scale.x=THREE.MathUtils.lerp(monster.root.scale.x,1.25,.12);
- if(monsterHP<=0){monster.root.visible=false; status.textContent='成功擊敗怪物！3 秒後重新生成';if(!('respawn' in monster.userData))monster.root.userData.respawn=gameT+3;}
- if(monster.root.userData.respawn&&gameT>=monster.root.userData.respawn){monsterHP=3;monster.root.visible=true;delete monster.root.userData.respawn;status.textContent='怪物已重新出現';}
- if(monsterHP>0){const d=monster.root.position.distanceTo(hero.root.position);if(d>2.4&&d<10){const dir=hero.root.position.clone().sub(monster.root.position);dir.y=0;dir.normalize();monster.root.position.addScaledVector(dir,dt*.65);}monster.root.lookAt(hero.root.position.x,monster.root.position.y,hero.root.position.z);
+ if(updateMonsterLife(monsterLife,gameT))status.textContent='怪物已重新出現';
+ monster.root.visible=monsterLife.hp>0;
+ if(monsterLife.hp>0){const d=monster.root.position.distanceTo(hero.root.position);if(d>2.4&&d<10){const dir=hero.root.position.clone().sub(monster.root.position);dir.y=0;dir.normalize();monster.root.position.addScaledVector(dir,dt*.65);}monster.root.lookAt(hero.root.position.x,monster.root.position.y,hero.root.position.z);
  if(d<1.55 && Math.sin(gameT*2.2)>0.995){heroHP=Math.max(0,heroHP-3);hpBar.style.width=heroHP+'%';status.textContent='怪物攻擊了你';}}
  const ideal=hero.root.position.clone().add(new THREE.Vector3(16,20,20));camera.position.lerp(ideal,Math.min(1,dt*3.5));camera.lookAt(hero.root.position.x,1,hero.root.position.z);
  renderer.render(scene,camera);

@@ -1,0 +1,23 @@
+
+> canopy-forge-lab@0.1.0 test:browser
+> playwright test
+
+[WebServer] (node:4577) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4590) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:4602) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/game.spec.ts:18:1 › 正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤 (4.3s)
+  ✓  2 tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 (11.1s)
+  ✓  3 tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 (18.0s)
+
+  3 passed (35.5s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
