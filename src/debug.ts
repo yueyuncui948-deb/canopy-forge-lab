@@ -4,7 +4,9 @@ export interface GameSnapshot {
   hero: { x: number; y: number; z: number; hp: number };
   monster: { x: number; y: number; z: number; hp: number; visible: boolean; respawnAt: number | null };
   attackCooldown: number;
-  character: { loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
+  showcase: boolean;
+  resources: { geometries: number; textures: number };
+  character: { id: string; loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
   camera: { distance: number; desiredDistance: number; minDistance: number; maxDistance: number; azimuth: number };
 }
 

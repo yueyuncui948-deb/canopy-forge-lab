@@ -1,0 +1,15 @@
+{
+  "original_sha256": "cfc8905df1467ab73c8bce436f34d42a5a790c0a6cb6fe84d339e7cab34c4e1b",
+  "original_bytes": 30016053,
+  "retained": [
+    "src/744d414369b7f1f66a699b9bae5aa733650aeccc.ts",
+    "test.trace",
+    "1-trace.trace",
+    "1-trace.network",
+    "1-trace.stacks",
+    "0-trace.trace",
+    "0-trace.network",
+    "0-trace.stacks"
+  ],
+  "note": "保留原始事件、網路、stack 與測試原始碼；重複模型回應與連續 screencast 不加入 Git。不是完整可離線重播的 trace；失敗截圖另存。"
+}

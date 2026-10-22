@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import './style.css';
 import { createMonsterLife, hitMonster, updateMonsterLife } from './combat/monster-life';
 import { installDebugSnapshot } from './debug';
-import { loadHero } from './character/hero';
+import { loadHero, type HeroMotion } from './character/hero';
+import { findCharacter } from './character/catalog';
+import { createGallery } from './character/gallery';
 import { createFollowCamera } from './camera/follow-camera';
 import { frameDelta } from './time';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -25,6 +27,8 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.1;
+renderer.domElement.tabIndex = 0;
+renderer.domElement.setAttribute('aria-label', '遊戲畫面：WASD 移動，空白鍵跳躍');
 app.prepend(renderer.domElement);
 const followCamera = createFollowCamera(camera, renderer.domElement);
 const room = new RoomEnvironment();
@@ -65,32 +69,61 @@ function humanoid(color:string){
  }
  return {root};
 }
-const hero = await loadHero();
+let hero = await loadHero(findCharacter(new URLSearchParams(location.search).get('character')));
 scene.add(hero.root);hero.root.position.set(0,0,3);
+followCamera.setCharacter(hero.config.id === 'sophia');
 document.getElementById('status')!.textContent='人物已就緒';
 followCamera.update(hero.root.position, 1);
 const monster=humanoid('#79423f');monster.root.scale.set(1.25,1.2,1.25);monster.root.position.set(5,0,-1);scene.add(monster.root);
 const keys=new Set<string>();let jumpV=0, jumpY=0,attackT=0,attackCooldown=0,hitDone=false,heroHP=100,gameT=0;
 const monsterLife = createMonsterLife();
 let renderedFrames = 0;
+let showcase = false, previewMotion: HeroMotion = 'idle', previewTime = 0, loadRequest = 0;
+createGallery(app, hero.config, {
+ async select(character) {
+   const request = ++loadRequest;
+   if (hero.config.id === character.id) return true;
+   try {
+     const next = await loadHero(character);
+     if (request !== loadRequest) { next.dispose(); return false; }
+     next.root.position.copy(hero.root.position);
+     next.root.quaternion.copy(hero.root.quaternion);
+     const previous = hero;
+     hero = next; scene.add(hero.root); previous.dispose();
+     followCamera.setCharacter(hero.config.id === 'sophia');
+     return true;
+   } catch (error) { console.warn('角色切換失敗', error); return false; }
+ },
+ showcase(enabled) {
+   showcase = enabled; keys.clear(); jumpV = 0; jumpY = 0; attackT = 0;
+   hero.root.position.y = 0; previewTime = 0;
+   if (enabled) hero.root.rotation.y = 0;
+   else renderer.domElement.focus({ preventScroll: true });
+ },
+ motion(motion) { previewMotion = motion; previewTime = 0; },
+ view(close) { followCamera.preset(close); },
+});
 installDebugSnapshot(() => ({
  time: gameT, frame: renderedFrames,
- hero: { x: hero.root.position.x, y: jumpY, z: hero.root.position.z, hp: heroHP },
+ hero: { x: hero.root.position.x, y: hero.root.position.y, z: hero.root.position.z, hp: heroHP },
  monster: { x: monster.root.position.x, y: monster.root.position.y, z: monster.root.position.z,
    hp: monsterLife.hp, visible: monster.root.visible, respawnAt: monsterLife.respawnAt },
  attackCooldown,
  character: hero.snapshot(),
+ showcase,
+ resources: { geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures },
  camera: followCamera.snapshot(),
 }));
 const status=document.getElementById('status')!; const hpBar=document.getElementById('hp-bar')!;
 const normKey=(v:string)=>v.toLowerCase();
-window.addEventListener('keydown',e=>{const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();});
+window.addEventListener('keydown',e=>{if(showcase || (e.target instanceof HTMLElement && e.target.closest('input:not([type=checkbox]),select') || e.target instanceof HTMLElement && e.target.closest('button,input[type=checkbox]') && [' ', 'Enter'].includes(e.key)))return;const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();});
 window.addEventListener('keyup',e=>keys.delete(normKey(e.key)));
 window.addEventListener('blur',()=>keys.clear());
 renderer.domElement.addEventListener('pointerdown',e=>{if(e.button===0)startAttack();});
-function startAttack(){if(attackCooldown>0)return;attackT=.32;attackCooldown=.5;hitDone=false;}
+function startAttack(){if(showcase || attackCooldown>0)return;attackT=.32;attackCooldown=.5;hitDone=false;}
 let last: number | null = null;
-function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,last);last=now;gameT+=dt;
+function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,last);last=now;
+ if (!showcase) { gameT+=dt;
  const dx=Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft'));
  const dz=Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup'));
  const moving=dx!==0||dz!==0; const run=keys.has('shift'); const speed=run?8:4.3;
@@ -107,6 +140,14 @@ function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,la
  monster.root.visible=monsterLife.hp>0;
  if(monsterLife.hp>0){const d=monster.root.position.distanceTo(hero.root.position);if(d>2.4&&d<10){const dir=hero.root.position.clone().sub(monster.root.position);dir.y=0;dir.normalize();monster.root.position.addScaledVector(dir,dt*.65);}monster.root.lookAt(hero.root.position.x,monster.root.position.y,hero.root.position.z);
  if(d<1.55 && Math.sin(gameT*2.2)>0.995){heroHP=Math.max(0,heroHP-3);hpBar.style.width=heroHP+'%';status.textContent='怪物攻擊了你';}}
+ } else {
+   previewTime += dt;
+   const phase = previewTime % 1.4;
+   const height = previewMotion === 'jump' ? Math.max(0, 3.8 * phase - 5 * phase * phase) : 0;
+   hero.root.position.y = height;
+   hero.update(dt, previewMotion === 'walk' || previewMotion === 'run', previewMotion === 'run', height, 3.8 - 10 * phase,
+     previewMotion === 'attack' ? Math.max(0, 0.32 - phase) : 0);
+ }
  followCamera.update(hero.root.position,dt);
  keyLight.position.copy(camera.position).add(new THREE.Vector3(-2, 4, 1));
  keyLight.target.position.copy(hero.root.position).add(new THREE.Vector3(0, 1.3, 0));

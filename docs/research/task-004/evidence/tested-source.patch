@@ -1,0 +1,666 @@
+diff --git a/scripts/assets/README.md b/scripts/assets/README.md
+new file mode 100644
+index 0000000..ebd969e
+--- /dev/null
++++ b/scripts/assets/README.md
+@@ -0,0 +1,17 @@
++# 人物資產重建
++
++一般展示不需要 Blender 或 Python，GLB 已放在 public/models/rocketbox。以下僅供研究者重建來源處理流程。
++
++環境：Blender 4.3.2、Python 3、Pillow。固定來源版本與輸入／輸出雜湊見 [source.json](../../public/models/rocketbox/source.json)。
++
++```sh
++python3 scripts/assets/fetch_rocketbox.py /tmp/rocket-source
++blender -b -t 2 --python scripts/assets/convert_rocketbox.py -- /tmp/rocket-source /tmp/rocket-output
++python3 scripts/assets/optimize_glb.py /tmp/rocket-output/female.glb /tmp/rocket-output/male.glb
++```
++
++FBX 使用不同休止姿勢，不能直接共用 local quaternion。轉換以世界空間 Copy Rotation 約束烘焙到人物骨架；骨盆僅複製世界 Z，高度保留、水平移動交給遊戲。Idle／Walk／Run 分別烘焙為 NLA 動畫。三種動作均來自原始庫，跳躍與揮劍則在 TypeScript 疊加程序姿態。
++
++材質重新連結原始底色／法線，取消 FBX 灰色乘數與不適用的舊高光設定。頭部底色保留 2048，其餘貼圖縮為 1024；不透明底色轉 JPEG 92，透明頭髮和法線保持 PNG。保留高精度網格與 80 個骨架節點，沒有網格簡化。
++
++以實際渲染檢查任何重建輸出；不同 Blender／圖像編碼版本可能造成位元組差異。不要以成功匯出代替視覺與動作驗收。
+diff --git a/scripts/assets/convert_rocketbox.py b/scripts/assets/convert_rocketbox.py
+new file mode 100644
+index 0000000..cbef5a4
+--- /dev/null
++++ b/scripts/assets/convert_rocketbox.py
+@@ -0,0 +1,69 @@
++"""Blender 4.3: blender -b -t 2 --python scripts/assets/convert_rocketbox.py -- SOURCE_ROOT OUTPUT_ROOT
++來源與下載雜湊見 public/models/rocketbox/source.json。保留骨架、材質與三個真實動畫。
++"""
++import bpy, sys, pathlib, math
++source, output = map(pathlib.Path, sys.argv[sys.argv.index('--') + 1:])
++for name, gender, slug, prefix in [('Female_Adult_01','f','female','f001'),('Male_Adult_01','m','male','m002')]:
++    bpy.ops.wm.read_factory_settings(use_empty=True)
++    folder = source / 'Assets/Avatars/Adults' / name
++    bpy.ops.import_scene.fbx(filepath=str(folder / 'Export' / (name + '.fbx')))
++    rig = next(o for o in bpy.data.objects if o.type == 'ARMATURE')
++    rig.animation_data_clear()
++    mesh = next(o for o in bpy.data.objects if o.type == 'MESH')
++    for face in mesh.data.polygons: face.use_smooth = True
++    # 明確重建 FBX 材質，移除原本無效的絕對路徑、Specular 與灰色乘數。
++    for material in mesh.data.materials:
++        kind = material.name.split('_')[1]
++        material.use_nodes = True
++        nodes, links = material.node_tree.nodes, material.node_tree.links
++        nodes.clear()
++        bsdf = nodes.new('ShaderNodeBsdfPrincipled')
++        bsdf.inputs['Roughness'].default_value = .78 if kind == 'body' else .62
++        bsdf.inputs['Specular IOR Level'].default_value = .25
++        out = nodes.new('ShaderNodeOutputMaterial'); links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
++        color = bpy.data.images.load(str(folder/'Textures'/f'{prefix}_{kind}_color.tga'), check_existing=False)
++        if kind != 'head': color.scale(1024,1024)
++        color.file_format = 'PNG' if kind == 'opacity' else 'JPEG'
++        color.pack()
++        node = nodes.new('ShaderNodeTexImage'); node.image=color
++        links.new(node.outputs['Color'],bsdf.inputs['Base Color'])
++        if kind == 'opacity':
++            links.new(node.outputs['Alpha'],bsdf.inputs['Alpha'])
++            material.surface_render_method = 'DITHERED'
++            material.use_backface_culling = False
++        else:
++            normal = bpy.data.images.load(str(folder/'Textures'/f'{prefix}_{kind}_normal.tga'), check_existing=False)
++            normal.colorspace_settings.name='Non-Color'; normal.scale(1024,1024); normal.pack()
++            tex=nodes.new('ShaderNodeTexImage');tex.image=normal
++            normal_map=nodes.new('ShaderNodeNormalMap');normal_map.inputs['Strength'].default_value=.6
++            links.new(tex.outputs['Color'],normal_map.inputs['Color']);links.new(normal_map.outputs['Normal'],bsdf.inputs['Normal'])
++    actions=[]
++    for clip, category, filename in [('Idle','static',gender+'_idle_breathe_01'),('Walk','xy',gender+'_walk_neutral'),('Run','xy',gender+'_run_neutral')]:
++        existing=set(bpy.data.objects)
++        bpy.ops.import_scene.fbx(filepath=str(source/'Assets/Animations'/('all_animations_max_motextr_'+category)/(filename+'.max.fbx')))
++        imported=set(bpy.data.objects)-existing
++        driver=next(o for o in imported if o.type=='ARMATURE')
++        start,end=map(int,driver.animation_data.action.frame_range)
++        for bone in rig.pose.bones:
++            if bone.name not in driver.pose.bones: continue
++            c=bone.constraints.new('COPY_ROTATION');c.target=driver;c.subtarget=bone.name;c.owner_space='WORLD';c.target_space='WORLD'
++            if bone.name=='Bip01 Pelvis':
++                c=bone.constraints.new('COPY_LOCATION');c.target=driver;c.subtarget=bone.name;c.owner_space='WORLD';c.target_space='WORLD';c.use_x=False;c.use_y=False
++        bpy.ops.object.select_all(action='DESELECT');rig.select_set(True);bpy.context.view_layer.objects.active=rig
++        bpy.ops.nla.bake(frame_start=start,frame_end=end,step=1,only_selected=False,visual_keying=True,clear_constraints=True,use_current_action=False,bake_types={'POSE'})
++        action=rig.animation_data.action;action.name=clip;action.use_fake_user=True;actions.append(action)
++        rig.animation_data.action=None
++        for o in imported:bpy.data.objects.remove(o,do_unlink=True)
++        for bone in rig.pose.bones:bone.matrix_basis.identity()
++    rig.animation_data_create()
++    for action in actions:
++        track=rig.animation_data.nla_tracks.new();track.name=action.name
++        strip=track.strips.new(action.name,int(action.frame_range[0]),action);strip.name=action.name
++        track.mute=True
++    # glTF NLA 模式逐一輸出，避免匯出來源動作或重疊混合動作。
++    for o in list(bpy.data.objects):
++        if o not in [rig,mesh]:bpy.data.objects.remove(o,do_unlink=True)
++    bpy.context.scene.frame_set(1)
++    output.mkdir(parents=True,exist_ok=True)
++    bpy.ops.export_scene.gltf(filepath=str(output/(slug+'.glb')),export_format='GLB',export_animations=True,export_animation_mode='NLA_TRACKS',export_anim_slide_to_zero=True,export_yup=True,export_skins=True)
++    print('EXPORTED',slug,(output/(slug+'.glb')).stat().st_size,flush=True)
+diff --git a/scripts/assets/fetch_rocketbox.py b/scripts/assets/fetch_rocketbox.py
+new file mode 100644
+index 0000000..ec69b86
+--- /dev/null
++++ b/scripts/assets/fetch_rocketbox.py
+@@ -0,0 +1,13 @@
++"""python3 scripts/assets/fetch_rocketbox.py /tmp/rocket-source
++僅下載 source.json 固定版本中的原始檔，核對 SHA-256；約 150 MB，不放進 Git。
++"""
++import concurrent.futures, hashlib, json, pathlib, sys, urllib.request
++manifest=json.loads((pathlib.Path(__file__).resolve().parents[2]/'public/models/rocketbox/source.json').read_text())
++root=pathlib.Path(sys.argv[1])
++base='https://raw.githubusercontent.com/microsoft/Microsoft-Rocketbox/'+manifest['commit']+'/'
++def fetch(record):
++    target=root/record['path'];target.parent.mkdir(parents=True,exist_ok=True)
++    data=target.read_bytes() if target.exists() else urllib.request.urlopen(base+record['path'],timeout=60).read()
++    if hashlib.sha256(data).hexdigest()!=record['sha256']:raise ValueError('來源雜湊不符：'+record['path'])
++    target.write_bytes(data);print(record['path'],len(data))
++with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:list(pool.map(fetch,manifest['files']))
+diff --git a/scripts/assets/optimize_glb.py b/scripts/assets/optimize_glb.py
+new file mode 100644
+index 0000000..e86bc19
+--- /dev/null
++++ b/scripts/assets/optimize_glb.py
+@@ -0,0 +1,20 @@
++"""以 Pillow 將 GLB 的不透明底色轉為 JPEG；法線與透明頭髮保留原 PNG。"""
++import io, json, pathlib, struct, sys
++from PIL import Image
++for filename in sys.argv[1:]:
++    path=pathlib.Path(filename); raw=path.read_bytes()
++    length=struct.unpack_from('<I',raw,12)[0]; document=json.loads(raw[20:20+length]); binary=raw[28+length:]
++    images={image['bufferView']:image for image in document.get('images',[])}
++    output=bytearray()
++    for index,view in enumerate(document['bufferViews']):
++        data=binary[view.get('byteOffset',0):view.get('byteOffset',0)+view['byteLength']]
++        image=images.get(index)
++        if image and '_color' in image.get('name','') and 'opacity' not in image['name']:
++            decoded=Image.open(io.BytesIO(data)).convert('RGB'); encoded=io.BytesIO();decoded.save(encoded,format='JPEG',quality=92,subsampling=0,optimize=True)
++            data=encoded.getvalue();image['mimeType']='image/jpeg'
++        view['byteOffset']=len(output);view['byteLength']=len(data);output.extend(data)
++        output.extend(b'\0'*(-len(output)%4))
++    document['buffers'][0]['byteLength']=len(output)
++    metadata=json.dumps(document,separators=(',',':'),ensure_ascii=False).encode();metadata+=b' '*(-len(metadata)%4)
++    result=struct.pack('<4sII',b'glTF',2,28+len(metadata)+len(output))+struct.pack('<I4s',len(metadata),b'JSON')+metadata+struct.pack('<I4s',len(output),b'BIN\0')+output
++    path.write_bytes(result);print(path.name,len(raw),'->',len(result))
+diff --git a/src/camera/follow-camera.ts b/src/camera/follow-camera.ts
+index 1c78437..e25c3c8 100644
+--- a/src/camera/follow-camera.ts
++++ b/src/camera/follow-camera.ts
+@@ -4,6 +4,8 @@ import { DEFAULT_DISTANCE, MIN_DISTANCE, MAX_DISTANCE, zoomDistance } from './zo
+ export function createFollowCamera(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasElement) {
+   let desiredDistance = DEFAULT_DISTANCE;
+   let distance = desiredDistance;
++  let portraitDistance = MIN_DISTANCE;
++  let focusHeight = 1.9;
+   let azimuth = 0.5;
+   let elevationOffset = 0;
+   let drag: { x: number; y: number } | null = null;
+@@ -37,11 +39,18 @@ export function createFollowCamera(camera: THREE.PerspectiveCamera, canvas: HTML
+   });
+ 
+   return {
++    setCharacter(chibi: boolean) {
++      const viewingPortrait = desiredDistance <= 2.5;
++      portraitDistance = chibi ? 2.5 : MIN_DISTANCE;
++      focusHeight = chibi ? 1.65 : 1.9;
++      if (viewingPortrait) desiredDistance = portraitDistance;
++    },
++    preset(close: boolean) { desiredDistance = close ? portraitDistance : 5.5; azimuth = 0.15; elevationOffset = close ? -0.1 : -0.2; },
+     update(position: THREE.Vector3, dt: number) {
+       distance = THREE.MathUtils.lerp(distance, desiredDistance, 1 - Math.exp(-12 * dt));
+       const close = 1 - THREE.MathUtils.smoothstep(distance, MIN_DISTANCE, 7);
+       const elevation = THREE.MathUtils.clamp(0.6 - close * 0.38 + elevationOffset, 0.14, 1.12);
+-      target.copy(position).add(new THREE.Vector3(0, THREE.MathUtils.lerp(1.05, 1.65, close), 0));
++      target.copy(position).add(new THREE.Vector3(0, THREE.MathUtils.lerp(1.05, focusHeight, close), 0));
+       offset.set(Math.sin(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.cos(azimuth) * Math.cos(elevation)).multiplyScalar(distance);
+       camera.position.copy(target).add(offset);
+       camera.lookAt(target);
+diff --git a/src/camera/zoom.ts b/src/camera/zoom.ts
+index 73a1500..5d453b1 100644
+--- a/src/camera/zoom.ts
++++ b/src/camera/zoom.ts
+@@ -1,4 +1,4 @@
+-export const MIN_DISTANCE = 2.5;
++export const MIN_DISTANCE = 1.5;
+ export const MAX_DISTANCE = 24;
+ export const DEFAULT_DISTANCE = 7.5;
+ 
+diff --git a/src/character/catalog.ts b/src/character/catalog.ts
+new file mode 100644
+index 0000000..8432929
+--- /dev/null
++++ b/src/character/catalog.ts
+@@ -0,0 +1,23 @@
++export const characters = [
++  ...(['female', 'male'] as const).map(gender => ({
++    id: gender, name: gender === 'female' ? '艾琳 · 寫實女性' : '里昂 · 寫實男性',
++    style: '自然比例 · 臉部與服裝貼圖',
++    description: '原生待機、步行與跑步；跳躍與揮劍為程序姿態。現代服裝用於人物品質研究。',
++    credit: 'Microsoft Rocketbox · Microsoft / Rocketbox · MIT',
++    file: `models/rocketbox/${gender}.glb`, notice: 'models/rocketbox/NOTICE.txt',
++    hand: 'Bip01 R Hand', arm: 'Bip01 R UpperArm', forearm: 'Bip01 R Forearm', chest: 'Bip01 Spine2',
++    idle: 'Idle', walk: 'Walk', run: 'Run', jump: 'Idle', fall: 'Idle',
++  })),
++  {
++    id: 'sophia', name: 'Sophia · 藍髮旅人', style: 'Q 版比例 · 動漫人像',
++    description: '原生待機、跑步與跳落；步行沿用減速跑步，揮劍使用程序姿態。',
++    credit: 'Sophia · GDQuest · CC BY-NC-SA 4.0',
++    file: 'models/sophia/sophia.glb', notice: 'models/sophia/NOTICE.txt',
++    hand: 'DEF-hand.R', arm: 'DEF-upper_arm.R', forearm: 'DEF-forearm.R', chest: 'DEF-spine.003',
++    idle: 'Idle', walk: 'Run', run: 'Run', jump: 'Jump', fall: 'Fall',
++  },
++] as const;
++export type Character = typeof characters[number];
++export function findCharacter(id: string | null): Character {
++  return characters.find(character => character.id === id) ?? characters[0];
++}
+diff --git a/src/character/gallery.ts b/src/character/gallery.ts
+new file mode 100644
+index 0000000..82d9759
+--- /dev/null
++++ b/src/character/gallery.ts
+@@ -0,0 +1,53 @@
++import { characters, type Character } from './catalog';
++import type { HeroMotion } from './hero';
++
++export function createGallery(parent: HTMLElement, initial: Character, callbacks: {
++  select: (character: Character) => Promise<boolean>;
++  showcase: (enabled: boolean) => void;
++  motion: (motion: HeroMotion) => void;
++  view: (close: boolean) => void;
++}) {
++  const panel = document.createElement('section');
++  panel.className = 'gallery';
++  panel.setAttribute('aria-label', '人物選擇與展示');
++  panel.innerHTML = `<div class="badge">CHARACTER COLLECTION</div><h2>選擇你的行者</h2>
++    <div class="character-list">${characters.map(c => `<button type="button" data-character="${c.id}" aria-pressed="false"><strong>${c.name}</strong><span>${c.style}</span></button>`).join('')}</div>
++    <p class="character-description"></p><p class="gallery-status" role="status" aria-live="polite"></p>
++    <label class="showcase-toggle"><input type="checkbox" id="showcase"> 人物展示 <small>暫停戰鬥</small></label>
++    <div class="motion-controls" hidden>${[['idle','待機'],['walk','步行'],['run','跑步'],['jump','跳躍'],['attack','揮劍']].map(([id,label]) => `<button type="button" data-motion="${id}" aria-pressed="${id === 'idle'}">${label}</button>`).join('')}</div>
++    <div class="view-controls"><button type="button" data-view="full">全身</button><button type="button" data-view="close">近看</button></div>`;
++  parent.append(panel);
++  const message = panel.querySelector<HTMLElement>('.gallery-status')!;
++  let request = 0;
++  function selected(character: Character) {
++    panel.querySelectorAll<HTMLButtonElement>('[data-character]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.character === character.id)));
++    panel.querySelector('.character-description')!.textContent = character.description;
++    const foot = document.querySelector('.foot')!;
++    foot.textContent = `${character.credit} · `;
++    const link = document.createElement('a');
++    link.href = `${import.meta.env.BASE_URL}${character.notice}`;
++    link.textContent = '角色來源'; link.target = '_blank'; link.rel = 'noopener'; foot.append(link);
++  }
++  selected(initial);
++  panel.querySelectorAll<HTMLButtonElement>('[data-character]').forEach(button => button.addEventListener('click', async () => {
++    const character = characters.find(c => c.id === button.dataset.character)!;
++    const current = ++request;
++    message.textContent = `載入 ${character.name}…`;
++    panel.setAttribute('aria-busy', 'true');
++    const success = await callbacks.select(character);
++    if (current !== request) return;
++    panel.setAttribute('aria-busy', 'false');
++    if (success) { selected(character); message.textContent = '人物已切換'; }
++    else message.textContent = '載入失敗，已保留目前人物；可重新選取重試。';
++  }));
++  panel.querySelector<HTMLInputElement>('#showcase')!.addEventListener('change', event => {
++    const enabled = (event.target as HTMLInputElement).checked;
++    (panel.querySelector('.motion-controls') as HTMLElement).hidden = !enabled;
++    callbacks.showcase(enabled);
++  });
++  panel.querySelectorAll<HTMLButtonElement>('[data-motion]').forEach(button => button.addEventListener('click', () => {
++    panel.querySelectorAll('[data-motion]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
++    callbacks.motion(button.dataset.motion as HeroMotion);
++  }));
++  panel.querySelectorAll<HTMLButtonElement>('[data-view]').forEach(button => button.addEventListener('click', () => callbacks.view(button.dataset.view === 'close')));
++}
+diff --git a/src/character/hero.ts b/src/character/hero.ts
+index d1b98ea..8c76f17 100644
+--- a/src/character/hero.ts
++++ b/src/character/hero.ts
+@@ -1,11 +1,12 @@
+ import * as THREE from 'three';
+ import { createSword } from './sword';
++import { findCharacter, type Character } from './catalog';
+ 
+ export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack';
+ 
+-export async function loadHero() {
++export async function loadHero(config: Character = findCharacter(null)) {
+   const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+-  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/sophia/sophia.glb`);
++  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}${config.file}`);
+   const root = new THREE.Group();
+   root.name = 'Hero';
+   const model = gltf.scene;
+@@ -40,20 +41,22 @@ export async function loadHero() {
+     if (!result) throw new Error(`人物骨架缺少 ${name}`);
+     return result;
+   };
+-  const hand = bone('DEF-hand.R');
+-  const upperArm = bone('DEF-upper_arm.R');
+-  const forearm = bone('DEF-forearm.R');
+-  const chest = bone('DEF-spine.003');
++  const hand = bone(config.hand);
++  const upperArm = bone(config.arm);
++  const forearm = bone(config.forearm);
++  const chest = bone(config.chest);
+   const mixer = new THREE.AnimationMixer(model);
+   const actions = new Map<string, THREE.AnimationAction>();
+   for (const clip of gltf.animations) actions.set(clip.name, mixer.clipAction(clip));
+-  for (const name of ['Idle', 'Run', 'Jump', 'Fall']) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
+-  let active = actions.get('Idle')!;
++  for (const name of [config.idle, config.walk, config.run, config.jump, config.fall]) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
++  let active = actions.get(config.idle)!;
+   active.play();
+   mixer.update(0);
+   root.updateMatrixWorld(true);
+   const sword = createSword();
+-  sword.position.set(0, 0.075, 0);
++  sword.position.set(0, config.id === 'sophia' ? 0.075 : 5, 0);
++  // 武器用世界尺寸，避免公分制骨架把劍放大百倍。
++  sword.scale.setScalar(1 / hand.getWorldScale(new THREE.Vector3()).x);
+   const worldGrip = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, -0.55, 0.85).normalize());
+   sword.quaternion.copy(hand.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldGrip));
+   hand.add(sword);
+@@ -73,12 +76,41 @@ export async function loadHero() {
+ 
+   return {
+     root,
++    config,
++    dispose() {
++      mixer.stopAllAction();
++      mixer.uncacheRoot(model);
++      const textures = new Set<THREE.Texture>();
++      const materials = new Set<THREE.Material>();
++      root.traverse(object => {
++        if (object instanceof THREE.Mesh) {
++          object.geometry.dispose();
++          if (object instanceof THREE.SkinnedMesh) object.skeleton.dispose();
++          for (const material of Array.isArray(object.material) ? object.material : [object.material]) materials.add(material);
++        }
++      });
++      for (const material of materials) {
++        for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
++        material.dispose();
++      }
++      for (const texture of textures) {
++        texture.dispose();
++        if (typeof ImageBitmap !== 'undefined' && texture.image instanceof ImageBitmap) texture.image.close();
++      }
++      root.removeFromParent();
++    },
+     update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number) {
+       motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : moving ? (running ? 'run' : 'walk') : 'idle';
+-      if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? 'Jump' : 'Fall');
+-      else if (moving) setAction('Run', running ? 1.35 : 0.72);
+-      else setAction('Idle');
++      if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
++      else if (moving) setAction(running ? config.run : config.walk, config.id === 'sophia' ? (running ? 1.35 : 0.72) : 1);
++      else setAction(config.idle);
+       mixer.update(dt);
++      if (config.id !== 'sophia' && jumpHeight > 0.02) {
++        bone('Bip01 L Thigh').rotateX(-0.35);
++        bone('Bip01 R Thigh').rotateX(-0.5);
++        bone('Bip01 L Calf').rotateX(0.65);
++        bone('Bip01 R Calf').rotateX(0.8);
++      }
+       // 在原始骨架姿態上疊加揮劍，不再旋轉獨立於手臂的武器。
+       if (attackTime > 0) {
+         const phase = 1 - attackTime / 0.32;
+@@ -89,7 +121,7 @@ export async function loadHero() {
+         chest.rotateY(-0.35 * Math.sin(phase * Math.PI * 2));
+       }
+       // 握劍手指採輕度彎曲，基礎姿態每幀由 Mixer 還原，不累加。
+-      for (const digit of ['index', 'middle', 'ring', 'pinky']) {
++      if (config.id === 'sophia') for (const digit of ['index', 'middle', 'ring', 'pinky']) {
+         bone(`DEF-f_${digit}.01.R`).rotateX(0.6);
+         bone(`DEF-f_${digit}.02.R`).rotateX(0.7);
+       }
+@@ -98,7 +130,7 @@ export async function loadHero() {
+     snapshot() {
+       hand.getWorldPosition(handPosition);
+       return {
+-        loaded: true, skinnedMeshes, bones: bones.size, triangles,
++        id: config.id, loaded: true, skinnedMeshes, bones: bones.size, triangles,
+         animation: motion, clip: active.getClip().name, animationTime: active.time,
+         swordAttachedTo: sword.parent?.name ?? '',
+         hand: { x: handPosition.x, y: handPosition.y, z: handPosition.z },
+diff --git a/src/debug.ts b/src/debug.ts
+index 4199180..6f15870 100644
+--- a/src/debug.ts
++++ b/src/debug.ts
+@@ -4,7 +4,9 @@ export interface GameSnapshot {
+   hero: { x: number; y: number; z: number; hp: number };
+   monster: { x: number; y: number; z: number; hp: number; visible: boolean; respawnAt: number | null };
+   attackCooldown: number;
+-  character: { loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
++  showcase: boolean;
++  resources: { geometries: number; textures: number };
++  character: { id: string; loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
+   camera: { distance: number; desiredDistance: number; minDistance: number; maxDistance: number; azimuth: number };
+ }
+ 
+diff --git a/src/main.ts b/src/main.ts
+index 66a04ae..325e7fc 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -2,7 +2,9 @@ import * as THREE from 'three';
+ import './style.css';
+ import { createMonsterLife, hitMonster, updateMonsterLife } from './combat/monster-life';
+ import { installDebugSnapshot } from './debug';
+-import { loadHero } from './character/hero';
++import { loadHero, type HeroMotion } from './character/hero';
++import { findCharacter } from './character/catalog';
++import { createGallery } from './character/gallery';
+ import { createFollowCamera } from './camera/follow-camera';
+ import { frameDelta } from './time';
+ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+@@ -25,6 +27,8 @@ renderer.shadowMap.enabled = true;
+ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+ renderer.toneMapping = THREE.ACESFilmicToneMapping;
+ renderer.toneMappingExposure = 1.1;
++renderer.domElement.tabIndex = 0;
++renderer.domElement.setAttribute('aria-label', '遊戲畫面：WASD 移動，空白鍵跳躍');
+ app.prepend(renderer.domElement);
+ const followCamera = createFollowCamera(camera, renderer.domElement);
+ const room = new RoomEnvironment();
+@@ -65,32 +69,61 @@ function humanoid(color:string){
+  }
+  return {root};
+ }
+-const hero = await loadHero();
++let hero = await loadHero(findCharacter(new URLSearchParams(location.search).get('character')));
+ scene.add(hero.root);hero.root.position.set(0,0,3);
++followCamera.setCharacter(hero.config.id === 'sophia');
+ document.getElementById('status')!.textContent='人物已就緒';
+ followCamera.update(hero.root.position, 1);
+ const monster=humanoid('#79423f');monster.root.scale.set(1.25,1.2,1.25);monster.root.position.set(5,0,-1);scene.add(monster.root);
+ const keys=new Set<string>();let jumpV=0, jumpY=0,attackT=0,attackCooldown=0,hitDone=false,heroHP=100,gameT=0;
+ const monsterLife = createMonsterLife();
+ let renderedFrames = 0;
++let showcase = false, previewMotion: HeroMotion = 'idle', previewTime = 0, loadRequest = 0;
++createGallery(app, hero.config, {
++ async select(character) {
++   const request = ++loadRequest;
++   if (hero.config.id === character.id) return true;
++   try {
++     const next = await loadHero(character);
++     if (request !== loadRequest) { next.dispose(); return false; }
++     next.root.position.copy(hero.root.position);
++     next.root.quaternion.copy(hero.root.quaternion);
++     const previous = hero;
++     hero = next; scene.add(hero.root); previous.dispose();
++     followCamera.setCharacter(hero.config.id === 'sophia');
++     return true;
++   } catch (error) { console.warn('角色切換失敗', error); return false; }
++ },
++ showcase(enabled) {
++   showcase = enabled; keys.clear(); jumpV = 0; jumpY = 0; attackT = 0;
++   hero.root.position.y = 0; previewTime = 0;
++   if (enabled) hero.root.rotation.y = 0;
++   else renderer.domElement.focus({ preventScroll: true });
++ },
++ motion(motion) { previewMotion = motion; previewTime = 0; },
++ view(close) { followCamera.preset(close); },
++});
+ installDebugSnapshot(() => ({
+  time: gameT, frame: renderedFrames,
+- hero: { x: hero.root.position.x, y: jumpY, z: hero.root.position.z, hp: heroHP },
++ hero: { x: hero.root.position.x, y: hero.root.position.y, z: hero.root.position.z, hp: heroHP },
+  monster: { x: monster.root.position.x, y: monster.root.position.y, z: monster.root.position.z,
+    hp: monsterLife.hp, visible: monster.root.visible, respawnAt: monsterLife.respawnAt },
+  attackCooldown,
+  character: hero.snapshot(),
++ showcase,
++ resources: { geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures },
+  camera: followCamera.snapshot(),
+ }));
+ const status=document.getElementById('status')!; const hpBar=document.getElementById('hp-bar')!;
+ const normKey=(v:string)=>v.toLowerCase();
+-window.addEventListener('keydown',e=>{const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();});
++window.addEventListener('keydown',e=>{if(showcase || (e.target instanceof HTMLElement && e.target.closest('input:not([type=checkbox]),select') || e.target instanceof HTMLElement && e.target.closest('button,input[type=checkbox]') && [' ', 'Enter'].includes(e.key)))return;const k=normKey(e.key);keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k===' '&&jumpY<=.001)jumpV=8.5;if(k==='j')startAttack();});
+ window.addEventListener('keyup',e=>keys.delete(normKey(e.key)));
+ window.addEventListener('blur',()=>keys.clear());
+ renderer.domElement.addEventListener('pointerdown',e=>{if(e.button===0)startAttack();});
+-function startAttack(){if(attackCooldown>0)return;attackT=.32;attackCooldown=.5;hitDone=false;}
++function startAttack(){if(showcase || attackCooldown>0)return;attackT=.32;attackCooldown=.5;hitDone=false;}
+ let last: number | null = null;
+-function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,last);last=now;gameT+=dt;
++function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,last);last=now;
++ if (!showcase) { gameT+=dt;
+  const dx=Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft'));
+  const dz=Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup'));
+  const moving=dx!==0||dz!==0; const run=keys.has('shift'); const speed=run?8:4.3;
+@@ -107,6 +140,14 @@ function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,la
+  monster.root.visible=monsterLife.hp>0;
+  if(monsterLife.hp>0){const d=monster.root.position.distanceTo(hero.root.position);if(d>2.4&&d<10){const dir=hero.root.position.clone().sub(monster.root.position);dir.y=0;dir.normalize();monster.root.position.addScaledVector(dir,dt*.65);}monster.root.lookAt(hero.root.position.x,monster.root.position.y,hero.root.position.z);
+  if(d<1.55 && Math.sin(gameT*2.2)>0.995){heroHP=Math.max(0,heroHP-3);hpBar.style.width=heroHP+'%';status.textContent='怪物攻擊了你';}}
++ } else {
++   previewTime += dt;
++   const phase = previewTime % 1.4;
++   const height = previewMotion === 'jump' ? Math.max(0, 3.8 * phase - 5 * phase * phase) : 0;
++   hero.root.position.y = height;
++   hero.update(dt, previewMotion === 'walk' || previewMotion === 'run', previewMotion === 'run', height, 3.8 - 10 * phase,
++     previewMotion === 'attack' ? Math.max(0, 0.32 - phase) : 0);
++ }
+  followCamera.update(hero.root.position,dt);
+  keyLight.position.copy(camera.position).add(new THREE.Vector3(-2, 4, 1));
+  keyLight.target.position.copy(hero.root.position).add(new THREE.Vector3(0, 1.3, 0));
+diff --git a/src/style.css b/src/style.css
+index 935e936..d213901 100644
+--- a/src/style.css
++++ b/src/style.css
+@@ -1,3 +1,5 @@
+ *{box-sizing:border-box}body{margin:0;background:#060b0a;color:#e3eee7;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif}canvas{display:block}.hud{position:absolute;top:18px;left:18px;padding:15px 17px;background:#07150fcf;border:1px solid #44755a66;border-radius:12px;pointer-events:none;max-width:365px}.hud strong{font-size:17px;letter-spacing:.06em}.hud p{margin:7px 0 0;color:#b3c4ba;font-size:13px;line-height:1.65}.badge{color:#bce39f;font-size:11px;letter-spacing:.1em}.hp{margin-top:10px;height:6px;background:#3a3434;border-radius:9px;overflow:hidden}.hp>div{width:100%;height:100%;background:linear-gradient(90deg,#ca755a,#e3ba78)}.foot{position:absolute;bottom:14px;right:16px;color:#a7c6ba;font-size:12px;text-align:right;pointer-events:none}
+ 
+ .camera-help{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);padding:10px 18px;border:1px solid #78948555;border-radius:24px;background:#081a16cc;color:#d3e2d7;font-size:12px;white-space:nowrap;pointer-events:none}.foot{font-size:10px;opacity:.8;pointer-events:auto}.foot a{color:#cbd7b9}.hud{max-width:300px;padding:13px 16px}.hud p{font-size:12px}.badge{font-size:10px;letter-spacing:.12em}@media(max-width:720px){.camera-help{bottom:60px;font-size:10px}.foot{right:12px;bottom:12px}}
++.gallery{position:absolute;right:18px;top:18px;width:260px;padding:18px;background:linear-gradient(150deg,#112520ee,#071410e8);border:1px solid #7e9a6866;border-radius:14px;box-shadow:0 14px 40px #0005}.gallery h2{font-size:19px;font-weight:500;letter-spacing:.08em;margin:8px 0 16px}.gallery button{font:inherit;color:#c9d8ce;background:#152c24;border:1px solid #3c5549;border-radius:8px;cursor:pointer;padding:9px}.gallery button:hover{background:#244535}.gallery button:focus-visible,.gallery input:focus-visible{outline:2px solid #e6cf95;outline-offset:3px}.character-list{display:grid;gap:8px}.character-list button{text-align:left;padding:12px}.character-list strong{display:block;font-size:13px}.character-list span{display:block;font-size:11px;margin-top:5px;color:#9bb6a6}.gallery button[aria-pressed=true]{border-color:#d1bd86;background:#394434;color:#f5e8c3}.character-description{font-size:11px;line-height:1.7;color:#adc1b4;min-height:38px}.gallery-status{font-size:11px;color:#e0cb91;min-height:16px;margin:6px 0}.showcase-toggle{display:flex;align-items:center;gap:6px;font-size:13px;padding-top:10px;border-top:1px solid #4b625344;cursor:pointer}.showcase-toggle small{margin-left:auto;color:#91aa9a;font-size:10px}.motion-controls{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}.motion-controls[hidden]{display:none}.motion-controls button{font-size:11px;padding:6px 8px}.view-controls{display:flex;gap:8px;margin-top:12px}.view-controls button{flex:1;font-size:12px}.foot{max-width:260px}.camera-help{bottom:20px}@media(max-width:800px){.gallery{width:220px;right:10px;padding:12px}.hud{left:10px;max-width:220px}.gallery h2{font-size:16px}.foot{max-width:210px}.camera-help{left:12px;transform:none;bottom:15px;font-size:10px;padding:8px}}
++.gallery{max-height:calc(100dvh - 70px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#738a65 #112520}
+diff --git a/tests/browser/gallery.spec.ts b/tests/browser/gallery.spec.ts
+new file mode 100644
+index 0000000..43d66f8
+--- /dev/null
++++ b/tests/browser/gallery.spec.ts
+@@ -0,0 +1,105 @@
++import { test, expect, type Page } from '@playwright/test';
++import type { GameSnapshot } from '../../src/debug';
++const read = (page: Page): Promise<GameSnapshot> => page.evaluate(() => (window as Window & { __CANOPY_DEBUG__: GameSnapshot }).__CANOPY_DEBUG__);
++const select = async (page: Page, id: string) => {
++  await page.locator(`[data-character="${id}"]`).click();
++  await expect.poll(async () => (await read(page)).character.id).toBe(id);
++  await expect(page.locator('.gallery')).toHaveAttribute('aria-busy', 'false');
++};
++test.beforeEach(async ({ page }) => {
++  await page.goto('/?debug=1');
++  await expect.poll(async () => (await read(page))?.frame ?? 0).toBeGreaterThan(2);
++});
++
++test('男女寫實角色與 Sophia 可切換、近看並釋放舊資源', async ({ page }, info) => {
++  test.setTimeout(150000);
++  const errors: string[] = [];
++  page.on('pageerror', e => errors.push(e.message));
++  await page.locator('#showcase').check();
++  const initial = await read(page);
++  expect(initial.character.id).toBe('female');
++  expect(initial.character.bones).toBe(80);
++  expect(initial.character.triangles).toBeGreaterThan(8000);
++  expect(initial.character.swordAttachedTo).toBe('Bip01_R_Hand');
++  const samples: GameSnapshot[] = [];
++  for (const id of ['female', 'male', 'sophia', 'female', 'male', 'female']) {
++    await select(page, id);
++    await page.getByRole('button', { name: '近看', exact: true }).click();
++    await expect.poll(async () => (await read(page)).camera.distance).toBeLessThan(id === 'sophia' ? 2.6 : 1.6);
++    expect((await read(page)).camera.desiredDistance).toBe(id === 'sophia' ? 2.5 : 1.5);
++    await expect.poll(async () => { const c = (await read(page)).camera; return Math.abs(c.distance - c.desiredDistance); }).toBeLessThan(0.05);
++    const frame = (await read(page)).frame;
++    await expect.poll(async () => (await read(page)).frame).toBeGreaterThan(frame + 2);
++    const current = await read(page);
++    expect(current.hero.x).toBe(initial.hero.x); expect(current.hero.z).toBe(initial.hero.z);
++    expect(current.character.skinnedMeshes).toBe(id === 'sophia' ? 4 : 3);
++    samples.push(current);
++    if (samples.length <= 3) await page.screenshot({ path: info.outputPath(`${id}-close.png`) });
++  }
++  expect(samples.at(-1)!.resources).toEqual(samples[0].resources);
++  expect(samples[4].resources).toEqual(samples[1].resources);
++  expect(errors).toEqual([]);
++  await info.attach('switches', { body: JSON.stringify(samples, null, 2), contentType: 'application/json' });
++});
++
++test('展示暫停戰鬥、播放男女骨架動作，退出後恢復控制', async ({ page }, info) => {
++  test.setTimeout(150000);
++  await page.locator('#showcase').check();
++  const paused = await read(page);
++  const samples: GameSnapshot[] = [];
++  for (const id of ['female', 'male']) {
++    await select(page, id);
++    await page.getByRole('button', { name: '全身', exact: true }).click();
++    const idle = await read(page);
++    for (const [motion, label, clip] of [['walk','步行','Walk'], ['run','跑步','Run'], ['jump','跳躍','Idle'], ['attack','揮劍','Idle']]) {
++      await page.getByRole('button', { name: label, exact: true }).click();
++      await expect.poll(async () => (await read(page)).character.animation, { intervals: [30] }).toBe(motion);
++      const state = await read(page); samples.push(state);
++      expect(state.character.clip).toBe(clip);
++      expect(state.character.upperArm).not.toEqual(idle.character.upperArm);
++      expect(state.character.swordAttachedTo).toBe('Bip01_R_Hand');
++      await page.screenshot({ path: info.outputPath(`${id}-${motion}.png`) });
++    }
++    await page.getByRole('button', { name: '待機', exact: true }).click();
++  }
++  await page.keyboard.press('j'); await page.keyboard.press('Space');
++  const still = await read(page);
++  expect(still.time).toBe(paused.time);
++  expect(still.monster).toEqual(paused.monster);
++  expect(still.hero.x).toBe(paused.hero.x); expect(still.hero.z).toBe(paused.hero.z);
++  expect(still.attackCooldown).toBe(0);
++  await page.locator('#showcase').uncheck();
++  await page.keyboard.down('d');
++  await expect.poll(async () => (await read(page)).hero.x).toBeGreaterThan(paused.hero.x + 0.4);
++  await page.keyboard.up('d');
++  await page.keyboard.press('Space');
++  await expect.poll(async () => (await read(page)).hero.y, { intervals: [30] }).toBeGreaterThan(0.3);
++  await expect.poll(async () => (await read(page)).hero.y).toBe(0);
++  await info.attach('motions', { body: JSON.stringify(samples,null,2), contentType: 'application/json' });
++});
++
++test('切換失敗保留原人物，快速改選以最後選擇為準', async ({ page }) => {
++  await page.locator('#showcase').check();
++  await page.route('**/models/rocketbox/male.glb', route => route.abort());
++  await page.locator('[data-character="male"]').click();
++  await expect(page.locator('.gallery-status')).toContainText('載入失敗');
++  expect((await read(page)).character.id).toBe('female');
++  await expect(page.locator('[data-character="female"]')).toHaveAttribute('aria-pressed','true');
++  await page.unroute('**/models/rocketbox/male.glb');
++  let release!: () => void;
++  const gate = new Promise<void>(resolve => { release = resolve; });
++  let started!: () => void;
++  const requested = new Promise<void>(resolve => { started = resolve; });
++  await page.route('**/models/rocketbox/male.glb', async route => { started(); await gate; await route.continue(); });
++  await page.locator('[data-character="male"]').click();
++  await requested;
++  await select(page, 'sophia');
++  const response = page.waitForResponse('**/models/rocketbox/male.glb');
++  release(); await response;
++  await expect(page.locator('[data-character="sophia"]')).toHaveAttribute('aria-pressed','true');
++  // 下一個選取會增加序號；晚回來的男性不得覆蓋目前女性。
++  await select(page, 'female');
++  const frame = (await read(page)).frame;
++  await expect.poll(async () => (await read(page)).frame).toBeGreaterThan(frame + 5);
++  expect((await read(page)).character.id).toBe('female');
++});
+diff --git a/tests/browser/game.spec.ts b/tests/browser/game.spec.ts
+index eb82aab..a5c30d9 100644
+--- a/tests/browser/game.spec.ts
++++ b/tests/browser/game.spec.ts
+@@ -11,7 +11,7 @@ async function advance(page: Page, seconds: number) {
+ }
+ 
+ test.beforeEach(async ({ page }) => {
+-  await page.goto('/?debug=1');
++  await page.goto('/?debug=1&character=sophia');
+   await expect.poll(async () => (await snapshot(page))?.frame ?? 0).toBeGreaterThan(2);
+ });
+ 
+@@ -139,6 +139,7 @@ test('人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸
+   expect(orbit.attackCooldown).toBe(0);
+   expect(distance(orbit.hero, close.hero)).toBeLessThan(0.001);
+   await page.screenshot({ path: info.outputPath('character-orbit.png') });
++  await page.mouse.move(600, 400);
+   await page.mouse.wheel(0, 6000);
+   await expect.poll(async () => (await snapshot(page)).camera.distance).toBeGreaterThan(23.9);
+   expect((await snapshot(page)).camera.desiredDistance).toBe(24);
+diff --git a/tests/unit/camera-time.test.ts b/tests/unit/camera-time.test.ts
+index e7727e7..6be2dbd 100644
+--- a/tests/unit/camera-time.test.ts
++++ b/tests/unit/camera-time.test.ts
+@@ -8,10 +8,10 @@ test('滾輪負值拉近、正值拉遠，零輸入保持距離', () => {
+   assert.ok(zoomDistance(DEFAULT_DISTANCE, 200) > DEFAULT_DISTANCE);
+   assert.equal(zoomDistance(DEFAULT_DISTANCE, 0), DEFAULT_DISTANCE);
+ });
+-test('大量滾動仍限制在可看清角色又不穿入人物的範圍', () => {
++test('大量滾動固定在人物近看 1.5 至遠景 24 的範圍', () => {
+   assert.equal(zoomDistance(DEFAULT_DISTANCE, -100000), MIN_DISTANCE);
+   assert.equal(zoomDistance(DEFAULT_DISTANCE, 100000), MAX_DISTANCE);
+-  assert.ok(MIN_DISTANCE > 2);
++  assert.equal(MIN_DISTANCE, 1.5); // task-004：自然比例人臉近看距離；穿模由真實渲染檢查。
+ });
+ test('非同步載入後首影格與早於初始化的 RAF timestamp 不倒退遊戲時間', () => {
+   assert.equal(frameDelta(100, null), 0);

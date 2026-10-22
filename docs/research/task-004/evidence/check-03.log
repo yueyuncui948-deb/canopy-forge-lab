@@ -1,0 +1,62 @@
+
+> canopy-forge-lab@0.1.0 check
+> npm run typecheck && npm test && npm run build
+
+
+> canopy-forge-lab@0.1.0 typecheck
+> tsc --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> canopy-forge-lab@0.1.0 test
+> node --test tests/unit/*.test.ts
+
+✔ 滾輪負值拉近、正值拉遠，零輸入保持距離 (0.787396ms)
+✔ 大量滾動仍限制在可看清角色又不穿入人物的範圍 (0.180073ms)
+✔ 非同步載入後首影格與早於初始化的 RAF timestamp 不倒退遊戲時間 (0.251403ms)
+✔ 新怪物三點 HP，活著時不會重生 (1.979985ms)
+✔ 每次有效命中只扣一點，第三次命中排定重生 (0.334095ms)
+✔ 死後連續攻擊不會扣成負血或推遲重生 (0.26679ms)
+✔ 三秒之前不重生，到期恢復 HP 並清除排程 (0.288692ms)
+✔ 跨越到期時間仍可重生，第二次生命可再次死亡重生 (0.247903ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 142.187375
+
+> canopy-forge-lab@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 19 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                       0.40 kB │ gzip:   0.28 kB
+dist/assets/index-BFkbvaR9.css        3.03 kB │ gzip:   1.19 kB
+dist/assets/GLTFLoader-BQK0i_aH.js   44.80 kB │ gzip:  13.22 kB
+dist/assets/index-7p5lec1-.js       598.65 kB │ gzip: 157.03 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.60s
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

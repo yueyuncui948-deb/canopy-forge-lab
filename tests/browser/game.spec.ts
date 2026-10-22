@@ -11,7 +11,7 @@ async function advance(page: Page, seconds: number) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/?debug=1');
+  await page.goto('/?debug=1&character=sophia');
   await expect.poll(async () => (await snapshot(page))?.frame ?? 0).toBeGreaterThan(2);
 });
 
@@ -139,6 +139,7 @@ test('人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸�
   expect(orbit.attackCooldown).toBe(0);
   expect(distance(orbit.hero, close.hero)).toBeLessThan(0.001);
   await page.screenshot({ path: info.outputPath('character-orbit.png') });
+  await page.mouse.move(600, 400);
   await page.mouse.wheel(0, 6000);
   await expect.poll(async () => (await snapshot(page)).camera.distance).toBeGreaterThan(23.9);
   expect((await snapshot(page)).camera.desiredDistance).toBe(24);

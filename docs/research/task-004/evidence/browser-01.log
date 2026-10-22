@@ -1,0 +1,29 @@
+
+> canopy-forge-lab@0.1.0 test:browser
+> playwright test
+
+[WebServer] (node:15586) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15599) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+(node:15611) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/gallery.spec.ts:14:1 › 男女寫實角色與 Sophia 可切換、近看並釋放舊資源 (2.1m)
+  ✓  2 tests/browser/gallery.spec.ts:43:1 › 展示暫停戰鬥、播放男女骨架動作，退出後恢復控制 (1.5m)
+  ✓  3 tests/browser/gallery.spec.ts:80:1 › 切換失敗保留原人物，快速改選以最後選擇為準 (40.6s)
+  ✓  4 tests/browser/game.spec.ts:18:1 › 正式建置以 WebGL2 繪製場景且沒有 JavaScript 或主控台錯誤 (17.8s)
+  ✓  5 tests/browser/game.spec.ts:37:1 › 鍵盤可移動、Shift 跑得更快、Space 跳躍後落地 (36.5s)
+  ✓  6 tests/browser/game.spec.ts:66:1 › 鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作 (59.2s)
+  ✓  7 tests/browser/game.spec.ts:115:1 › 人物是有材質的骨架網格，滾輪可近看且右鍵環視不觸發攻擊 (57.7s)
+  ✓  8 tests/browser/game.spec.ts:151:1 › 真實輸入驅動骨架走跑跳與手臂揮劍 (28.0s)
+  ✓  9 tests/browser/game.spec.ts:178:1 › 模型載入失敗有明確訊息，不退回積木人物 (8.2s)
+
+  9 passed (7.8m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

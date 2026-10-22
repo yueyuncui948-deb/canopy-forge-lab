@@ -33,3 +33,12 @@
 - [完整資產數據](research/task-003/evidence/asset-metadata.json)。
 
 Sophia 的形象不代表 GDQuest 背書本專案。未來複用流程母版時，資產授權須分開處理，不能因為程式可複用就視人物為無限制授權。
+
+## Rocketbox 寫實人物（task-004）
+
+- Female_Adult_01（介面暱稱「艾琳」）、Male_Adult_01（「里昂」）：Microsoft Rocketbox Avatar Library，Microsoft / Markus Wojcik 與 Rocketbox 原始創作團隊。
+- 固定版本 `0943055db6ec570bcef9f2c8b41c9e5467c808f9`；上游 README 明確聲明人物庫於 2020 年改為 MIT。保留 [授權](../public/models/rocketbox/LICENSE.txt)、[原始 README](../public/models/rocketbox/UPSTREAM-README.txt)、[來源／修改聲明](../public/models/rocketbox/NOTICE.txt)與[輸入輸出雜湊](../public/models/rocketbox/source.json)。
+- 原始男女各自 Idle／Walk／Run FBX 由 Blender 轉移並烘焙到人物骨架；不使用 Sophia 動作硬套其他骨架。法線與透明材質重建，頭部底色 2048，其餘 1024，不透明底色 JPEG、法線／透明 PNG。
+- 女角 6,162,756 bytes，男角 5,596,036 bytes；只載入被選中的人物。保留 80 骨架節點與平滑網格；不是換色複製。原始 FBX／TGA 不加入 Git，可用[重建流程](../scripts/assets/README.md)按雜湊取得。
+- 跳躍與揮劍為本專案程序姿態，並非來源提供的完整動捕片段。服裝為現代裝束，用於比例、臉部、材質與動作研究，尚非最終 ARPG 美術。
+- HVGirl 曾試載，但近看仍有明顯低面數切面；保留 task-004 淘汰證據，沒有放入交付模型清單。淘汰截圖人物由 Babylon.js Assets 提供，[固定來源](https://github.com/BabylonJS/Assets/tree/c81f5d744fe8d41acfebd89eaeb7008c6f9659e3/meshes)，[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，改作僅本專案渲染、尺寸與掛劍。

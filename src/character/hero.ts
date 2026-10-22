@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 import { createSword } from './sword';
+import { findCharacter, type Character } from './catalog';
 
 export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack';
 
-export async function loadHero() {
+export async function loadHero(config: Character = findCharacter(null)) {
   const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
-  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/sophia/sophia.glb`);
+  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}${config.file}`);
   const root = new THREE.Group();
   root.name = 'Hero';
   const model = gltf.scene;
@@ -40,20 +41,22 @@ export async function loadHero() {
     if (!result) throw new Error(`人物骨架缺少 ${name}`);
     return result;
   };
-  const hand = bone('DEF-hand.R');
-  const upperArm = bone('DEF-upper_arm.R');
-  const forearm = bone('DEF-forearm.R');
-  const chest = bone('DEF-spine.003');
+  const hand = bone(config.hand);
+  const upperArm = bone(config.arm);
+  const forearm = bone(config.forearm);
+  const chest = bone(config.chest);
   const mixer = new THREE.AnimationMixer(model);
   const actions = new Map<string, THREE.AnimationAction>();
   for (const clip of gltf.animations) actions.set(clip.name, mixer.clipAction(clip));
-  for (const name of ['Idle', 'Run', 'Jump', 'Fall']) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
-  let active = actions.get('Idle')!;
+  for (const name of [config.idle, config.walk, config.run, config.jump, config.fall]) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
+  let active = actions.get(config.idle)!;
   active.play();
   mixer.update(0);
   root.updateMatrixWorld(true);
   const sword = createSword();
-  sword.position.set(0, 0.075, 0);
+  sword.position.set(0, config.id === 'sophia' ? 0.075 : 5, 0);
+  // 武器用世界尺寸，避免公分制骨架把劍放大百倍。
+  sword.scale.setScalar(1 / hand.getWorldScale(new THREE.Vector3()).x);
   const worldGrip = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, -0.55, 0.85).normalize());
   sword.quaternion.copy(hand.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldGrip));
   hand.add(sword);
@@ -73,12 +76,41 @@ export async function loadHero() {
 
   return {
     root,
+    config,
+    dispose() {
+      mixer.stopAllAction();
+      mixer.uncacheRoot(model);
+      const textures = new Set<THREE.Texture>();
+      const materials = new Set<THREE.Material>();
+      root.traverse(object => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          if (object instanceof THREE.SkinnedMesh) object.skeleton.dispose();
+          for (const material of Array.isArray(object.material) ? object.material : [object.material]) materials.add(material);
+        }
+      });
+      for (const material of materials) {
+        for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+        material.dispose();
+      }
+      for (const texture of textures) {
+        texture.dispose();
+        if (typeof ImageBitmap !== 'undefined' && texture.image instanceof ImageBitmap) texture.image.close();
+      }
+      root.removeFromParent();
+    },
     update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number) {
       motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : moving ? (running ? 'run' : 'walk') : 'idle';
-      if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? 'Jump' : 'Fall');
-      else if (moving) setAction('Run', running ? 1.35 : 0.72);
-      else setAction('Idle');
+      if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
+      else if (moving) setAction(running ? config.run : config.walk, config.id === 'sophia' ? (running ? 1.35 : 0.72) : 1);
+      else setAction(config.idle);
       mixer.update(dt);
+      if (config.id !== 'sophia' && jumpHeight > 0.02) {
+        bone('Bip01 L Thigh').rotateX(-0.35);
+        bone('Bip01 R Thigh').rotateX(-0.5);
+        bone('Bip01 L Calf').rotateX(0.65);
+        bone('Bip01 R Calf').rotateX(0.8);
+      }
       // 在原始骨架姿態上疊加揮劍，不再旋轉獨立於手臂的武器。
       if (attackTime > 0) {
         const phase = 1 - attackTime / 0.32;
@@ -89,7 +121,7 @@ export async function loadHero() {
         chest.rotateY(-0.35 * Math.sin(phase * Math.PI * 2));
       }
       // 握劍手指採輕度彎曲，基礎姿態每幀由 Mixer 還原，不累加。
-      for (const digit of ['index', 'middle', 'ring', 'pinky']) {
+      if (config.id === 'sophia') for (const digit of ['index', 'middle', 'ring', 'pinky']) {
         bone(`DEF-f_${digit}.01.R`).rotateX(0.6);
         bone(`DEF-f_${digit}.02.R`).rotateX(0.7);
       }
@@ -98,7 +130,7 @@ export async function loadHero() {
     snapshot() {
       hand.getWorldPosition(handPosition);
       return {
-        loaded: true, skinnedMeshes, bones: bones.size, triangles,
+        id: config.id, loaded: true, skinnedMeshes, bones: bones.size, triangles,
         animation: motion, clip: active.getClip().name, animationTime: active.time,
         swordAttachedTo: sword.parent?.name ?? '',
         hand: { x: handPosition.x, y: handPosition.y, z: handPosition.z },

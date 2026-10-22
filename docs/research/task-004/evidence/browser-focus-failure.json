@@ -1,0 +1,285 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/canopy-forge-lab/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "展示暫停|鍵盤可移動|鍵盤與滑鼠攻擊"
+    ],
+    "configFile": "/workspace/canopy-forge-lab/playwright.config.ts",
+    "rootDir": "/workspace/canopy-forge-lab/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/canopy-forge-lab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/canopy-forge-lab/tests/browser",
+        "snapshotDir": "/workspace/canopy-forge-lab/tests/browser",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "viewport": {
+            "width": 960,
+            "height": 540
+          },
+          "deviceScaleFactor": 1,
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--enable-unsafe-swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "gallery.spec.ts",
+      "file": "gallery.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "展示暫停戰鬥、播放男女骨架動作，退出後恢復控制",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 110451,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.3\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 20000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.3\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 20000ms exceeded while waiting on the predicate\n    at /workspace/canopy-forge-lab/tests/browser/gallery.spec.ts:74:81",
+                    "location": {
+                      "file": "/workspace/canopy-forge-lab/tests/browser/gallery.spec.ts",
+                      "column": 81,
+                      "line": 74
+                    },
+                    "snippet": "  72 |   await page.keyboard.up('d');\n  73 |   await page.keyboard.press('Space');\n> 74 |   await expect.poll(async () => (await read(page)).hero.y, { intervals: [30] }).toBeGreaterThan(0.3);\n     |                                                                                 ^\n  75 |   await expect.poll(async () => (await read(page)).hero.y).toBe(0);\n  76 |   await info.attach('motions', { body: JSON.stringify(samples,null,2), contentType: 'application/json' });\n  77 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/canopy-forge-lab/tests/browser/gallery.spec.ts",
+                        "column": 81,
+                        "line": 74
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.3\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 20000ms exceeded while waiting on the predicate\n\n  72 |   await page.keyboard.up('d');\n  73 |   await page.keyboard.press('Space');\n> 74 |   await expect.poll(async () => (await read(page)).hero.y, { intervals: [30] }).toBeGreaterThan(0.3);\n     |                                                                                 ^\n  75 |   await expect.poll(async () => (await read(page)).hero.y).toBe(0);\n  76 |   await info.attach('motions', { body: JSON.stringify(samples,null,2), contentType: 'application/json' });\n  77 | });\n    at /workspace/canopy-forge-lab/tests/browser/gallery.spec.ts:74:81"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T10:18:41.892Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/canopy-forge-lab/test-results/gallery-展示暫停戰鬥、播放男女骨架動作，退出後恢復控制/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/canopy-forge-lab/test-results/gallery-展示暫停戰鬥、播放男女骨架動作，退出後恢復控制/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/canopy-forge-lab/test-results/gallery-展示暫停戰鬥、播放男女骨架動作，退出後恢復控制/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/canopy-forge-lab/tests/browser/gallery.spec.ts",
+                    "column": 81,
+                    "line": 74
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0087bd98ece4956907e4-a0add41a5de98c162822",
+          "file": "gallery.spec.ts",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "game.spec.ts",
+      "file": "game.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "鍵盤可移動、Shift 跑得更快、Space 跳躍後落地",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 37638,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T10:20:34.746Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-7f5a2422ed6b0b0bb48e",
+          "file": "game.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "鍵盤與滑鼠攻擊、冷卻、死亡及三秒重生可重複運作",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 56341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T10:21:12.702Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "lifecycle",
+                      "contentType": "application/json",
+                      "body": "ewogICJkZWFkIjogewogICAgInRpbWUiOiAzLjY4OTk5OTk5OTk5OTk5NjQsCiAgICAiZnJhbWUiOiA4MywKICAgICJoZXJvIjogewogICAgICAieCI6IDMuNTY2MDU2NzQwMjQxNTMsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAxLjA1MTg1NDMyMzg4MTgyMSwKICAgICAgImhwIjogMTAwCiAgICB9LAogICAgIm1vbnN0ZXIiOiB7CiAgICAgICJ4IjogNC40Nzk3NTY1NjkzOTE0OTg1LAogICAgICAieSI6IDAsCiAgICAgICJ6IjogLTAuNTMwODIyOTM3MTE2ODU0MSwKICAgICAgImhwIjogMCwKICAgICAgInZpc2libGUiOiBmYWxzZSwKICAgICAgInJlc3Bhd25BdCI6IDYuNTU0OTk5OTk5OTk5OTk2CiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMC4xODUwMDAwMDAwMDAwMDAxLAogICAgImNoYXJhY3RlciI6IHsKICAgICAgImlkIjogInNvcGhpYSIsCiAgICAgICJsb2FkZWQiOiB0cnVlLAogICAgICAic2tpbm5lZE1lc2hlcyI6IDQsCiAgICAgICJib25lcyI6IDkzLAogICAgICAidHJpYW5nbGVzIjogMTkwODYsCiAgICAgICJhbmltYXRpb24iOiAiYXR0YWNrIiwKICAgICAgImNsaXAiOiAiSWRsZSIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMC40Mjk5OTk5OTk5OTk5OTg5NCwKICAgICAgInN3b3JkQXR0YWNoZWRUbyI6ICJERUYtaGFuZFIiLAogICAgICAiaGFuZCI6IHsKICAgICAgICAieCI6IDMuNTc2NTAwNjk4MTYwMTA5NSwKICAgICAgICAieSI6IDAuNjczMjYwNjI2ODA5MjAxMiwKICAgICAgICAieiI6IDEuMzg2NjQyODA3MDgyMjQ5NAogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMzUwMzQ4MzU1Nzk5NDYyNTUsCiAgICAgICAgLTAuNjg3Njk3Mjc1NjA0Mzk5MywKICAgICAgICAwLjMwMjA1NzAzNTAxMDM4ODYsCiAgICAgICAgMC41NTk1NDQ1MTU5MzI2ODUzCiAgICAgIF0KICAgIH0sCiAgICAic2hvd2Nhc2UiOiBmYWxzZSwKICAgICJyZXNvdXJjZXMiOiB7CiAgICAgICJnZW9tZXRyaWVzIjogNTcsCiAgICAgICJ0ZXh0dXJlcyI6IDEwCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogNy41LAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogNy41LAogICAgICAibWluRGlzdGFuY2UiOiAxLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgInN0aWxsRGVhZCI6IHsKICAgICJ0aW1lIjogNS4wMzk5OTk5OTk5OTk5OTUsCiAgICAiZnJhbWUiOiAxMTMsCiAgICAiaGVybyI6IHsKICAgICAgIngiOiAzLjU2NjA1Njc0MDI0MTUzLAogICAgICAieSI6IDAsCiAgICAgICJ6IjogMS4wNTE4NTQzMjM4ODE4MjEsCiAgICAgICJocCI6IDEwMAogICAgfSwKICAgICJtb25zdGVyIjogewogICAgICAieCI6IDQuNDc5NzU2NTY5MzkxNDk4NSwKICAgICAgInkiOiAwLAogICAgICAieiI6IC0wLjUzMDgyMjkzNzExNjg1NDEsCiAgICAgICJocCI6IDAsCiAgICAgICJ2aXNpYmxlIjogZmFsc2UsCiAgICAgICJyZXNwYXduQXQiOiA2LjU1NDk5OTk5OTk5OTk5NgogICAgfSwKICAgICJhdHRhY2tDb29sZG93biI6IDAsCiAgICAiY2hhcmFjdGVyIjogewogICAgICAiaWQiOiAic29waGlhIiwKICAgICAgImxvYWRlZCI6IHRydWUsCiAgICAgICJza2lubmVkTWVzaGVzIjogNCwKICAgICAgImJvbmVzIjogOTMsCiAgICAgICJ0cmlhbmdsZXMiOiAxOTA4NiwKICAgICAgImFuaW1hdGlvbiI6ICJpZGxlIiwKICAgICAgImNsaXAiOiAiSWRsZSIsCiAgICAgICJhbmltYXRpb25UaW1lIjogMS43Nzk5OTk5OTk5OTk5OTgsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAzLjg5NDkxMjg4MDc0NDIyNCwKICAgICAgICAieSI6IDAuNzI4NDkwNDcwNzI0NDM3NywKICAgICAgICAieiI6IDEuMTcyNTA0OTk3NTI5MDYzNgogICAgICB9LAogICAgICAidXBwZXJBcm0iOiBbCiAgICAgICAgLTAuMTc2MDUzMTAxODk1ODAwMzcsCiAgICAgICAgLTAuNjIxNDM5OTYxMjkwOTMwNCwKICAgICAgICAwLjUzMjI3MDU2NjAzNDE0MDcsCiAgICAgICAgMC41NDcyNzEyMjA0NjM4OTE2CiAgICAgIF0KICAgIH0sCiAgICAic2hvd2Nhc2UiOiBmYWxzZSwKICAgICJyZXNvdXJjZXMiOiB7CiAgICAgICJnZW9tZXRyaWVzIjogNTcsCiAgICAgICJ0ZXh0dXJlcyI6IDEwCiAgICB9LAogICAgImNhbWVyYSI6IHsKICAgICAgImRpc3RhbmNlIjogNy41LAogICAgICAiZGVzaXJlZERpc3RhbmNlIjogNy41LAogICAgICAibWluRGlzdGFuY2UiOiAxLjUsCiAgICAgICJtYXhEaXN0YW5jZSI6IDI0LAogICAgICAiYXppbXV0aCI6IDAuNQogICAgfQogIH0sCiAgInJldml2ZWQiOiB7CiAgICAidGltZSI6IDYuODM5OTk5OTk5OTk5OTkyLAogICAgImZyYW1lIjogMTUzLAogICAgImhlcm8iOiB7CiAgICAgICJ4IjogMy41NjYwNTY3NDAyNDE1MywKICAgICAgInkiOiAwLAogICAgICAieiI6IDEuMDUxODU0MzIzODgxODIxLAogICAgICAiaHAiOiAxMDAKICAgIH0sCiAgICAibW9uc3RlciI6IHsKICAgICAgIngiOiA0LjQ3OTc1NjU2OTM5MTQ5ODUsCiAgICAgICJ5IjogMCwKICAgICAgInoiOiAtMC41MzA4MjI5MzcxMTY4NTQxLAogICAgICAiaHAiOiAzLAogICAgICAidmlzaWJsZSI6IHRydWUsCiAgICAgICJyZXNwYXduQXQiOiBudWxsCiAgICB9LAogICAgImF0dGFja0Nvb2xkb3duIjogMCwKICAgICJjaGFyYWN0ZXIiOiB7CiAgICAgICJpZCI6ICJzb3BoaWEiLAogICAgICAibG9hZGVkIjogdHJ1ZSwKICAgICAgInNraW5uZWRNZXNoZXMiOiA0LAogICAgICAiYm9uZXMiOiA5MywKICAgICAgInRyaWFuZ2xlcyI6IDE5MDg2LAogICAgICAiYW5pbWF0aW9uIjogImlkbGUiLAogICAgICAiY2xpcCI6ICJJZGxlIiwKICAgICAgImFuaW1hdGlvblRpbWUiOiAxLjU3OTk5OTk5OTk5OTk5NzIsCiAgICAgICJzd29yZEF0dGFjaGVkVG8iOiAiREVGLWhhbmRSIiwKICAgICAgImhhbmQiOiB7CiAgICAgICAgIngiOiAzLjkxMjk1NDIxNzg2NTA4MSwKICAgICAgICAieSI6IDAuNzMwNTYxMTE2OTAxMTgwNCwKICAgICAgICAieiI6IDEuMDY4MTc0ODEzMDY0MDU2CiAgICAgIH0sCiAgICAgICJ1cHBlckFybSI6IFsKICAgICAgICAtMC4xNTQ5MTY0MDEwNDIwOTg0NCwKICAgICAgICAtMC42MTU5OTExMDQ1NTUxNzA1LAogICAgICAgIDAuNTQ3MDE5NDEzODkxMDA3MiwKICAgICAgICAwLjU0NTI3NTc1MjE0NDU2MzYKICAgICAgXQogICAgfSwKICAgICJzaG93Y2FzZSI6IGZhbHNlLAogICAgInJlc291cmNlcyI6IHsKICAgICAgImdlb21ldHJpZXMiOiA1NywKICAgICAgInRleHR1cmVzIjogMTAKICAgIH0sCiAgICAiY2FtZXJhIjogewogICAgICAiZGlzdGFuY2UiOiA3LjUsCiAgICAgICJkZXNpcmVkRGlzdGFuY2UiOiA3LjUsCiAgICAgICJtaW5EaXN0YW5jZSI6IDEuNSwKICAgICAgIm1heERpc3RhbmNlIjogMjQsCiAgICAgICJhemltdXRoIjogMC41CiAgICB9CiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b1bb1493a64c9fc3ab6-cb0dc8fe0739527960e8",
+          "file": "game.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T10:18:40.415Z",
+    "duration": 208828.483,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

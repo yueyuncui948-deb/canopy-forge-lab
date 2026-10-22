@@ -1,0 +1,19 @@
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -27,8 +27,6 @@
+ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+ renderer.toneMapping = THREE.ACESFilmicToneMapping;
+ renderer.toneMappingExposure = 1.1;
+-renderer.domElement.tabIndex = 0;
+-renderer.domElement.setAttribute('aria-label', '遊戲畫面：WASD 移動，空白鍵跳躍');
+ app.prepend(renderer.domElement);
+ const followCamera = createFollowCamera(camera, renderer.domElement);
+ const room = new RoomEnvironment();
+@@ -96,7 +94,6 @@
+    showcase = enabled; keys.clear(); jumpV = 0; jumpY = 0; attackT = 0;
+    hero.root.position.y = 0; previewTime = 0;
+    if (enabled) hero.root.rotation.y = 0;
+-   else renderer.domElement.focus({ preventScroll: true });
+  },
+  motion(motion) { previewMotion = motion; previewTime = 0; },
+  view(close) { followCamera.preset(close); },

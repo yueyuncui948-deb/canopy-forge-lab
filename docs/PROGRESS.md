@@ -2,7 +2,7 @@
 
 ## 目前狀態
 
-研究流程母版 v0.1；主角已換為 Sophia 風格化骨架人物，環境與怪物仍為占位。task-002 已完成基礎建置與走跑跳／攻擊／死亡重生回歸；P0 尚缺 lint 規則實作，P1 尚缺鏡頭相對方向驗收，不能標記全階段完成。原始進度中的「尚未連接 GitHub」已過時：2026-10-22 唯讀查詢確認 origin 指向 yueyuncui948-deb/canopy-forge-lab，當時本地 HEAD 與遠端 main 均為 09937fb773974b7bace164a56f4d0cf0d183d2ef。
+研究流程母版 v0.1；主角可切換 Rocketbox 寫實男女及 Sophia 風格化骨架人物，環境與怪物仍為占位。task-002 已完成基礎建置與走跑跳／攻擊／死亡重生回歸；P0 尚缺 lint 規則實作，P1 尚缺鏡頭相對方向驗收，不能標記全階段完成。原始進度中的「尚未連接 GitHub」已過時：2026-10-22 唯讀查詢確認 origin 指向 yueyuncui948-deb/canopy-forge-lab，當時本地 HEAD 與遠端 main 均為 09937fb773974b7bace164a56f4d0cf0d183d2ef。
 
 ## 既有唯讀檢查（本任務前，聊天觀察摘要）
 
@@ -23,6 +23,7 @@ Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 1
 - [task-001：研究流程母版](research/task-001/SUMMARY.md)：文件、模板與文件 CI；以任務報告記錄實際驗證及 Git 交付狀態。
 - [task-002](research/task-002/SUMMARY.md)：本地型別／建置、5 項單元、3 項瀏覽器測試與開發伺服器 smoke 通過；已建立遊戲 CI，遠端執行待確認。
 - [task-003](research/task-003/SUMMARY.md)：依使用者要求先提升人物；已導入 Sophia、滾輪近看、右鍵環視及手骨武器，8 項單元與 6 項瀏覽器回歸通過。
+- [task-004](research/task-004/SUMMARY.md)：新增自然比例男女、三角色選擇、展示模式與近距離臉部檢視；8 項單元、9 項瀏覽器基線，以及焦點／角色比例近看修正後的受影響回歸通過；完整失敗與修正證據見任務報告。
 - 下一項依視覺回饋細分人物步態／攻擊動畫精修與戰鬥／碰撞，維持小型場景。
 
 當前雲端依賴與開發伺服器已準備，install_script／start_skill 已保存草稿；尚未發布環境快照，也未驗證新任務還原。

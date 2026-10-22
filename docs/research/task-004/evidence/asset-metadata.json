@@ -1,0 +1,74 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "pillow": "12.3.0",
+  "models": [
+    {
+      "file": "female.glb",
+      "bytes": 6162756,
+      "sha256": "ca059d8b7eb35c10f72af8f49a424d47ce99c1a3ac731025077c3ab0d5a91cd2",
+      "triangles": 8732,
+      "bones": 80,
+      "animations": [
+        "Idle",
+        "Walk",
+        "Run"
+      ],
+      "images": [
+        [
+          "f001_body_normal",
+          "image/png"
+        ],
+        [
+          "f001_body_color",
+          "image/jpeg"
+        ],
+        [
+          "f001_head_normal",
+          "image/png"
+        ],
+        [
+          "f001_head_color",
+          "image/jpeg"
+        ],
+        [
+          "f001_opacity_color",
+          "image/png"
+        ]
+      ]
+    },
+    {
+      "file": "male.glb",
+      "bytes": 5596036,
+      "sha256": "df543fd0e15023dab90b3206e96c52f6e528c9c89ff50086eb47383bfb85d46c",
+      "triangles": 7440,
+      "bones": 80,
+      "animations": [
+        "Idle",
+        "Walk",
+        "Run"
+      ],
+      "images": [
+        [
+          "m002_body_normal",
+          "image/png"
+        ],
+        [
+          "m002_body_color",
+          "image/jpeg"
+        ],
+        [
+          "m002_head_normal",
+          "image/png"
+        ],
+        [
+          "m002_head_color",
+          "image/jpeg"
+        ],
+        [
+          "m002_opacity_color",
+          "image/png"
+        ]
+      ]
+    }
+  ]
+}

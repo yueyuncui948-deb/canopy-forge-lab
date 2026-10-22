@@ -4,6 +4,8 @@ import { DEFAULT_DISTANCE, MIN_DISTANCE, MAX_DISTANCE, zoomDistance } from './zo
 export function createFollowCamera(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasElement) {
   let desiredDistance = DEFAULT_DISTANCE;
   let distance = desiredDistance;
+  let portraitDistance = MIN_DISTANCE;
+  let focusHeight = 1.9;
   let azimuth = 0.5;
   let elevationOffset = 0;
   let drag: { x: number; y: number } | null = null;
@@ -37,11 +39,18 @@ export function createFollowCamera(camera: THREE.PerspectiveCamera, canvas: HTML
   });
 
   return {
+    setCharacter(chibi: boolean) {
+      const viewingPortrait = desiredDistance <= 2.5;
+      portraitDistance = chibi ? 2.5 : MIN_DISTANCE;
+      focusHeight = chibi ? 1.65 : 1.9;
+      if (viewingPortrait) desiredDistance = portraitDistance;
+    },
+    preset(close: boolean) { desiredDistance = close ? portraitDistance : 5.5; azimuth = 0.15; elevationOffset = close ? -0.1 : -0.2; },
     update(position: THREE.Vector3, dt: number) {
       distance = THREE.MathUtils.lerp(distance, desiredDistance, 1 - Math.exp(-12 * dt));
       const close = 1 - THREE.MathUtils.smoothstep(distance, MIN_DISTANCE, 7);
       const elevation = THREE.MathUtils.clamp(0.6 - close * 0.38 + elevationOffset, 0.14, 1.12);
-      target.copy(position).add(new THREE.Vector3(0, THREE.MathUtils.lerp(1.05, 1.65, close), 0));
+      target.copy(position).add(new THREE.Vector3(0, THREE.MathUtils.lerp(1.05, focusHeight, close), 0));
       offset.set(Math.sin(azimuth) * Math.cos(elevation), Math.sin(elevation), Math.cos(azimuth) * Math.cos(elevation)).multiplyScalar(distance);
       camera.position.copy(target).add(offset);
       camera.lookAt(target);

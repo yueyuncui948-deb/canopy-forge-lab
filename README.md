@@ -2,7 +2,7 @@
 
 這是一項自主 AI 軟體工程實驗：用小型桌面瀏覽器 3D ARPG，研究 Agent 如何規劃、實作、測試、修正及留下可追溯的證據。工作流程與遊戲同為交付成果。
 
-**目前是研究流程母版 v0.1，主角已替換為有臉髮、服裝材質與骨架動畫的 Sophia 風格化人物；怪物與環境仍為占位模型，寫實人物與完整美術品質尚未驗收。**
+**目前是研究流程母版 v0.1，可切換 Rocketbox 寫實女性、寫實男性與 Sophia 動漫人物。具備人物展示模式及臉部近看；怪物與環境仍為占位模型，最終 ARPG 美術與完整戰鬥尚未驗收。**
 
 ## 閱讀入口
 
@@ -27,7 +27,7 @@ npm run dev
 # 如需檢查正式建置：npm run preview
 ```
 
-控制：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。滾輪可拉近／拉遠，右鍵拖曳環視，R 重設視角。預設鏡頭距離 7.5，最近 2.5，可近看臉部與服裝；移動方向依鏡頭方位計算。場景碰撞與玩家死亡流程仍待後續任務。
+控制：WASD／方向鍵移動、Shift 跑步、Space 跳躍、滑鼠左鍵／J 攻擊。滾輪可拉近／拉遠，右鍵拖曳環視，R 重設視角。預設鏡頭距離 7.5，最近 1.5，可近看臉部與服裝；移動方向依鏡頭方位計算。場景碰撞與玩家死亡流程仍待後續任務。
 
 ## 本機展示與 XAMPP
 
@@ -40,11 +40,17 @@ npm run build -- --base=/canopy/
 
 將 dist 裡的所有內容（包括 assets 與 models 資料夾）放進 htdocs/canopy，再經 Apache 開啟 /canopy/。不要只複製 index.html。已以靜態 HTTP 伺服器驗證相同子目錄路徑，未在雲端直接執行 XAMPP／Apache。
 
-## 人物與鏡頭預覽
+## 人物選擇與展示
 
-[近距離臉部／服裝](docs/research/task-003/evidence/browser/character-close.png) · [右鍵環視](docs/research/task-003/evidence/browser/character-orbit.png) · [遊戲視角](docs/research/task-003/evidence/browser/character-default.png)
+右側選擇 **艾琳（寫實女性）／里昂（寫實男性）／Sophia（動漫人物）**。按「近看」查看臉部，按「全身」比較比例；右鍵環視、滾輪縮放。
 
-Sophia by GDQuest，CC BY-NC-SA 4.0；來源與修改見 [資產紀錄](docs/ASSETS.md)。本次為非商業研究展示。原始模型約 2.6 MB，隨專案提供，不需執行時連外下載。這版是風格化／Q 版人物；步行暫用跑步 clip 降速，攻擊為骨架疊加，後續仍需專門動作與更高品質美術評估。
+[寫實女性近看](docs/research/task-004/evidence/final-preview/female-portrait.png) · [寫實男性近看](docs/research/task-004/evidence/final-preview/male-portrait.png) · [Sophia 近看](docs/research/task-004/evidence/final-preview/sophia-portrait.png)
+
+勾選「人物展示」會暫停戰鬥，可切換待機、步行、跑步、跳躍與揮劍。取消勾選即可回到遊戲。切換失敗會保留目前人物，可再選取重試。
+
+兩位寫實角色來自 Microsoft Rocketbox（MIT），具正常人體比例、皮膚／髮絲／服裝貼圖及獨立走跑動畫。Sophia 來自 GDQuest（CC BY-NC-SA 4.0）。全部隨專案附上，不需執行時連外下載；來源、授權與可重建轉換腳本見 [資產紀錄](docs/ASSETS.md)。
+
+現代服裝是人物品質研究用；跳躍／揮劍仍有程序動畫限制，不能視為最終 ARPG 裝備及動畫品質達標。
 
 ## 瀏覽器回歸
 
@@ -64,7 +70,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:browser
 ## 正式輸出與限制
 
 npm run build 產生 dist/，可由支援靜態檔案的 HTTP 伺服器提供；npm run preview 用於本機驗證，非正式部署服務。預設部署網站根目錄；若使用子路徑，需設定 Vite base 後重建並驗證。尚未公開部署。
-遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。目前 6 項瀏覽器回歸涵蓋原有操作、人物與鏡頭，以及載入失敗處理。詳見 [task-003 測試報告](docs/research/task-003/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
+遊戲 CI 執行安裝、型別、單元測試、建置及瀏覽器回歸。目前 9 項瀏覽器回歸涵蓋原有操作、人物與鏡頭，以及載入失敗處理。詳見 [task-004 測試報告](docs/research/task-004/TEST_REPORT.md)。遠端 CI 狀態未取得時不能推定通過。
 
 ## 文件檢查
 

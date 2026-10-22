@@ -1,4 +1,4 @@
-export const MIN_DISTANCE = 2.5;
+export const MIN_DISTANCE = 1.5;
 export const MAX_DISTANCE = 24;
 export const DEFAULT_DISTANCE = 7.5;
 

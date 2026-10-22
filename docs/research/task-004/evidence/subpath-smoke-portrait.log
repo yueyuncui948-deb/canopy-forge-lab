@@ -1,0 +1,264 @@
+{
+  "subpath": "/canopy/",
+  "states": [
+    {
+      "time": 0.7200000000000001,
+      "frame": 58,
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "z": 3,
+        "hp": 100
+      },
+      "monster": {
+        "x": 4.634553397180667,
+        "y": 0,
+        "z": -0.7076427177445304,
+        "hp": 3,
+        "visible": true,
+        "respawnAt": null
+      },
+      "attackCooldown": 0,
+      "character": {
+        "id": "female",
+        "loaded": true,
+        "skinnedMeshes": 3,
+        "bones": 80,
+        "triangles": 8732,
+        "animation": "idle",
+        "clip": "Idle",
+        "animationTime": 2.564999999999998,
+        "swordAttachedTo": "Bip01_R_Hand",
+        "hand": {
+          "x": -0.3057140831121148,
+          "y": 1.2094505949563932,
+          "z": 3.00230391030821
+        },
+        "upperArm": [
+          -0.02629280880061258,
+          -0.5426569333125614,
+          0.0654226825130521,
+          0.8369898548651385
+        ]
+      },
+      "showcase": true,
+      "resources": {
+        "geometries": 56,
+        "textures": 8
+      },
+      "camera": {
+        "distance": 1.5006184831988982,
+        "desiredDistance": 1.5,
+        "minDistance": 1.5,
+        "maxDistance": 24,
+        "azimuth": 0.15
+      }
+    },
+    {
+      "time": 0.7200000000000001,
+      "frame": 106,
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "z": 3,
+        "hp": 100
+      },
+      "monster": {
+        "x": 4.634553397180667,
+        "y": 0,
+        "z": -0.7076427177445304,
+        "hp": 3,
+        "visible": true,
+        "respawnAt": null
+      },
+      "attackCooldown": 0,
+      "character": {
+        "id": "male",
+        "loaded": true,
+        "skinnedMeshes": 3,
+        "bones": 80,
+        "triangles": 7440,
+        "animation": "idle",
+        "clip": "Idle",
+        "animationTime": 0.9000000000000002,
+        "swordAttachedTo": "Bip01_R_Hand",
+        "hand": {
+          "x": -0.3639054098765029,
+          "y": 1.1401053250280089,
+          "z": 3.0425136509909683
+        },
+        "upperArm": [
+          -0.08991752399210504,
+          -0.5491139187479652,
+          0.005121281577140138,
+          0.8308805663820702
+        ]
+      },
+      "showcase": true,
+      "resources": {
+        "geometries": 56,
+        "textures": 8
+      },
+      "camera": {
+        "distance": 1.5000000000000036,
+        "desiredDistance": 1.5,
+        "minDistance": 1.5,
+        "maxDistance": 24,
+        "azimuth": 0.15
+      }
+    },
+    {
+      "time": 0.7200000000000001,
+      "frame": 154,
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "z": 3,
+        "hp": 100
+      },
+      "monster": {
+        "x": 4.634553397180667,
+        "y": 0,
+        "z": -0.7076427177445304,
+        "hp": 3,
+        "visible": true,
+        "respawnAt": null
+      },
+      "attackCooldown": 0,
+      "character": {
+        "id": "sophia",
+        "loaded": true,
+        "skinnedMeshes": 4,
+        "bones": 93,
+        "triangles": 19086,
+        "animation": "idle",
+        "clip": "Idle",
+        "animationTime": 0.9000000000000002,
+        "swordAttachedTo": "DEF-handR",
+        "hand": {
+          "x": -0.28798255447191234,
+          "y": 0.6559373403084595,
+          "z": 3.0403340371083933
+        },
+        "upperArm": [
+          -0.33199154721712676,
+          -0.6557171334218993,
+          0.38408011945845055,
+          0.5588374135022341
+        ]
+      },
+      "showcase": true,
+      "resources": {
+        "geometries": 57,
+        "textures": 10
+      },
+      "camera": {
+        "distance": 2.4999796004965886,
+        "desiredDistance": 2.5,
+        "minDistance": 1.5,
+        "maxDistance": 24,
+        "azimuth": 0.15
+      }
+    }
+  ],
+  "responses": [
+    {
+      "path": "/canopy/?debug=1",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/index-B0gt6Kmh.css",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/index-Wh2TXcRl.js",
+      "status": 200
+    },
+    {
+      "path": "/canopy/assets/GLTFLoader-BXKJd3ik.js",
+      "status": 200
+    },
+    {
+      "path": "/canopy/models/rocketbox/female.glb",
+      "status": 200
+    },
+    {
+      "path": "/99500f5c-47aa-4eb3-be9f-0a8ec0531175",
+      "status": 200
+    },
+    {
+      "path": "/79e7b6a1-7484-4c14-b95e-35faadf06688",
+      "status": 200
+    },
+    {
+      "path": "/82b15480-50ca-4e3b-b071-4dfbd88d3f1b",
+      "status": 200
+    },
+    {
+      "path": "/83c68f67-5e57-45e2-a8a0-40923067c194",
+      "status": 200
+    },
+    {
+      "path": "/d216bd58-150e-4529-8af8-9755fae42696",
+      "status": 200
+    },
+    {
+      "path": "/canopy/models/rocketbox/male.glb",
+      "status": 200
+    },
+    {
+      "path": "/fdb00a78-3224-4c3d-aecd-02b71ff61db7",
+      "status": 200
+    },
+    {
+      "path": "/187ab4b3-a35b-4fe3-a578-d21407fd09a1",
+      "status": 200
+    },
+    {
+      "path": "/3ba22a58-b677-450d-a94a-55765cd7620c",
+      "status": 200
+    },
+    {
+      "path": "/9d60a809-760e-4894-b6e3-b9a0b4bc2761",
+      "status": 200
+    },
+    {
+      "path": "/690e8982-689b-46b9-ad4d-9bf28675602b",
+      "status": 200
+    },
+    {
+      "path": "/canopy/models/sophia/sophia.glb",
+      "status": 200
+    },
+    {
+      "path": "/47e78447-86d4-43a0-9311-6a4a7ca108bb",
+      "status": 200
+    },
+    {
+      "path": "/df9344be-5e7b-4412-90bb-07623782bb5e",
+      "status": 200
+    },
+    {
+      "path": "/14aafb0f-318d-4dee-8e0e-999df5ebe650",
+      "status": 200
+    },
+    {
+      "path": "/edb095f1-0ab3-40b7-a8db-de156f4bb082",
+      "status": 200
+    },
+    {
+      "path": "/4d169a8b-c5dd-4bda-9e41-fef05ca7470c",
+      "status": 200
+    },
+    {
+      "path": "/ae31e686-e79c-473b-8839-baad2427c991",
+      "status": 200
+    },
+    {
+      "path": "/70c9e5a7-e040-40e9-9807-cc02f0a0dcfb",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "note": "Python 靜態 HTTP server 模擬 XAMPP 子目錄，未直接啟動 Apache；真實 Chromium WebGL2 軟體渲染。"
+}

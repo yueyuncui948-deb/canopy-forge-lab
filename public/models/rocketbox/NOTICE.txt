@@ -1,0 +1,8 @@
+Microsoft Rocketbox Avatar Library
+Copyright (c) 2020 Microsoft — MIT License，完整原文見 LICENSE.txt。
+原始人物：Female_Adult_01、Male_Adult_01。介面暱稱艾琳、里昂由本專案提供。
+人物創作：Markus Wojcik / Rocketbox；Microsoft Research 與其他貢獻者見 UPSTREAM-README.txt。
+來源：https://github.com/microsoft/Microsoft-Rocketbox/tree/0943055db6ec570bcef9f2c8b41c9e5467c808f9
+原始動畫：f/m_idle_breathe_01、f/m_walk_neutral、f/m_run_neutral。
+修改：Blender 4.3.2 轉 GLB，材質重建，身體/法線/透明貼圖縮為 1024，頭部底色保留 2048；底色 JPEG，法線/透明 PNG。世界空間骨架轉移後烘焙動畫，水平原地化。執行時尺寸正規化、補光、掛劍與跳躍/攻擊程序姿態。
+研究參考：Gonzalez-Franco et al. (2020), The Rocketbox library and the utility of freely available rigged avatars. DOI: 10.3389/frvir.2020.561558
