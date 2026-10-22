@@ -15,3 +15,7 @@ GitHub Actions 設定已加入，但遠端結果尚未確認；實際推送結�
 task-003 先處理鏡頭相對方向與輸入／鏡頭責任拆分，再分項驗證戰鬥與碰撞。後續改良畫面偏暗與樹冠遮擋；精緻骨架人物待操作穩定後導入。P0 尚缺 lint，P1 方向驗收未完，尚未宣稱母版 v1.0 或遊戲美術達標。
 
 遠端檢查限制：實際使用 gh api 查詢 Actions 回覆 Forbidden（見 evidence/remote-ci.log），因此沒有宣稱遠端 CI 通過，也未要求額外 token；原生 Git 與 API 權限分開判定。
+
+## 已確認交付
+
+實作 commit 93fa36be64d44ea7342fc8e6bd27f5d04a962497 已成功推送並以 git ls-remote 核對遠端 main。這項確認不代表 GitHub Actions 已通過。
