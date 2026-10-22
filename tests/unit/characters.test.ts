@@ -87,28 +87,29 @@ test('素材總表：ID 唯一、必填欄位齊全、CATALOG.md 與 catalog.jso
   assert.match(output, /通過/);
 });
 
-test('Mixamo 攻擊擊中時刻落在揮劍高峰（右手相對骨盆速度 ≥ 該動作峰值 45%），且在動作長度內', async () => {
+test('攻擊擊中時刻落在刀尖揮砍高峰（刀尖速度 ≥ 該區段峰值 55%），且在播放區間內', async () => {
   const THREE = await import('three');
   for (const c of characters.filter(c => c.moves)) {
     const gltf = await loadCharacterGlb(pub(c.file));
     normalizeHeight(gltf.scene);
-    const bones = boneMap(gltf.scene);
-    const hand = bones.get(sanitize(c.hand))!, hips = bones.get(sanitize(c.legs.thighL))!.parent!;
+    const grip = gltf.scene.getObjectByName('SwordGrip')!;
+    const tip = () => { const s = grip.getWorldScale(new THREE.Vector3()).x; return grip.localToWorld(new THREE.Vector3(0, 1 / s, 0)); };
     const cases = [
-      ...(['attack', 'combo2', 'combo3'] as const).map(kind => ({ label: kind, clip: c.moves!.clips[kind], from: 0, to: Infinity, hits: c.moves!.hits[kind] })),
-      ...c.moves!.chain.map((seg, i) => ({ label: `J 連段第 ${i + 1} 段`, ...seg })),
+      ...(['attack', 'combo2', 'combo3'] as const).map(kind => ({ label: kind, clip: c.moves!.clips[kind], range: c.moves!.ranges[kind] ?? [0, Infinity], hits: c.moves!.hits[kind] })),
+      ...c.moves!.chain.map((seg, i) => ({ label: `J 連段第 ${i + 1} 段`, clip: seg.clip, range: [seg.from, seg.to], hits: seg.hits })),
     ];
-    for (const { label: kind, clip: clipName, from, to, hits } of cases) {
+    for (const { label, clip: clipName, range, hits } of cases) {
       const clip = gltf.animations.find(a => a.name === clipName)!;
       const mixer = new THREE.AnimationMixer(gltf.scene); mixer.clipAction(clip).play();
-      const at = (t: number) => { mixer.setTime(t); gltf.scene.updateMatrixWorld(true); return hand.getWorldPosition(new THREE.Vector3()).sub(hips.getWorldPosition(new THREE.Vector3())); };
+      const at = (t: number) => { mixer.setTime(Math.min(Math.max(t, 0), clip.duration - 1e-4)); gltf.scene.updateMatrixWorld(true); return tip(); };
       const speed = (t: number) => at(t + 1 / 60).distanceTo(at(t - 1 / 60)) * 30;
-      const samples = Array.from({ length: Math.floor(clip.duration * 30) - 2 }, (_, i) => speed((i + 1) / 30)).sort((a, b) => a - b);
+      const end = Math.min(range[1], clip.duration);
+      const samples = Array.from({ length: Math.floor((end - range[0]) * 30) - 2 }, (_, i) => speed(range[0] + (i + 1) / 30)).sort((a, b) => a - b);
       const peak = samples[Math.floor(samples.length * 0.95)];
       for (const t of hits) {
-        assert.ok(t < clip.duration && t > from && t < to, `${c.id} ${kind} 擊中時刻 ${t} 不在播放區間內`);
-        const best = Math.max(...[-0.1, -0.05, 0, 0.05, 0.1].map(d => speed(t + d)));
-        assert.ok(best >= 0.45 * peak, `${c.id} ${kind} 在 ${t}s 手未在揮動（${best.toFixed(2)} / 峰值 ${peak.toFixed(2)}）`);
+        assert.ok(t > range[0] && t < end, `${c.id} ${label} 擊中時刻 ${t} 不在播放區間 ${range[0]}–${end.toFixed(2)}`);
+        const best = Math.max(...[-0.05, -0.025, 0, 0.025, 0.05].map(d => speed(t + d)));
+        assert.ok(best >= 0.55 * peak, `${c.id} ${label} 在 ${t}s 刀尖未在揮砍（${best.toFixed(1)} / 峰值 ${peak.toFixed(1)}）`);
       }
       mixer.stopAllAction(); mixer.uncacheRoot(gltf.scene);
     }
@@ -135,6 +136,36 @@ test('倒地動畫最後停在倒下的姿勢（不會在最後一格跳回站�
       assert.ok(root, `${c.id} 缺 RootMotion 節點`);
       assert.ok(root!.position.z * direction > 0.3, `${c.id} ${name} 根位移方向不對（z=${root!.position.z.toFixed(2)}）`);
       mixer.stopAllAction(); mixer.uncacheRoot(gltf.scene);
+    }
+  }
+});
+
+test('握劍角度：待機時刀尖朝上，擊中瞬間刀尖掃過速度明顯大於手（刀身順著弧線揮，不是被拖著走）', async () => {
+  const THREE = await import('three');
+  for (const c of characters.filter(c => c.moves)) {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    normalizeHeight(gltf.scene);
+    const grip = gltf.scene.getObjectByName('SwordGrip');
+    assert.ok(grip, `${c.id} 缺 SwordGrip 握點`);
+    const bones = boneMap(gltf.scene);
+    const hand = bones.get(sanitize(c.hand))!;
+    const tipOf = () => { const s = grip!.getWorldScale(new THREE.Vector3()).x; return grip!.localToWorld(new THREE.Vector3(0, 1.0 / s, 0)); };
+    const gripPos = () => grip!.getWorldPosition(new THREE.Vector3());
+    const play = (name: string) => { const m = new THREE.AnimationMixer(gltf.scene); m.clipAction(gltf.animations.find(a => a.name === name)!).play(); return m; };
+    const idle = play(c.idle); idle.setTime(0.5); gltf.scene.updateMatrixWorld(true);
+    const up = tipOf().sub(gripPos()).normalize().y;
+    assert.ok(up > 0.5, `${c.id} 待機時刀尖未朝上（y=${up.toFixed(2)}）`);
+    idle.stopAllAction(); idle.uncacheRoot(gltf.scene);
+    for (const kind of ['attack', 'combo2', 'combo3'] as const) {
+      const m = play(c.moves!.clips[kind]);
+      // 檢查各動作的擊中瞬間
+      const at = (t: number) => { m.setTime(t); gltf.scene.updateMatrixWorld(true); return { tip: tipOf(), hand: hand.getWorldPosition(new THREE.Vector3()) }; };
+      for (const t of c.moves!.hits[kind]) {
+        const a = at(t - 1 / 30), b = at(t + 1 / 30);
+        const ratio = a.tip.distanceTo(b.tip) / Math.max(a.hand.distanceTo(b.hand), 1e-4);
+        assert.ok(ratio > 1.3, `${c.id} ${kind} @${t}s 刀尖／手速度比 ${ratio.toFixed(2)}，刀身未順著揮砍弧線`);
+      }
+      m.stopAllAction(); m.uncacheRoot(gltf.scene);
     }
   }
 });

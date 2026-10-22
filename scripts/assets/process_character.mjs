@@ -51,7 +51,7 @@ for (const name of plan.removeMesh ?? []) {
 }
 
 await doc.transform(
-  prune({ keepLeaves: false }),
+  prune({ keepLeaves: true, keepExtras: true }),
   dedup(),
   resample(),
   weld(),

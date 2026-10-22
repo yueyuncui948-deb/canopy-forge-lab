@@ -4,6 +4,8 @@ export type HeroAction = 'attack' | 'combo2' | 'combo3' | 'cast' | 'hit' | 'deat
 export interface Moves {
   clips: Record<HeroAction | 'crouch' | 'jumpStand' | 'jumpRun', string>;
   hits: Record<HeroAction, number[]>;
+  /** 只播放 clip 的一段（秒）；未列出的動作播完整 clip */
+  ranges: Partial<Record<HeroAction, [number, number]>>;
   /** 攻擊、施法類動作播放倍率 */
   actionScale: number;
   /** 原地起跳略過蹲伏預備的起點（秒） */
@@ -42,17 +44,19 @@ export const WALK_SPEED = 2.2;
 export const RUN_SPEED = 5.2;
 export const CROUCH_SPEED = 1.5;
 export const MIXAMO_MOVES: Moves = {
-  clips: { attack: 'SlashDown', combo2: 'SlashCross', combo3: 'Combo2H', cast: 'CastForward', hit: 'HitBody', death: 'DeathForward',
+  clips: { attack: 'SlashDown', combo2: 'ComboSlash', combo3: 'Combo1H', cast: 'CastForward', hit: 'HitBody', death: 'DeathForward',
     crouch: 'CrouchWalk', jumpStand: 'Jump', jumpRun: 'RunJump' },
-  // 擊中時刻取右手相對骨盆速度峰值（scripts/assets 分析，task-007）
-  hits: { attack: [0.57], combo2: [0.47, 0.8], combo3: [0.6, 1.3, 2.23], cast: [], hit: [], death: [] },
+  // 擊中時刻取「刀尖」速度峰值（task-009；task-007 以手速判定，誤把橫斬的預備動作當成第一刀）
+  hits: { attack: [0.58], combo2: [0.65, 1.22], combo3: [1.08, 2.1, 3.02], cast: [], hit: [], death: [] },
+  // 二連擊取劍盾連擊前兩刀；三連擊用單手劍連擊（與單手持劍一致），略去結尾慢收
+  ranges: { combo2: [0, 1.75], combo3: [0, 3.6] },
   actionScale: 1.2,
   jumpStandOffset: 0.3,
-  // 下劈 → 交叉二連斬（略過起手）→ 雙手連擊的最後一刀收尾
+  // 下劈 → 橫斬（略過起手）→ 單手連擊最後一刀收尾，三段都是單手
   chain: [
-    { clip: 'SlashDown', from: 0, to: 1.5, hits: [0.57] },
-    { clip: 'SlashCross', from: 0.15, to: 1.667, hits: [0.47, 0.8] },
-    { clip: 'Combo2H', from: 1.75, to: 3.267, hits: [2.23] },
+    { clip: 'SlashDown', from: 0, to: 1.5, hits: [0.58] },
+    { clip: 'SlashCross', from: 0.2, to: 1.667, hits: [0.82] },
+    { clip: 'Combo1H', from: 2.45, to: 3.9, hits: [3.02] },
   ],
 };
 /** 走、跑、蹲走的著地腳速度（高度 2.35 下，task-007 量測）換算播放倍率，減少滑步。 */

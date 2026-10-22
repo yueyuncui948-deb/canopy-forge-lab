@@ -254,6 +254,35 @@ for (const [srcClip, outName] of CLIPS) {
   }
 }
 
+// ---------- 握劍點 SwordGrip ----------
+// 在 X Bot（Mixamo 動作原本的骨架，手指完整）的右手上依解剖算出握法，再換算到目標手骨座標：
+// 刀身 Y 從虎口沿「小指根→食指根」方向伸出並略向手指傾斜，刃口 X 朝指關節，Z 為刀面法線。
+// 由重新綁定關係 T(t) = Ry·D(t)·Ry⁻¹·T_ref 可推得手骨座標下握法為常數 inv(T_ref)·Ry·R_s，所以各骨架揮刀時劍的角度與 Mixamo 原設計一致。
+{
+  const GRIP_TILT = THREE.MathUtils.degToRad(Number(process.env.GRIP_TILT ?? 12));
+  const b = (n) => { let f; restObj.traverse((o) => { if (o.name === 'mixamorig' + n) f = o; }); return f.getWorldPosition(new THREE.Vector3()); };
+  const hand = b('RightHand'), index = b('RightHandIndex1'), pinky = b('RightHandPinky1'), middle = b('RightHandMiddle1');
+  const radial = index.clone().sub(pinky).normalize();
+  const fingers = middle.clone().sub(hand).normalize();
+  const blade = radial.clone().multiplyScalar(Math.cos(GRIP_TILT)).add(fingers.clone().multiplyScalar(Math.sin(GRIP_TILT))).normalize();
+  const edge = fingers.clone().sub(blade.clone().multiplyScalar(fingers.dot(blade))).normalize();
+  const flat = new THREE.Vector3().crossVectors(edge, blade).normalize();
+  const Rs = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(edge, blade, flat));
+  // 握點：手腕到中指根 55%，往掌心內縮一些（掌心方向 = -flat 對右手）
+  const gripS = hand.clone().lerp(middle, 0.55).sub(flat.clone().multiplyScalar(hand.distanceTo(middle) * 0.25));
+  const handT = tgt.handR;
+  const Tref = ref.get(handT);
+  const Gt = Tref.clone().invert().multiply(Ry.clone().multiply(Rs));
+  const handWorld = rest.get(handT);
+  const offsetWorld = gripS.sub(hand).applyQuaternion(Ry).multiplyScalar(heightRatio);
+  const gripWorldPos = pos(rest, handT).add(offsetWorld);
+  const localPos = gripWorldPos.applyMatrix4(handWorld.clone().invert());
+  const handScale = new THREE.Vector3().setFromMatrixScale(handWorld);
+  const grip = doc.createNode('SwordGrip').setTranslation(localPos.toArray()).setRotation(Gt.normalize().toArray())
+    .setScale([1 / handScale.x, 1 / handScale.y, 1 / handScale.z]);
+  handT.addChild(grip);
+}
+
 // 全域朝向：讓角色正面朝 +Z（遊戲用 atan2(vx, vz) 轉向）
 const toPlusZ = yawTo(fTgt, new THREE.Vector3(0, 0, 1));
 for (const s of doc.getRoot().listScenes()) for (const n of s.listChildren()) { if (n === rootMotionNode) continue;

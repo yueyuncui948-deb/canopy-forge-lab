@@ -58,9 +58,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a1/model.glb",
-          "bytes": 8041872,
-          "sha256": "99380c53cb956425c48966342ba8b40b62c539628bba7f6bb3959403d4aaf845",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 8048272,
+          "sha256": "6601f80855fbcbff699e1d15701e2613ed19b24ddf4e0d3fcaf2edbe044c9176",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },
@@ -121,9 +121,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a2/model.glb",
-          "bytes": 6241740,
-          "sha256": "4197bb038c5398b2fd1181c231622c6892045b8645d2e27d58bb6bed39d52941",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 6246960,
+          "sha256": "e631786a916b195591ab36a3e96bc1d953b87d8cfda176b957c3979efda6d89a",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },
@@ -184,9 +184,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a3/model.glb",
-          "bytes": 3385436,
-          "sha256": "15e713558b71722633a93429e6b523b427ba127c616b2e5dbf43051a7fb85221",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 3412812,
+          "sha256": "f48b8cb976c344bc030402253511e4e5669e3c8d6ea5b60122f9130079fec720",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },
@@ -245,9 +245,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a4/model.glb",
-          "bytes": 9182408,
-          "sha256": "bc719c6b775768657c85b570cd30ed94d0c1a1ecd3fef9323fe6d7eb67ecd9aa",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 9184284,
+          "sha256": "3dd04cc8a5d82cab574e71675b0a74df1ad2a290972e1f764598631c6c66eb9f",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },
@@ -306,9 +306,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b1/model.glb",
-          "bytes": 5562368,
-          "sha256": "2697fefb35d7d330865bf7066d8d20b5e72ec3ca90c269ebb2b8d313a4763012",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 5562824,
+          "sha256": "6a52d1c617f1b5b7ca9d44e927c6162ca58403ee04de05d8f906afcbd9889e05",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },
@@ -367,9 +367,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b2/model.glb",
-          "bytes": 13159012,
-          "sha256": "2d67815eb7b1441bbd8502fabb4051a3a7f84a9e78b864ead6818d8e8e4e0f36",
-          "note": "Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008）"
+          "bytes": 13159992,
+          "sha256": "9728fcf475509449debd3eeb1f58926a9ec8a24dcd3d48303b6d5abf5dc25a8d",
+          "note": "Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt"
         }
       ]
     },

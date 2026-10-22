@@ -39,3 +39,5 @@ Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 1
 - [task-007](research/task-007/SUMMARY.md)：Mixamo 17 段動作整理入素材總表並套用到 6 位人物；新增連擊、施法、蹲走、受擊、倒地與重生操作。
 
 - [task-008](research/task-008/SUMMARY.md)：動作手感改善（自動面向、根位移、J 三段連擊、收招取消），修正一次性動作片尾跳回首格。
+
+- [task-009](research/task-009/SUMMARY.md)：握劍方向依手部解剖校正；以刀尖速度更正二連擊／三連擊對應。

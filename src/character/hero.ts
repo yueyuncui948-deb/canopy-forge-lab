@@ -60,12 +60,22 @@ export async function loadHero(config: Character = findCharacter(null)) {
   mixer.update(0);
   root.updateMatrixWorld(true);
   const sword = createSword();
-  sword.position.set(0, config.grip, 0);
-  // 武器用世界尺寸，避免公分制骨架把劍放大百倍。
-  sword.scale.setScalar(1 / hand.getWorldScale(new THREE.Vector3()).x);
-  const worldGrip = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, -0.55, 0.85).normalize());
-  sword.quaternion.copy(hand.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldGrip));
-  hand.add(sword);
+  // 有 SwordGrip（重新綁定時依 X Bot 手部解剖換算的握法）就掛在那裡：刀身沿虎口伸出、刃口朝指關節，
+  // 與 Mixamo 動作設計時的持劍角度一致（task-009）。舊角色沿用載入姿勢的世界方向。
+  const swordGrip = model.getObjectByName('SwordGrip');
+  if (swordGrip) {
+    const gripScale = swordGrip.getWorldScale(new THREE.Vector3()).x;
+    sword.scale.setScalar(1 / gripScale);
+    sword.position.set(0, 0.03 / gripScale, 0); // 握柄中心（劍模型 y≈-0.03）對準握點
+    swordGrip.add(sword);
+  } else {
+    sword.position.set(0, config.grip, 0);
+    // 武器用世界尺寸，避免公分制骨架把劍放大百倍。
+    sword.scale.setScalar(1 / hand.getWorldScale(new THREE.Vector3()).x);
+    const worldGrip = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, -0.55, 0.85).normalize());
+    sword.quaternion.copy(hand.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldGrip));
+    hand.add(sword);
+  }
   const handPosition = new THREE.Vector3();
   const thighL = bone(config.legs.thighL), thighR = bone(config.legs.thighR);
   const calfL = bone(config.legs.calfL), calfR = bone(config.legs.calfR);
@@ -99,7 +109,8 @@ export async function loadHero(config: Character = findCharacter(null)) {
   function startOnce(kind: HeroAction, segment?: { clip: string; from: number; to: number; hits: number[] }) {
     const name = segment?.clip ?? moves!.clips[kind];
     const clip = actions.get(name)!.getClip();
-    const from = segment?.from ?? 0, to = segment?.to ?? clip.duration;
+    const range = segment ? [segment.from, segment.to] : moves!.ranges[kind] ?? [0, clip.duration];
+    const from = range[0], to = Math.min(range[1], clip.duration);
     const scale = kind === 'death' || kind === 'hit' ? 1 : moves!.actionScale;
     setAction(name, scale, true, from);
     performing = { kind, elapsed: 0, duration: (to - from) / scale, rootPrev: null };

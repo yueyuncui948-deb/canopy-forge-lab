@@ -55,7 +55,7 @@
 - 檔案：
   - `A1/cursed_knight_-_ue5_character_game_ready.glb` — 52,177,624 bytes，下載 2026-10-22，SHA-256 `dc6a643a02e3f5fcb2799507fcf15a65ac77eee7eef5fc0899903590f9d2ccd1`
 - 實測骨架：UE5 Mannequin（89 骨）；道具處理：護手、胸甲、褲、短劍、背負巨劍、盾、腰劍、劍鞘原未綁骨，已掛至 hand_l／spine／pelvis；處理後三角形 129,554
-- 遊戲用檔：`public/models/sketchfab/a1/model.glb` — 8,041,872 bytes，SHA-256 `99380c53cb956425c48966342ba8b40b62c539628bba7f6bb3959403d4aaf845`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/a1/model.glb` — 8,048,272 bytes，SHA-256 `6601f80855fbcbff699e1d15701e2613ed19b24ddf4e0d3fcaf2edbe044c9176`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
@@ -72,7 +72,7 @@
 - 檔案：
   - `A2/medieval_knight__sculpture__game_ready.zip` — 48,722,376 bytes，下載 2026-10-22，SHA-256 `6086c10d3949c19ff7a8406c8c28feefff2cbc46026ffbc496c7e544a0107310`
 - 實測骨架：Mixamo（58 骨）；道具處理：無；處理後三角形 41,654
-- 遊戲用檔：`public/models/sketchfab/a2/model.glb` — 6,241,740 bytes，SHA-256 `4197bb038c5398b2fd1181c231622c6892045b8645d2e27d58bb6bed39d52941`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/a2/model.glb` — 6,246,960 bytes，SHA-256 `e631786a916b195591ab36a3e96bc1d953b87d8cfda176b957c3979efda6d89a`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
@@ -90,7 +90,7 @@
 - 檔案：
   - `A3/stelae_knight.glb` — 36,121,400 bytes，下載 2026-10-22，SHA-256 `6ca6c6d2eb619fe36fdc718c191ecbef10b42a9a72c3269bac6af51515e8bc61`
 - 實測骨架：Maya QuickRig／HumanIK（23 骨，無手指）；道具處理：立地巨劍（獨立 2 骨架）已移出；處理後三角形 18,826
-- 遊戲用檔：`public/models/sketchfab/a3/model.glb` — 3,385,436 bytes，SHA-256 `15e713558b71722633a93429e6b523b427ba127c616b2e5dbf43051a7fb85221`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/a3/model.glb` — 3,412,812 bytes，SHA-256 `f48b8cb976c344bc030402253511e4e5669e3c8d6ea5b60122f9130079fec720`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
@@ -107,7 +107,7 @@
 - 檔案：
   - `A4/knight.glb` — 103,368,052 bytes，下載 2026-10-22，SHA-256 `d97677713e61eaac444836bdd7a185a211f80c76e2cdd5370ae2b15cc4a5b808`
 - 實測骨架：Blender IK 骨架（100 骨；手掌、腳趾由 IK 控制，已改跟隨烘焙）；道具處理：腰前長劍未綁骨，已移出；處理後三角形 43,998
-- 遊戲用檔：`public/models/sketchfab/a4/model.glb` — 9,182,408 bytes，SHA-256 `bc719c6b775768657c85b570cd30ed94d0c1a1ecd3fef9323fe6d7eb67ecd9aa`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/a4/model.glb` — 9,184,284 bytes，SHA-256 `3dd04cc8a5d82cab574e71675b0a74df1ad2a290972e1f764598631c6c66eb9f`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
@@ -124,7 +124,7 @@
 - 檔案：
   - `B1/shadowflame_samurai.glb` — 29,006,916 bytes，下載 2026-10-22，SHA-256 `eeb6e04ec7f7abfdd5043ff134464ab377612fdb4a2b7fce93495dbf40be5e9a`
 - 實測骨架：Reallusion Character Creator（147 骨）；道具處理：手持武士刀未綁骨，已移出；腰間刀鞘為綁骨網格保留；處理後三角形 72,759
-- 遊戲用檔：`public/models/sketchfab/b1/model.glb` — 5,562,368 bytes，SHA-256 `2697fefb35d7d330865bf7066d8d20b5e72ec3ca90c269ebb2b8d313a4763012`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/b1/model.glb` — 5,562,824 bytes，SHA-256 `6a52d1c617f1b5b7ca9d44e927c6162ca58403ee04de05d8f906afcbd9889e05`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
@@ -142,7 +142,7 @@
 - 檔案：
   - `B2/samurai.glb` — 96,769,644 bytes，下載 2026-10-22，SHA-256 `fa5d3fba1780a859e0618ad468fb6af6047baaeada8bad4c68e4b21519551082`
 - 實測骨架：自訂（96 骨，含甲冑與繩結骨）；道具處理：兩把刀與展示底座已移出；處理後三角形 54,741
-- 遊戲用檔：`public/models/sketchfab/b2/model.glb` — 13,159,012 bytes，SHA-256 `2d67815eb7b1441bbd8502fabb4051a3a7f84a9e78b864ead6818d8e8e4e0f36`（Mixamo MX01–MX17、RootMotion 根位移節點、修正片尾跳回首格、朝向 +Z、WebP≤2048、meshopt（task-008））
+- 遊戲用檔：`public/models/sketchfab/b2/model.glb` — 13,159,992 bytes，SHA-256 `9728fcf475509449debd3eeb1f58926a9ec8a24dcd3d48303b6d5abf5dc25a8d`（Mixamo MX01–MX17、RootMotion、SwordGrip 解剖握點（task-009）、朝向 +Z、WebP≤2048、meshopt）
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
