@@ -5,8 +5,12 @@ import { findCharacter, type Character } from './catalog';
 export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack';
 
 export async function loadHero(config: Character = findCharacter(null)) {
-  const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
-  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}${config.file}`);
+  const [{ GLTFLoader }, { MeshoptDecoder }] = await Promise.all([
+    import('three/addons/loaders/GLTFLoader.js'),
+    import('three/addons/libs/meshopt_decoder.module.js'),
+  ]);
+  // Sketchfab 候選人物以 meshopt 壓縮幾何；未壓縮的舊模型不受影響。
+  const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`${import.meta.env.BASE_URL}${config.file}`);
   const root = new THREE.Group();
   root.name = 'Hero';
   const model = gltf.scene;
@@ -54,13 +58,16 @@ export async function loadHero(config: Character = findCharacter(null)) {
   mixer.update(0);
   root.updateMatrixWorld(true);
   const sword = createSword();
-  sword.position.set(0, config.id === 'sophia' ? 0.075 : 5, 0);
+  sword.position.set(0, config.grip, 0);
   // 武器用世界尺寸，避免公分制骨架把劍放大百倍。
   sword.scale.setScalar(1 / hand.getWorldScale(new THREE.Vector3()).x);
   const worldGrip = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, -0.55, 0.85).normalize());
   sword.quaternion.copy(hand.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldGrip));
   hand.add(sword);
   const handPosition = new THREE.Vector3();
+  const thighL = bone(config.legs.thighL), thighR = bone(config.legs.thighR);
+  const calfL = bone(config.legs.calfL), calfR = bone(config.legs.calfR);
+  const leftHip = new THREE.Vector3(), rightHip = new THREE.Vector3(), forward = new THREE.Vector3();
   let motion: HeroMotion = 'idle';
 
   function setAction(name: string, timeScale = 1) {
@@ -102,14 +109,14 @@ export async function loadHero(config: Character = findCharacter(null)) {
     update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number) {
       motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : moving ? (running ? 'run' : 'walk') : 'idle';
       if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
-      else if (moving) setAction(running ? config.run : config.walk, config.id === 'sophia' ? (running ? 1.35 : 0.72) : 1);
+      else if (moving) setAction(running ? config.run : config.walk, running ? config.runScale : config.walkScale);
       else setAction(config.idle);
       mixer.update(dt);
-      if (config.id !== 'sophia' && jumpHeight > 0.02) {
-        bone('Bip01 L Thigh').rotateX(-0.35);
-        bone('Bip01 R Thigh').rotateX(-0.5);
-        bone('Bip01 L Calf').rotateX(0.65);
-        bone('Bip01 R Calf').rotateX(0.8);
+      if (config.proceduralJump && jumpHeight > 0.02) {
+        thighL.rotateX(-0.35);
+        thighR.rotateX(-0.5);
+        calfL.rotateX(0.65);
+        calfR.rotateX(0.8);
       }
       // 在原始骨架姿態上疊加揮劍，不再旋轉獨立於手臂的武器。
       if (attackTime > 0) {
@@ -129,12 +136,17 @@ export async function loadHero(config: Character = findCharacter(null)) {
     },
     snapshot() {
       hand.getWorldPosition(handPosition);
+      // 解剖正面：左大腿減右大腿再與上方向外積；用來驗證模型正面與移動方向一致。
+      thighL.getWorldPosition(leftHip); thighR.getWorldPosition(rightHip);
+      forward.subVectors(leftHip, rightHip).cross(THREE.Object3D.DEFAULT_UP).setY(0).normalize();
       return {
         id: config.id, loaded: true, skinnedMeshes, bones: bones.size, triangles,
         animation: motion, clip: active.getClip().name, animationTime: active.time,
         swordAttachedTo: sword.parent?.name ?? '',
         hand: { x: handPosition.x, y: handPosition.y, z: handPosition.z },
         upperArm: upperArm.quaternion.toArray(),
+        forward: { x: forward.x, z: forward.z },
+        rootYaw: root.rotation.y,
       };
     },
   };

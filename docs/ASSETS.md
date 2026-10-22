@@ -42,3 +42,11 @@ Sophia 的形象不代表 GDQuest 背書本專案。未來複用流程母版時�
 - 女角 6,162,756 bytes，男角 5,596,036 bytes；只載入被選中的人物。保留 80 骨架節點與平滑網格；不是換色複製。原始 FBX／TGA 不加入 Git，可用[重建流程](../scripts/assets/README.md)按雜湊取得。
 - 跳躍與揮劍為本專案程序姿態，並非來源提供的完整動捕片段。服裝為現代裝束，用於比例、臉部、材質與動作研究，尚非最終 ARPG 美術。
 - HVGirl 曾試載，但近看仍有明顯低面數切面；保留 task-004 淘汰證據，沒有放入交付模型清單。淘汰截圖人物由 Babylon.js Assets 提供，[固定來源](https://github.com/BabylonJS/Assets/tree/c81f5d744fe8d41acfebd89eaeb7008c6f9659e3/meshes)，[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，改作僅本專案渲染、尺寸與掛劍。
+
+## Sketchfab 候選人物 A1–A4、B1、B2（task-005）
+
+六位 CC BY 4.0 人物，完整來源、作者、署名文字、注意事項、原檔與遊戲用檔 SHA-256 統一記於 [素材總表](asset-catalog/CATALOG.md)（資料來源 [catalog.json](asset-catalog/catalog.json)）。遊戲用檔在 public/models/sketchfab/<id>/，各附 NOTICE.txt。原始下載檔不進 Git（asset-library/raw/ 已忽略）。
+
+- 修改：重新綁定 Idle／Walk／Run、朝向 +Z、未綁骨道具掛骨或移除、WebP ≤2048、meshopt；腳本見 scripts/assets/retarget_character.mjs、process_character.mjs。
+- 測試動畫來源：three.js r180 範例 Xbot.glb（Mixamo 內容），僅作測試，正式版需替換為使用者自行下載的 Mixamo 或 CC0 UAL2。
+- A1、B1 本輪為 1K 貼圖版本；A3、B2 外觀參考他人設計，商業化前需確認。

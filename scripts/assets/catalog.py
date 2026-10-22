@@ -89,6 +89,11 @@ def render(data):
             lines.append('- 檔案：')
             for f in a['files']:
                 lines.append(f'  - `{f["path"]}` — {f["bytes"]:,} bytes，下載 {f["downloaded"]}，SHA-256 `{f["sha256"]}`')
+        if a.get('verified'):
+            v = a['verified']
+            lines.append(f'- 實測骨架：{v["rig"]}；道具處理：{v["props"]}；處理後三角形 {v["triangles_after"]:,}')
+        for o in a.get('outputs', []):
+            lines.append(f'- 遊戲用檔：`{o["path"]}` — {o["bytes"]:,} bytes，SHA-256 `{o["sha256"]}`（{o["note"]}）')
         if a['tests']:
             lines.append('- 測試：')
             for t in a['tests']:

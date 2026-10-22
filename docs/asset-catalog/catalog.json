@@ -8,7 +8,7 @@
       "name": "Cursed Knight - UE5 Character (Game Ready)",
       "kind": "character",
       "style": "dark-realism",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/f204e0ad3af645bcb0ecffd9e9ae9a15",
@@ -29,8 +29,18 @@
         "animations": 0,
         "rig": "作者聲明以 UE5 骨架完整綁定與刷權重"
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "A1/cursed_knight_-_ue5_character_game_ready.glb",
+          "bytes": 52177624,
+          "sha256": "dc6a643a02e3f5fcb2799507fcf15a65ac77eee7eef5fc0899903590f9d2ccd1",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "暗黑寫實首選；面數偏高，預計減面至約 5 萬。",
       "download": {
         "requested": "2026-10-22",
@@ -38,14 +48,27 @@
         "format": "GLB（Sketchfab 轉檔）1K 貼圖",
         "size": "49MB",
         "alternatives": "另有 FBX 原檔 501MB、GLB 4K 449MB；採用後再取 4K 版本"
-      }
+      },
+      "verified": {
+        "rig": "UE5 Mannequin（89 骨）",
+        "props": "護手、胸甲、褲、短劍、背負巨劍、盾、腰劍、劍鞘原未綁骨，已掛至 hand_l／spine／pelvis",
+        "triangles_after": 129554
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/a1/model.glb",
+          "bytes": 7696824,
+          "sha256": "2ea3d8ea01afbb828f0e3435976b75b28ef3b65f367538e03857820270e9af09",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "A2",
       "name": "Medieval Knight | Sculpture | Game ready",
       "kind": "character",
       "style": "dark-realism",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10",
@@ -68,8 +91,18 @@
         "glb_bytes": 50416480,
         "texture_max": 4096
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "A2/medieval_knight__sculpture__game_ready.zip",
+          "bytes": 48722376,
+          "sha256": "6086c10d3949c19ff7a8406c8c28feefff2cbc46026ffbc496c7e544a0107310",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "面數最輕；最可能直接相容 Mixamo 動畫。",
       "download": {
         "requested": "2026-10-22",
@@ -77,14 +110,27 @@
         "format": "glTF（Sketchfab 轉檔，zip）",
         "size": "46MB",
         "alternatives": "另有 FBX 原檔 70MB"
-      }
+      },
+      "verified": {
+        "rig": "Mixamo（58 骨）",
+        "props": "無",
+        "triangles_after": 41654
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/a2/model.glb",
+          "bytes": 5895716,
+          "sha256": "0fb42ccd61ad09f8645c1208af9c3c3ac1b1854d74753b51054a8c3dc289d050",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "A3",
       "name": "Stelae knight",
       "kind": "character",
       "style": "dark-realism",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/0a795ae613f2496e955974ca37bf1e94",
@@ -107,8 +153,18 @@
         "glb_bytes": 36121400,
         "texture_max": 2048
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "A3/stelae_knight.glb",
+          "bytes": 36121400,
+          "sha256": "6ca6c6d2eb619fe36fdc718c191ecbef10b42a9a72c3269bac6af51515e8bc61",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "不死騎士與巨劍，輪廓強烈。",
       "download": {
         "requested": "2026-10-22",
@@ -116,14 +172,27 @@
         "format": "GLB 2K 貼圖（原始最高解析度）",
         "size": "34MB",
         "alternatives": "另有 FBX 原檔 64MB"
-      }
+      },
+      "verified": {
+        "rig": "Maya QuickRig／HumanIK（23 骨，無手指）",
+        "props": "立地巨劍（獨立 2 骨架）已移出",
+        "triangles_after": 18826
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/a3/model.glb",
+          "bytes": 3042680,
+          "sha256": "034186c02a2dbb98c85dd5d017df62ef72e1832d1c5baa74a943fdddde8100cc",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "A4",
       "name": "Knight",
       "kind": "character",
       "style": "dark-realism",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/5a8eb53bbdee49b3906bf5decadb6c2b",
@@ -144,8 +213,18 @@
         "animations": 0,
         "rig": "標籤標示 rigged，未說明骨架類型"
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "A4/knight.glb",
+          "bytes": 103368052,
+          "sha256": "d97677713e61eaac444836bdd7a185a211f80c76e2cdd5370ae2b15cc4a5b808",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "盔甲有髒污與血跡。",
       "download": {
         "requested": "2026-10-22",
@@ -153,14 +232,27 @@
         "format": "GLB 4K 貼圖",
         "size": "98MB",
         "alternatives": "另有 FBX 原檔 71MB、GLB 1K 23MB"
-      }
+      },
+      "verified": {
+        "rig": "Blender IK 骨架（100 骨；手掌、腳趾由 IK 控制，已改跟隨烘焙）",
+        "props": "腰前長劍未綁骨，已移出",
+        "triangles_after": 43998
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/a4/model.glb",
+          "bytes": 8805776,
+          "sha256": "d6eba1374989c665a7e4430817d383875cb19676fc3e8ec1ddc3f2ba71bdf75a",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "B1",
       "name": "Shadowflame Samurai",
       "kind": "character",
       "style": "eastern",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/03def921ed814b3a9de5c5962b86a45c",
@@ -181,8 +273,18 @@
         "animations": 0,
         "rig": "Blender 製作並綁骨架（標籤 rig / rigged-character）"
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "B1/shadowflame_samurai.glb",
+          "bytes": 29006916,
+          "sha256": "eeb6e04ec7f7abfdd5043ff134464ab377612fdb4a2b7fce93495dbf40be5e9a",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "使用者指定參考角色。",
       "download": {
         "requested": "2026-10-22",
@@ -190,14 +292,27 @@
         "format": "GLB 1K 貼圖",
         "size": "27MB",
         "alternatives": "另有 FBX 原檔 163MB、GLB 4K 162MB；採用後再取 4K 版本"
-      }
+      },
+      "verified": {
+        "rig": "Reallusion Character Creator（147 骨）",
+        "props": "手持武士刀未綁骨，已移出；腰間刀鞘為綁骨網格保留",
+        "triangles_after": 72759
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/b1/model.glb",
+          "bytes": 5215844,
+          "sha256": "e376a620eae92797c273f72bc6adbef574f90381b1befefe610bc8d46e9fbaf3",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "B2",
       "name": "samurai",
       "kind": "character",
       "style": "eastern",
-      "status": "candidate",
+      "status": "tested",
       "source": {
         "platform": "Sketchfab",
         "url": "https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa",
@@ -218,8 +333,18 @@
         "animations": 0,
         "rig": "搜尋結果標示 rigged，未說明骨架類型"
       },
-      "files": [],
-      "tests": [],
+      "files": [
+        {
+          "path": "B2/samurai.glb",
+          "bytes": 96769644,
+          "sha256": "fa5d3fba1780a859e0618ad468fb6af6047baaeada8bad4c68e4b21519551082",
+          "downloaded": "2026-10-22"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+      ],
       "notes": "紅色武士鎧甲，介面暱稱暫定 Red Samurai。",
       "download": {
         "requested": "2026-10-22",
@@ -227,7 +352,20 @@
         "format": "GLB 2K 貼圖（原始最高解析度）",
         "size": "92MB",
         "alternatives": "另有 FBX 原檔 89MB、GLB 1K 28MB"
-      }
+      },
+      "verified": {
+        "rig": "自訂（96 骨，含甲冑與繩結骨）",
+        "props": "兩把刀與展示底座已移出",
+        "triangles_after": 54741
+      },
+      "outputs": [
+        {
+          "path": "public/models/sketchfab/b2/model.glb",
+          "bytes": 12832012,
+          "sha256": "66d97ec79cc1cc7fde4dad938457b68a0e556690a07a25a546b2c0c15e7cbf5a",
+          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+        }
+      ]
     },
     {
       "id": "B3",
@@ -343,6 +481,35 @@
       "files": [],
       "tests": [],
       "notes": "免費版 42 段，含 3/4 段近戰連擊。"
+    },
+    {
+      "id": "M0",
+      "name": "Xbot.glb（three.js r180 範例，Mixamo 骨架 idle/walk/run）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "source": {
+        "platform": "GitHub",
+        "url": "https://github.com/mrdoob/three.js/blob/r180/examples/models/gltf/Xbot.glb",
+        "uid": "",
+        "author": "three.js 範例（動作源自 Adobe Mixamo）",
+        "author_url": "https://github.com/mrdoob/three.js",
+        "published": ""
+      },
+      "license": {
+        "name": "three.js 範例素材（Mixamo 內容）",
+        "url": "https://github.com/mrdoob/three.js/blob/r180/LICENSE",
+        "commercial": false,
+        "attribution": "",
+        "caveats": "僅作 task-005 測試用重新綁定來源；Mixamo 內容不宜視為一般 MIT 授權。正式版改用使用者自行下載的 Mixamo（M1）或 CC0 UAL2（M2）。"
+      },
+      "listed": {
+        "animations": 7,
+        "rig": "Mixamo"
+      },
+      "files": [],
+      "tests": [],
+      "notes": "已烘焙進 A1–A4、B1、B2 測試版 GLB；不單獨提交原檔。"
     }
   ]
 }

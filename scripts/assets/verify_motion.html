@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>body{margin:0;background:#1a1d22}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const params = new URLSearchParams(location.search);
+const file = params.get('f');
+const W = 1500, H = 520;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setScissorTest(true);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight('#cfe0ff', '#30302a', 1.2));
+const sun = new THREE.DirectionalLight('#fff2dd', 2.5); sun.position.set(3, 6, 5); scene.add(sun);
+const grid = new THREE.GridHelper(6, 12, 0x557799, 0x333a44); scene.add(grid);
+// +Z 方向箭頭：遊戲裡的「前方」
+const arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0.02, 0), 1.6, 0xff4444, 0.3, 0.2); scene.add(arrow);
+
+const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(file);
+const model = gltf.scene;
+model.updateMatrixWorld(true);
+const box = new THREE.Box3().setFromObject(model);
+const scale = 2.35 / box.getSize(new THREE.Vector3()).y;
+model.scale.setScalar(scale);
+model.position.y = -box.min.y * scale;
+const root = new THREE.Group(); root.add(model); scene.add(root);
+model.traverse(o => { if (o.isMesh) o.frustumCulled = false; });
+
+const mixer = new THREE.AnimationMixer(model);
+const clips = Object.fromEntries(gltf.animations.map(c => [c.name, c]));
+const bones = {}; model.traverse(o => { if (o.isBone) bones[o.name] = o; });
+
+// 腳步方向檢查：在模型座標中，著地腳應向後（-Z）移動
+function stepCheck(name, footNames) {
+  const clip = clips[name]; const action = mixer.clipAction(clip); mixer.stopAllAction(); action.play();
+  const N = 120, dt = clip.duration / N; const res = {};
+  for (const fn of footNames) {
+    const foot = bones[fn]; if (!foot) { res[fn] = 'missing'; continue; }
+    const samples = [];
+    for (let i = 0; i <= N; i++) { mixer.setTime(i * dt); model.updateMatrixWorld(true); const p = foot.getWorldPosition(new THREE.Vector3()); samples.push(p); }
+    const minY = Math.min(...samples.map(p => p.y)), maxY = Math.max(...samples.map(p => p.y));
+    let vz = 0, n = 0;
+    for (let i = 1; i < samples.length; i++) if (samples[i].y < minY + (maxY - minY) * 0.15) { vz += (samples[i].z - samples[i - 1].z) / dt; n++; }
+    const zs = samples.map(p => p.z);
+    res[fn] = { contactVz: +(vz / Math.max(n, 1)).toFixed(2), strideZ: +(Math.max(...zs) - Math.min(...zs)).toFixed(2), liftY: +(maxY - minY).toFixed(2) };
+  }
+  return res;
+}
+const feet = (params.get('feet') || '').split(',');
+const report = { clips: Object.keys(clips), height: 2.35, walk: clips.Walk ? stepCheck('Walk', feet) : null, run: clips.Run ? stepCheck('Run', feet) : null };
+
+// 面板：正面待機、正面走路、側面走路、斜後俯視（遊戲視角）跑步
+const views = [
+  { clip: 'Idle', t: 0.5, cam: [0, 1.3, 4.6], look: [0, 1.15, 0], label: 'front idle' },
+  { clip: 'Walk', t: 0.25, cam: [0, 1.3, 4.6], look: [0, 1.15, 0], label: 'front walk' },
+  { clip: 'Walk', t: 0.25, cam: [4.6, 1.3, 0], look: [0, 1.15, 0], label: 'side walk' },
+  { clip: 'Run', t: 0.3, cam: [-3.2, 4.2, -4.2], look: [0, 1.0, 0.3], label: 'game cam run' },
+];
+const cam = new THREE.PerspectiveCamera(32, (W / 4) / H, 0.1, 50);
+renderer.setClearColor(0x1a1d22);
+views.forEach((v, i) => {
+  mixer.stopAllAction();
+  if (clips[v.clip]) { const a = mixer.clipAction(clips[v.clip]); a.play(); mixer.setTime(v.t * clips[v.clip].duration); }
+  model.updateMatrixWorld(true);
+  cam.position.set(...v.cam); cam.lookAt(...v.look); cam.updateProjectionMatrix();
+  const x = i * W / 4; renderer.setViewport(x, 0, W / 4, H); renderer.setScissor(x, 0, W / 4, H);
+  renderer.render(scene, cam);
+});
+window.REPORT = report;
+document.title = 'done';
+</script></body></html>

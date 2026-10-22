@@ -126,7 +126,7 @@ function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,la
  if (!showcase) { gameT+=dt;
  const dx=Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft'));
  const dz=Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup'));
- const moving=dx!==0||dz!==0; const run=keys.has('shift'); const speed=run?8:4.3;
+ const moving=dx!==0||dz!==0; const run=keys.has('shift'); const speed=run?hero.config.runSpeed:hero.config.walkSpeed;
  if(moving){const length=Math.hypot(dx,dz);const { x: vx, z: vz } = followCamera.movement(dx / length, dz / length);
  hero.root.position.x=THREE.MathUtils.clamp(hero.root.position.x+vx*speed*dt,-limit,limit);hero.root.position.z=THREE.MathUtils.clamp(hero.root.position.z+vz*speed*dt,-limit,limit);
  hero.root.rotation.y=Math.atan2(vx,vz);}

@@ -6,7 +6,7 @@ export interface GameSnapshot {
   attackCooldown: number;
   showcase: boolean;
   resources: { geometries: number; textures: number };
-  character: { id: string; loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[] };
+  character: { id: string; loaded: boolean; skinnedMeshes: number; bones: number; triangles: number; animation: string; clip: string; animationTime: number; swordAttachedTo: string; hand: { x: number; y: number; z: number }; upperArm: number[]; forward: { x: number; z: number }; rootYaw: number };
   camera: { distance: number; desiredDistance: number; minDistance: number; maxDistance: number; azimuth: number };
 }
 
