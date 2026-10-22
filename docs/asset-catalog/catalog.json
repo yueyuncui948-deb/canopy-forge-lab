@@ -24,10 +24,21 @@
         "attribution": "\"Cursed Knight - UE5 Character (Game Ready)\" (https://sketchfab.com/3d-models/f204e0ad3af645bcb0ecffd9e9ae9a15) by Blue-Spirit, licensed under CC BY 4.0",
         "caveats": "原創設計；標籤提及 darksouls/bloodborne 僅為風格參考。作者另售付費變體，不在本授權內。"
       },
-      "listed": {"faces": 130898, "animations": 0, "rig": "作者聲明以 UE5 骨架完整綁定與刷權重"},
+      "listed": {
+        "faces": 130898,
+        "animations": 0,
+        "rig": "作者聲明以 UE5 骨架完整綁定與刷權重"
+      },
       "files": [],
       "tests": [],
-      "notes": "暗黑寫實首選；面數偏高，預計減面至約 5 萬。"
+      "notes": "暗黑寫實首選；面數偏高，預計減面至約 5 萬。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "cursed_knight_-_ue5_character_game_ready.glb",
+        "format": "GLB（Sketchfab 轉檔）1K 貼圖",
+        "size": "49MB",
+        "alternatives": "另有 FBX 原檔 501MB、GLB 4K 449MB；採用後再取 4K 版本"
+      }
     },
     {
       "id": "A2",
@@ -50,10 +61,23 @@
         "attribution": "\"Medieval Knight | Sculpture | Game ready\" (https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10) by by__Rx, licensed under CC BY 4.0",
         "caveats": ""
       },
-      "listed": {"faces": 41654, "animations": 1, "rig": "Mixamo（作者說明 idle 動畫來自 Mixamo）", "glb_bytes": 50416480, "texture_max": 4096},
+      "listed": {
+        "faces": 41654,
+        "animations": 1,
+        "rig": "Mixamo（作者說明 idle 動畫來自 Mixamo）",
+        "glb_bytes": 50416480,
+        "texture_max": 4096
+      },
       "files": [],
       "tests": [],
-      "notes": "面數最輕；最可能直接相容 Mixamo 動畫。"
+      "notes": "面數最輕；最可能直接相容 Mixamo 動畫。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "medieval_knight__sculpture__game_ready.zip",
+        "format": "glTF（Sketchfab 轉檔，zip）",
+        "size": "46MB",
+        "alternatives": "另有 FBX 原檔 70MB"
+      }
     },
     {
       "id": "A3",
@@ -76,10 +100,23 @@
         "attribution": "\"Stelae knight\" (https://sketchfab.com/3d-models/0a795ae613f2496e955974ca37bf1e94) by Muru, licensed under CC BY 4.0. Concept art by Shuohan (https://www.artstation.com/artwork/KE3Yr)",
         "caveats": "外觀依 Shuohan 概念圖製作；模型為 CC BY，但商業使用前宜確認概念設計權利。"
       },
-      "listed": {"faces": 20060, "animations": 1, "rig": "有骨架與 1 段動畫", "glb_bytes": 36121400, "texture_max": 2048},
+      "listed": {
+        "faces": 20060,
+        "animations": 1,
+        "rig": "有骨架與 1 段動畫",
+        "glb_bytes": 36121400,
+        "texture_max": 2048
+      },
       "files": [],
       "tests": [],
-      "notes": "不死騎士與巨劍，輪廓強烈。"
+      "notes": "不死騎士與巨劍，輪廓強烈。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "stelae_knight.glb（預期檔名）",
+        "format": "GLB 2K 貼圖（原始最高解析度）",
+        "size": "34MB",
+        "alternatives": "另有 FBX 原檔 64MB"
+      }
     },
     {
       "id": "A4",
@@ -102,10 +139,21 @@
         "attribution": "\"Knight\" (https://sketchfab.com/3d-models/5a8eb53bbdee49b3906bf5decadb6c2b) by sanyaork, licensed under CC BY 4.0",
         "caveats": ""
       },
-      "listed": {"faces": 52492, "animations": 0, "rig": "標籤標示 rigged，未說明骨架類型"},
+      "listed": {
+        "faces": 52492,
+        "animations": 0,
+        "rig": "標籤標示 rigged，未說明骨架類型"
+      },
       "files": [],
       "tests": [],
-      "notes": "盔甲有髒污與血跡。"
+      "notes": "盔甲有髒污與血跡。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "knight.glb（預期檔名）",
+        "format": "GLB 4K 貼圖",
+        "size": "98MB",
+        "alternatives": "另有 FBX 原檔 71MB、GLB 1K 23MB"
+      }
     },
     {
       "id": "B1",
@@ -128,10 +176,21 @@
         "attribution": "\"Shadowflame Samurai\" (https://sketchfab.com/3d-models/03def921ed814b3a9de5c5962b86a45c) by dark_igorek, licensed under CC BY 4.0",
         "caveats": ""
       },
-      "listed": {"faces": 74032, "animations": 0, "rig": "Blender 製作並綁骨架（標籤 rig / rigged-character）"},
+      "listed": {
+        "faces": 74032,
+        "animations": 0,
+        "rig": "Blender 製作並綁骨架（標籤 rig / rigged-character）"
+      },
       "files": [],
       "tests": [],
-      "notes": "使用者指定參考角色。"
+      "notes": "使用者指定參考角色。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "shadowflame_samurai.glb",
+        "format": "GLB 1K 貼圖",
+        "size": "27MB",
+        "alternatives": "另有 FBX 原檔 163MB、GLB 4K 162MB；採用後再取 4K 版本"
+      }
     },
     {
       "id": "B2",
@@ -154,10 +213,21 @@
         "attribution": "\"samurai\" (https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa) by Xiaoyuyao, licensed under CC BY 4.0",
         "caveats": "作者註明參考 @bookoflor 的設計、武士刀使用 @Glennosaurus 模型；商業使用前宜確認。"
       },
-      "listed": {"faces": 63331, "animations": 0, "rig": "搜尋結果標示 rigged，未說明骨架類型"},
+      "listed": {
+        "faces": 63331,
+        "animations": 0,
+        "rig": "搜尋結果標示 rigged，未說明骨架類型"
+      },
       "files": [],
       "tests": [],
-      "notes": "紅色武士鎧甲，介面暱稱暫定 Red Samurai。"
+      "notes": "紅色武士鎧甲，介面暱稱暫定 Red Samurai。",
+      "download": {
+        "requested": "2026-10-22",
+        "file": "samurai.glb",
+        "format": "GLB 2K 貼圖（原始最高解析度）",
+        "size": "92MB",
+        "alternatives": "另有 FBX 原檔 89MB、GLB 1K 28MB"
+      }
     },
     {
       "id": "B3",
@@ -180,7 +250,11 @@
         "attribution": "\"Spirit Realm Slayer\" (https://sketchfab.com/3d-models/28d4526546bc43c6b8cacb40c71739c0) by Blue-Spirit, licensed under CC BY 4.0",
         "caveats": "Sketchfab 版本無骨架；作者 ArtStation 另有免費綁骨架版（https://artstn.co/m/Jpern），其授權需另外確認。"
       },
-      "listed": {"faces": 237915, "animations": 0, "rig": "Sketchfab 版本無"},
+      "listed": {
+        "faces": 237915,
+        "animations": 0,
+        "rig": "Sketchfab 版本無"
+      },
       "files": [],
       "tests": [],
       "notes": "暫緩；本輪未下載。"
@@ -206,7 +280,11 @@
         "attribution": "\"Death Samurai Character\" (https://sketchfab.com/3d-models/6e0a7667723747e0972488085f877bd6) by Alexandru Jardan, licensed under CC BY 4.0",
         "caveats": ""
       },
-      "listed": {"faces": 194259, "animations": 0, "rig": "無；T-pose 可交 Mixamo 自動綁定"},
+      "listed": {
+        "faces": 194259,
+        "animations": 0,
+        "rig": "無；T-pose 可交 Mixamo 自動綁定"
+      },
       "files": [],
       "tests": [],
       "notes": "暫緩；本輪未下載。"
@@ -258,7 +336,10 @@
         "attribution": "Universal Animation Library 2 by Quaternius (CC0)",
         "caveats": ""
       },
-      "listed": {"animations": 42, "rig": "Quaternius 通用人形骨架，可重新綁定"},
+      "listed": {
+        "animations": 42,
+        "rig": "Quaternius 通用人形骨架，可重新綁定"
+      },
       "files": [],
       "tests": [],
       "notes": "免費版 42 段，含 3/4 段近戰連擊。"

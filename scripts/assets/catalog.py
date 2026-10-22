@@ -80,6 +80,9 @@ def render(data):
             lines.append(f'- 署名文字：{lic["attribution"]}')
         if lic.get('caveats'):
             lines.append(f'- 注意：{lic["caveats"]}')
+        if a.get('download'):
+            dl = a['download']
+            lines.append(f'- 下載選項：{dl["format"]}，{dl["size"]}，檔名 `{dl["file"]}`（{dl["requested"]}）；{dl["alternatives"]}')
         if a.get('notes'):
             lines.append(f'- 備註：{a["notes"]}')
         if a['files']:

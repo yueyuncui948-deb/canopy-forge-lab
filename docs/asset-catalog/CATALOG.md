@@ -25,6 +25,7 @@
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："Cursed Knight - UE5 Character (Game Ready)" (https://sketchfab.com/3d-models/f204e0ad3af645bcb0ecffd9e9ae9a15) by Blue-Spirit, licensed under CC BY 4.0
 - 注意：原創設計；標籤提及 darksouls/bloodborne 僅為風格參考。作者另售付費變體，不在本授權內。
+- 下載選項：GLB（Sketchfab 轉檔）1K 貼圖，49MB，檔名 `cursed_knight_-_ue5_character_game_ready.glb`（2026-10-22）；另有 FBX 原檔 501MB、GLB 4K 449MB；採用後再取 4K 版本
 - 備註：暗黑寫實首選；面數偏高，預計減面至約 5 萬。
 
 ### A2 · Medieval Knight | Sculpture | Game ready
@@ -33,6 +34,7 @@
 - 作者：[by__Rx](https://sketchfab.com/by__Rx)，發布 2023-12-22
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："Medieval Knight | Sculpture | Game ready" (https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10) by by__Rx, licensed under CC BY 4.0
+- 下載選項：glTF（Sketchfab 轉檔，zip），46MB，檔名 `medieval_knight__sculpture__game_ready.zip`（2026-10-22）；另有 FBX 原檔 70MB
 - 備註：面數最輕；最可能直接相容 Mixamo 動畫。
 
 ### A3 · Stelae knight
@@ -42,6 +44,7 @@
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："Stelae knight" (https://sketchfab.com/3d-models/0a795ae613f2496e955974ca37bf1e94) by Muru, licensed under CC BY 4.0. Concept art by Shuohan (https://www.artstation.com/artwork/KE3Yr)
 - 注意：外觀依 Shuohan 概念圖製作；模型為 CC BY，但商業使用前宜確認概念設計權利。
+- 下載選項：GLB 2K 貼圖（原始最高解析度），34MB，檔名 `stelae_knight.glb（預期檔名）`（2026-10-22）；另有 FBX 原檔 64MB
 - 備註：不死騎士與巨劍，輪廓強烈。
 
 ### A4 · Knight
@@ -50,6 +53,7 @@
 - 作者：[sanyaork](https://sketchfab.com/sanyaork)，發布 2021-07-19
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："Knight" (https://sketchfab.com/3d-models/5a8eb53bbdee49b3906bf5decadb6c2b) by sanyaork, licensed under CC BY 4.0
+- 下載選項：GLB 4K 貼圖，98MB，檔名 `knight.glb（預期檔名）`（2026-10-22）；另有 FBX 原檔 71MB、GLB 1K 23MB
 - 備註：盔甲有髒污與血跡。
 
 ### B1 · Shadowflame Samurai
@@ -58,6 +62,7 @@
 - 作者：[dark_igorek](https://sketchfab.com/dark_igorek)，發布 2026-04-07
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："Shadowflame Samurai" (https://sketchfab.com/3d-models/03def921ed814b3a9de5c5962b86a45c) by dark_igorek, licensed under CC BY 4.0
+- 下載選項：GLB 1K 貼圖，27MB，檔名 `shadowflame_samurai.glb`（2026-10-22）；另有 FBX 原檔 163MB、GLB 4K 162MB；採用後再取 4K 版本
 - 備註：使用者指定參考角色。
 
 ### B2 · samurai
@@ -67,6 +72,7 @@
 - 授權：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，商用：可
 - 署名文字："samurai" (https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa) by Xiaoyuyao, licensed under CC BY 4.0
 - 注意：作者註明參考 @bookoflor 的設計、武士刀使用 @Glennosaurus 模型；商業使用前宜確認。
+- 下載選項：GLB 2K 貼圖（原始最高解析度），92MB，檔名 `samurai.glb`（2026-10-22）；另有 FBX 原檔 89MB、GLB 1K 28MB
 - 備註：紅色武士鎧甲，介面暱稱暫定 Red Samurai。
 
 ### B3 · Spirit Realm Slayer
