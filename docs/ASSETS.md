@@ -50,3 +50,7 @@ Sophia 的形象不代表 GDQuest 背書本專案。未來複用流程母版時�
 - 修改：重新綁定 Idle／Walk／Run、朝向 +Z、未綁骨道具掛骨或移除、WebP ≤2048、meshopt；腳本見 scripts/assets/retarget_character.mjs、process_character.mjs。
 - 測試動畫來源：three.js r180 範例 Xbot.glb（Mixamo 內容），僅作測試，正式版需替換為使用者自行下載的 Mixamo 或 CC0 UAL2。
 - A1、B1 本輪為 1K 貼圖版本；A3、B2 外觀參考他人設計，商業化前需確認。
+
+## Mixamo 動作 MX01–MX17（task-007）
+
+17 段 Adobe Mixamo 動作（劍盾系列為主），清單、類別、原始與整理後檔名、影格、原地與根位移、SHA-256 見 [素材總表](asset-catalog/CATALOG.md) 的「動畫庫」。原始 FBX 存 asset-library/raw/MX/，不進 Git；動作已烘焙進 public/models/sketchfab/ 六位人物，取代 task-005 的 Xbot 測試動畫（M0 已標為淘汰）。

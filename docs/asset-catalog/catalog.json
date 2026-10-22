@@ -39,7 +39,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "暗黑寫實首選；面數偏高，預計減面至約 5 萬。",
       "download": {
@@ -57,9 +58,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a1/model.glb",
-          "bytes": 7696824,
-          "sha256": "2ea3d8ea01afbb828f0e3435976b75b28ef3b65f367538e03857820270e9af09",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 8031584,
+          "sha256": "e87c707dd7bb580c4c467c6641dbf7cde5c93bc2bf42e9a68213dc139f5f1528",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -101,7 +102,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "面數最輕；最可能直接相容 Mixamo 動畫。",
       "download": {
@@ -119,9 +121,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a2/model.glb",
-          "bytes": 5895716,
-          "sha256": "0fb42ccd61ad09f8645c1208af9c3c3ac1b1854d74753b51054a8c3dc289d050",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 6232220,
+          "sha256": "6078e5880cabcec513b1c87d367c52fdf882d3726352135453988b5864fc1e58",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -163,7 +165,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "不死騎士與巨劍，輪廓強烈。",
       "download": {
@@ -181,9 +184,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a3/model.glb",
-          "bytes": 3042680,
-          "sha256": "034186c02a2dbb98c85dd5d017df62ef72e1832d1c5baa74a943fdddde8100cc",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 3376188,
+          "sha256": "02737b539c66f5beb83a753dff0a0da9d1f594219a5ea3c04608ea7629c8839d",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -223,7 +226,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "盔甲有髒污與血跡。",
       "download": {
@@ -241,9 +245,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/a4/model.glb",
-          "bytes": 8805776,
-          "sha256": "d6eba1374989c665a7e4430817d383875cb19676fc3e8ec1ddc3f2ba71bdf75a",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 9172448,
+          "sha256": "20b5ce4e5c5ea7c12eb1fca9180772ff5fdcffea5b50520acec3dba93b19614f",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -283,7 +287,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "使用者指定參考角色。",
       "download": {
@@ -301,9 +306,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b1/model.glb",
-          "bytes": 5215844,
-          "sha256": "e376a620eae92797c273f72bc6adbef574f90381b1befefe610bc8d46e9fbaf3",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 5552116,
+          "sha256": "53249eb907ac6d8f281213605a765f03a7967561d550f0eb9ca5c2f1d4d36842",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -343,7 +348,8 @@
       ],
       "tests": [
         "2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）",
-        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染"
+        "2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染",
+        "2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過"
       ],
       "notes": "紅色武士鎧甲，介面暱稱暫定 Red Samurai。",
       "download": {
@@ -361,9 +367,9 @@
       "outputs": [
         {
           "path": "public/models/sketchfab/b2/model.glb",
-          "bytes": 12832012,
-          "sha256": "66d97ec79cc1cc7fde4dad938457b68a0e556690a07a25a546b2c0c15e7cbf5a",
-          "note": "Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt"
+          "bytes": 13151052,
+          "sha256": "aa5d1efd9cc387e5c37f50a7e218d3f69ca2cad7fb1ba6c4eda682be5fa20c78",
+          "note": "Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007）"
         }
       ]
     },
@@ -429,10 +435,10 @@
     },
     {
       "id": "M1",
-      "name": "Mixamo 刀劍動作包（待選定）",
+      "name": "Mixamo 刀劍動作包（占位）",
       "kind": "animation",
       "style": "any",
-      "status": "backlog",
+      "status": "rejected",
       "source": {
         "platform": "Adobe Mixamo",
         "url": "https://www.mixamo.com",
@@ -442,16 +448,16 @@
         "published": ""
       },
       "license": {
-        "name": "Mixamo / Adobe 使用條款",
+        "name": "Adobe Mixamo 使用條款",
         "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
         "commercial": true,
         "attribution": "",
-        "caveats": "一般理解為可用於個人與商業專案、但不得單獨再散布動畫原檔；下載前須核對 Adobe 條款原文並記錄於此。下載需 Adobe 帳號。"
+        "caveats": ""
       },
       "listed": {},
       "files": [],
       "tests": [],
-      "notes": "待使用者登入 Adobe 後下載 FBX Without Skin。"
+      "notes": "占位紀錄；2026-10-22 由實際下載的 MX01–MX17 取代。"
     },
     {
       "id": "M2",
@@ -487,7 +493,7 @@
       "name": "Xbot.glb（three.js r180 範例，Mixamo 骨架 idle/walk/run）",
       "kind": "animation",
       "style": "any",
-      "status": "adopted",
+      "status": "rejected",
       "source": {
         "platform": "GitHub",
         "url": "https://github.com/mrdoob/three.js/blob/r180/examples/models/gltf/Xbot.glb",
@@ -509,7 +515,738 @@
       },
       "files": [],
       "tests": [],
-      "notes": "已烘焙進 A1–A4、B1、B2 測試版 GLB；不單獨提交原檔。"
+      "notes": "task-005 測試用；task-007 起由 Mixamo MX01–MX17 取代，已不再烘焙進遊戲模型。"
+    },
+    {
+      "id": "MX01",
+      "name": "持劍待機（Sword And Shield Idle）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "移動",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 77,
+        "duration_s": 2.533,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-move-idle.fbx",
+          "bytes": 536016,
+          "sha256": "7084c39e3155a233856080faa4b2c5a764618b50f0ad0edc12b2d19f68b4876b",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Idle.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX02",
+      "name": "持劍走路（Sword And Shield Walk）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "移動",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 34,
+        "duration_s": 1.1,
+        "in_place": true,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-move-walk.fbx",
+          "bytes": 383600,
+          "sha256": "8fa46df23ca6d8bb969d5d53f01fcb79a03e0b3136faa0236d31d087b27a4b5f",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Walk.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX03",
+      "name": "持劍跑步（Sword And Shield Run）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "移動",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 22,
+        "duration_s": 0.7,
+        "in_place": true,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-move-run.fbx",
+          "bytes": 319120,
+          "sha256": "469c976bc6eab8b0ff08ef05df09f3a5161e93938a9b9d3213bf8b9b687aa583",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Run.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX04",
+      "name": "蹲下慢走（Walking Forward While Crouched）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "移動",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 35,
+        "duration_s": 1.133,
+        "in_place": true,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-move-crouch-walk.fbx",
+          "bytes": 390944,
+          "sha256": "a46a438fc9ff1381abfc04b0cc991880149a65814984a8b05d472dd4e3d9a3f7",
+          "downloaded": "2026-10-22",
+          "original_name": "Crouch Walk Forward.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX05",
+      "name": "原地起跳（Sword And Shield Jump From Idle）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "跳躍",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 30,
+        "duration_s": 0.967,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-jump-stand.fbx",
+          "bytes": 357424,
+          "sha256": "229b752d68b3cb4dc5cbf63b0e14bbc8a24f149eebe08b66d9f596d80ce2f86f",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Jump.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX06",
+      "name": "跑步跳（Sword And Shield Running Jump）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "跳躍",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 26,
+        "duration_s": 0.833,
+        "in_place": true,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-jump-run.fbx",
+          "bytes": 329920,
+          "sha256": "30c8c8db7b298d4036909cb8ab4d423134e755958b330f8d83b2ccbe22ae86ea",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Jump (1).fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX07",
+      "name": "單擊：下劈（Sword And Shield Downward Slash）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "攻擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 46,
+        "duration_s": 1.5,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-attack-slash-down.fbx",
+          "bytes": 387664,
+          "sha256": "66d43d78a98a9d36850cbd7a6b9e196768fe4228d7be0590026e7a6d01741db9",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Slash.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX08",
+      "name": "單擊：橫斬（Sword And Shield Cross Slash）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "攻擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 51,
+        "duration_s": 1.667,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-attack-slash-cross.fbx",
+          "bytes": 397424,
+          "sha256": "cc4f3f4cb8363556c369c3b33c1b9dd45d127031ea6491008b0b377a005deaac",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Slash (1).fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX09",
+      "name": "連擊（劍盾）（Sword And Shield Slash Combo）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "攻擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 107,
+        "duration_s": 3.533,
+        "in_place": false,
+        "root_travel_cm": 245.0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-attack-combo-slash.fbx",
+          "bytes": 606064,
+          "sha256": "82d2ce273568a708df1f93d64f822010c6c1ba5305f3f5944c677c8ac9fc0c33",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Slash (2).fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": "含根位移（向前移動），整合時需決定原地化或套用根位移。"
+    },
+    {
+      "id": "MX10",
+      "name": "單手劍連擊（One Handed Sword Combo Attack）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "攻擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 137,
+        "duration_s": 4.533,
+        "in_place": false,
+        "root_travel_cm": 116.3,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-attack-combo-1h.fbx",
+          "bytes": 622448,
+          "sha256": "5218fa2709170411503f9a60b9bc0519e691f8574867636eeb432fe4642ab965",
+          "downloaded": "2026-10-22",
+          "original_name": "One Hand Sword Combo.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": "含根位移（向前移動），整合時需決定原地化或套用根位移。"
+    },
+    {
+      "id": "MX11",
+      "name": "雙手劍連擊（Two Handed Sword Combo Attack）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "攻擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 99,
+        "duration_s": 3.267,
+        "in_place": false,
+        "root_travel_cm": 188.5,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-attack-combo-2h.fbx",
+          "bytes": 589312,
+          "sha256": "ba29d2f95cd4ce1867243a451743300f0fea660ae2c5bd4d2e21867256cd74f7",
+          "downloaded": "2026-10-22",
+          "original_name": "Two Hand Sword Combo.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": "含根位移（向前移動），整合時需決定原地化或套用根位移。"
+    },
+    {
+      "id": "MX12",
+      "name": "持劍短施法（Sword And Shield Spell Casting）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "施法",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 32,
+        "duration_s": 1.033,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-cast-quick.fbx",
+          "bytes": 361312,
+          "sha256": "97229c6ad6c9b4f70d033398ec831affac6f5b76629edc1adcda44709322aab0",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Casting.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX13",
+      "name": "單手向前施法（Standing 1H Magic Attack 01）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "施法",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 70,
+        "duration_s": 2.3,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-cast-forward.fbx",
+          "bytes": 522048,
+          "sha256": "5e63cc06b91a82a55d615f431d87653f2c20111beae1950ecabd38d4f43f8a6f",
+          "downloaded": "2026-10-22",
+          "original_name": "Standing 1H Magic Attack 01.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX14",
+      "name": "身體受擊（Sword And Shield Unblocked Impact）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "受擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 30,
+        "duration_s": 0.967,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-hit-body.fbx",
+          "bytes": 340720,
+          "sha256": "fb93c144f2bc7a40f56ddce2205ea8d3efd7ce4e5a0e53f6c4bfd9867a971cdf",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Impact.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX15",
+      "name": "頭部受擊（Sword And Shield Head Impact）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "受擊",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 22,
+        "duration_s": 0.7,
+        "in_place": false,
+        "root_travel_cm": 0,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-hit-head.fbx",
+          "bytes": 321376,
+          "sha256": "5afe02a88cf18a49489c24cb8a8ba32ee9787cccc65988f03ec5ad8916b0ee7b",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Impact (1).fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "MX16",
+      "name": "往前倒地（Sword And Shield Falling Forward Death）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "死亡",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 118,
+        "duration_s": 3.9,
+        "in_place": false,
+        "root_travel_cm": 104.3,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-death-forward.fbx",
+          "bytes": 578400,
+          "sha256": "04fbc8631e32c4a651cc4e038f282b86739a0518184c84ae2e47e741d9afbbb7",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Death.fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": "含根位移（向前移動），整合時需決定原地化或套用根位移。"
+    },
+    {
+      "id": "MX17",
+      "name": "往後倒地（Sword And Shield Falling Back Death）",
+      "kind": "animation",
+      "style": "any",
+      "status": "adopted",
+      "category": "死亡",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe Mixamo",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Adobe Mixamo 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "Animations from Adobe Mixamo (mixamo.com)",
+        "caveats": "可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。"
+      },
+      "listed": {
+        "frames": 70,
+        "duration_s": 2.3,
+        "in_place": false,
+        "root_travel_cm": 126.5,
+        "rig": "Mixamo X Bot 骨架（FBX, Without Skin, 30 fps, 無關鍵影格精簡）"
+      },
+      "files": [
+        {
+          "path": "MX/mx-death-back.fbx",
+          "bytes": 448720,
+          "sha256": "d93e8e543ebf2a6653209ae79951a5b81b28b5d1c859de43e8486607fb935fd0",
+          "downloaded": "2026-10-22",
+          "original_name": "Sword And Shield Death (1).fbx"
+        }
+      ],
+      "tests": [
+        "2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過"
+      ],
+      "notes": "含根位移（向前移動），整合時需決定原地化或套用根位移。"
     }
   ]
 }

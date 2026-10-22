@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { createSword } from './sword';
-import { findCharacter, type Character } from './catalog';
+import { findCharacter, type Character, type HeroAction } from './catalog';
 import { applySwing, createPoseGuard, swingPose } from './swing';
 
-export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack';
+export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack' | 'crouch' | HeroAction;
+export type PreviewMotion = HeroAction | 'crouch';
 
 export async function loadHero(config: Character = findCharacter(null)) {
   const [{ GLTFLoader }, { MeshoptDecoder }] = await Promise.all([
@@ -53,7 +54,7 @@ export async function loadHero(config: Character = findCharacter(null)) {
   const mixer = new THREE.AnimationMixer(model);
   const actions = new Map<string, THREE.AnimationAction>();
   for (const clip of gltf.animations) actions.set(clip.name, mixer.clipAction(clip));
-  for (const name of [config.idle, config.walk, config.run, config.jump, config.fall]) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
+  for (const name of [config.idle, config.walk, config.run, config.jump, config.fall, ...Object.values(config.moves?.clips ?? {})]) if (!actions.has(name)) throw new Error(`人物缺少 ${name} 動畫`);
   let active = actions.get(config.idle)!;
   active.play();
   mixer.update(0);
@@ -73,15 +74,32 @@ export async function loadHero(config: Character = findCharacter(null)) {
   const poseGuard = createPoseGuard();
   const fingers = config.id === 'sophia' ? ['index', 'middle', 'ring', 'pinky'].flatMap(d => [bone(`DEF-f_${d}.01.R`), bone(`DEF-f_${d}.02.R`)]) : [];
 
-  function setAction(name: string, timeScale = 1) {
+  function setAction(name: string, timeScale = 1, once = false, startAt = 0) {
     const next = actions.get(name)!;
-    if (active !== next) {
+    if (active !== next || once) {
       const previous = active;
-      next.reset().setEffectiveTimeScale(timeScale).setEffectiveWeight(1).play();
-      previous.crossFadeTo(next, 0.16, false);
+      next.reset().setEffectiveTimeScale(timeScale).setEffectiveWeight(1);
+      next.setLoop(once ? THREE.LoopOnce : THREE.LoopRepeat, Infinity);
+      next.clampWhenFinished = once;
+      next.time = startAt;
+      next.play();
+      if (previous !== next) previous.crossFadeTo(next, once ? 0.1 : 0.16, false);
       active = next;
     }
     active.setEffectiveTimeScale(timeScale);
+  }
+
+  // 動作層（Mixamo 角色）：攻擊、施法、受擊、倒地播放一次，期間暫停移動動畫。
+  const moves = config.moves;
+  let performing: { kind: HeroAction; elapsed: number; duration: number } | null = null;
+  let preview: PreviewMotion | null = null;
+  let airborne = false;
+  function startOnce(kind: HeroAction) {
+    const clip = actions.get(moves!.clips[kind])!.getClip();
+    const scale = kind === 'death' || kind === 'hit' ? 1 : moves!.actionScale;
+    setAction(moves!.clips[kind], scale, true);
+    performing = { kind, elapsed: 0, duration: clip.duration / scale };
+    return { duration: performing.duration, hits: moves!.hits[kind].map(t => t / scale) };
   }
 
   return {
@@ -109,11 +127,42 @@ export async function loadHero(config: Character = findCharacter(null)) {
       }
       root.removeFromParent();
     },
-    update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number) {
-      motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : moving ? (running ? 'run' : 'walk') : 'idle';
-      if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
-      else if (moving) setAction(running ? config.run : config.walk, running ? config.runScale : config.walkScale);
-      else setAction(config.idle);
+    /** 是否支援 Mixamo 動作（攻擊連段、施法、受擊、倒地、蹲走）。 */
+    supports() { return !!moves; },
+    /** 開始一次性動作；回傳持續時間與擊中時刻（秒，已套倍率）。不支援時回傳 null。 */
+    perform(kind: HeroAction) {
+      if (!moves) return null;
+      if (performing?.kind === 'death' && kind !== 'death') return null;
+      return startOnce(kind);
+    },
+    get performing() { return performing?.kind ?? null; },
+    /** 展示模式循環預覽；null 回到一般狀態機。 */
+    preview(kind: PreviewMotion | null) {
+      preview = moves ? kind : null; performing = null;
+      if (preview === 'crouch') setAction(moves!.clips.crouch, config.crouchScale ?? 1);
+      else if (preview) setAction(moves!.clips[preview], preview === 'death' || preview === 'hit' ? 1 : moves!.actionScale, preview === 'death');
+    },
+    revive() { performing = null; setAction(config.idle); },
+    update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number, crouching = false) {
+      if (preview) {
+        motion = preview;
+        if (preview === 'death' && !active.isRunning()) { active.reset().play(); }
+      } else if (performing) {
+        motion = performing.kind;
+        performing.elapsed += dt;
+        if (performing.elapsed >= performing.duration && performing.kind !== 'death') performing = null;
+      }
+      if (!preview && !performing) {
+        motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : crouching && moves ? 'crouch' : moving ? (running ? 'run' : 'walk') : 'idle';
+        if (moves && jumpHeight > 0.02) {
+          // 起跳瞬間播一次真實跳躍；原地跳略過蹲伏預備，跑跳全段播放
+          if (!airborne) setAction(moving ? moves.clips.jumpRun : moves.clips.jumpStand, 1, true, moving ? 0 : moves.jumpStandOffset);
+        } else if (jumpHeight > 0.02) setAction(jumpVelocity > 0 ? config.jump : config.fall);
+        else if (moves && crouching) setAction(moves.clips.crouch, moving ? config.crouchScale ?? 1 : 0);
+        else if (moving) setAction(running ? config.run : config.walk, running ? config.runScale : config.walkScale);
+        else setAction(config.idle);
+      }
+      airborne = jumpHeight > 0.02;
       poseGuard.restore(); // 先還原上一幀的程序疊加，再讓 Mixer 寫入本幀姿勢
       mixer.update(dt);
       poseGuard.remember(chest, upperArm, forearm, hand, thighL, thighR, calfL, calfR, ...fingers);
@@ -124,7 +173,7 @@ export async function loadHero(config: Character = findCharacter(null)) {
         calfR.rotateX(0.8);
       }
       // 揮劍以角色座標定義、換算到各骨頭，不依賴骨架本地軸向（task-006）。
-      if (attackTime > 0) applySwing(swingPose(1 - attackTime / 0.32), { root, chest, upperArm, forearm, hand });
+      if (attackTime > 0 && !moves) applySwing(swingPose(1 - attackTime / 0.32), { root, chest, upperArm, forearm, hand });
       // 握劍手指採輕度彎曲，基礎姿態每幀由 Mixer 還原，不累加。
       for (let i = 0; i < fingers.length; i++) fingers[i].rotateX(i % 2 ? 0.7 : 0.6);
       root.updateMatrixWorld(true);

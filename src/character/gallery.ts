@@ -14,7 +14,7 @@ export function createGallery(parent: HTMLElement, initial: Character, callbacks
     <div class="character-list">${characters.map(c => `<button type="button" data-character="${c.id}" aria-pressed="false"><strong>${c.name}</strong><span>${c.style}</span></button>`).join('')}</div>
     <p class="character-description"></p><p class="gallery-status" role="status" aria-live="polite"></p>
     <label class="showcase-toggle"><input type="checkbox" id="showcase"> 人物展示 <small>暫停戰鬥</small></label>
-    <div class="motion-controls" hidden>${[['idle','待機'],['walk','步行'],['run','跑步'],['jump','跳躍'],['attack','揮劍']].map(([id,label]) => `<button type="button" data-motion="${id}" aria-pressed="${id === 'idle'}">${label}</button>`).join('')}</div>
+    <div class="motion-controls" hidden>${[['idle','待機'],['walk','步行'],['run','跑步'],['jump','跳躍'],['attack','揮劍']].map(([id,label]) => `<button type="button" data-motion="${id}" aria-pressed="${id === 'idle'}">${label}</button>`).join('')}${[['crouch','蹲走'],['combo2','二連擊'],['combo3','三連擊'],['cast','施法'],['hit','受擊'],['death','倒地']].map(([id,label]) => `<button type="button" data-motion="${id}" data-moves aria-pressed="false">${label}</button>`).join('')}</div>
     <div class="view-controls"><button type="button" data-view="full">全身</button><button type="button" data-view="close">近看</button></div>`;
   parent.append(panel);
   const message = panel.querySelector<HTMLElement>('.gallery-status')!;
@@ -22,6 +22,8 @@ export function createGallery(parent: HTMLElement, initial: Character, callbacks
   function selected(character: Character) {
     panel.querySelectorAll<HTMLButtonElement>('[data-character]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.character === character.id)));
     panel.querySelector('.character-description')!.textContent = character.description;
+    // 只有 Mixamo 動作組角色顯示進階動作
+    panel.querySelectorAll<HTMLButtonElement>('[data-moves]').forEach(button => { button.hidden = !character.moves; });
     const foot = document.querySelector('.foot')!;
     foot.textContent = `${character.credit} · `;
     const link = document.createElement('a');

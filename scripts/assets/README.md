@@ -24,3 +24,10 @@ FBX 使用不同休止姿勢，不能直接共用 local quaternion。轉換以�
 2. `XBOT_GLB=<Xbot.glb> node retarget_character.mjs <rig> <in> <out>`：rig 為 ue5／mixamo／quickrig／blenderik／cc／wushi。
 3. `node process_character.mjs <ID> <in> <out>`：道具掛骨／移除與壓縮。
 4. `verify_motion.html` + `node verify_motion.mjs <ID> <左腳,右腳> <glb>`：四格截圖與著地腳方向（需本機 HTTP 伺服器於 8765）。
+
+## Mixamo 動作（task-007）
+
+- `node inspect_fbx.mjs <fbx...>`：影格、骨盆位移，用於辨識同名下載檔。
+- `node analyze_swings.mjs <fbx...>`：右手相對骨盆速度峰值，估算攻擊段數與擊中時刻。
+- `node retarget_mixamo.mjs <rig> <in> <out> Idle=<fbx> Walk=<fbx> ...`：把多段 Mixamo FBX 重新綁定到目標骨架（clip 名稱即遊戲使用的名稱，見 src/character/catalog.ts 的 MIXAMO_MOVES）。
+- 原始檔命名 `mx-<類別>-<動作>.fbx`，放 asset-library/raw/MX/，並在 docs/asset-catalog/catalog.json 登記 MX 編號。

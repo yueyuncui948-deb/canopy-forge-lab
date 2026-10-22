@@ -9,20 +9,25 @@ import { boneMap, loadCharacterGlb, normalizeHeight, sanitize } from './support/
 
 const pub = (path: string) => new URL(`../../public/${path}`, import.meta.url).pathname;
 
-test('姿勢還原器：同一時間重複疊加不累加（AnimationMixer 數值未變時不重寫骨頭）', async () => {
+test('姿勢還原器：程序疊加每幀還原，不會在動畫未寫入的骨頭上累加', async () => {
   const c = characters.find(c => c.id === 'a2')!;
   const gltf = await loadCharacterGlb(pub(c.file));
+  const clip = gltf.animations.find(a => a.name === c.idle)!;
   const mixer = new THREE.AnimationMixer(gltf.scene);
-  mixer.clipAction(gltf.animations.find(a => a.name === c.idle)!).play();
-  const arm = boneMap(gltf.scene).get(sanitize(c.arm))!;
+  mixer.clipAction(clip).play();
+  // 取動畫沒有寫入的骨頭（Mixer 永遠不會重設它），這正是累加風險所在
+  const animated = new Set(clip.tracks.map(t => t.name.split('.')[0]));
+  let free: THREE.Object3D | undefined;
+  gltf.scene.traverse(o => { if (!free && o instanceof THREE.Bone && !animated.has(o.name)) free = o; });
+  assert.ok(free, '應存在未被動畫寫入的骨頭');
+  mixer.setTime(0.2); const clean = free.quaternion.clone();
+  for (let i = 0; i < 3; i++) { mixer.setTime(0.2); free.rotateX(0.5); }
+  assert.ok(free.quaternion.angleTo(clean) > 1, '前提：沒有還原器時旋轉會累加');
+  free.quaternion.copy(clean);
   const guard = createPoseGuard();
-  mixer.setTime(0.2); const clean = arm.quaternion.clone();
-  for (let i = 0; i < 5; i++) { guard.restore(); mixer.setTime(0.2); guard.remember(arm); arm.rotateX(0.5); }
-  guard.restore(); mixer.setTime(0.2);
-  assert.ok(arm.quaternion.angleTo(clean) < 1e-6, '還原後應回到動畫姿勢');
-  for (let i = 0; i < 3; i++) { mixer.setTime(0.2); arm.rotateX(0.5); }
-  mixer.setTime(0.2);
-  assert.ok(arm.quaternion.angleTo(clean) > 0.5, '確認 Mixer 確實不會自行還原（此測試的前提）');
+  for (let i = 0; i < 5; i++) { guard.restore(); mixer.setTime(0.2); guard.remember(free); free.rotateX(0.5); }
+  guard.restore();
+  assert.ok(free.quaternion.angleTo(clean) < 1e-6, '還原後應回到原姿勢');
 });
 
 test('揮劍姿勢分段連續：起點與終點回到原姿勢，蓄力過頭、劈砍向左前', () => {
@@ -33,7 +38,8 @@ test('揮劍姿勢分段連續：起點與終點回到原姿勢，蓄力過頭�
   assert.ok(swingPose(0.65).armYaw > 0.7);
 });
 
-for (const c of characters) {
+// 程序揮劍只用於沒有 Mixamo 動作組的角色（Rocketbox、Sophia）
+for (const c of characters.filter(c => !c.moves)) {
   test(`${c.id}：揮劍蓄力時手高於肩，劈砍時手在身前並掃向左側`, async () => {
     const gltf = await loadCharacterGlb(pub(c.file));
     const root = new THREE.Group(); root.add(gltf.scene);

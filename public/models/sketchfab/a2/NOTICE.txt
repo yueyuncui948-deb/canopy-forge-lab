@@ -3,7 +3,7 @@ Medieval Knight | Sculpture | Game ready（本專案編號 A2）
 來源：https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10
 授權：CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
 署名："Medieval Knight | Sculpture | Game ready" (https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10) by by__Rx, licensed under CC BY 4.0
-修改（task-005，2026-10-22）：重新綁定 Idle／Walk／Run 測試動畫（來源 three.js r180 examples/models/gltf/Xbot.glb，Mixamo 骨架；正式版將替換）；
+修改（task-005／007，2026-10-22）：重新綁定 Adobe Mixamo 動作 17 段（Animations from Adobe Mixamo, mixamo.com；清單見素材總表 MX01–MX17）；
 朝向修正為 +Z；未綁骨架道具依 scripts/assets/process_character.mjs 掛骨或移除；貼圖轉 WebP（最大 2048）、meshopt 壓縮。
 原始檔 SHA-256 與完整紀錄：docs/asset-catalog/CATALOG.md
 本專案使用此模型不代表作者背書。

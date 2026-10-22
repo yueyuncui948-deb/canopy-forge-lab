@@ -60,13 +60,26 @@ def render(data, write=True):
         '| ID | 名稱 | 類型 | 風格 | 狀態 | 作者 | 授權 | 面數 | 骨架 |',
         '|---|---|---|---|---|---|---|---|---|',
     ]
-    for a in data['assets']:
+    for a in [x for x in data['assets'] if not x.get('category')]:
         listed = a.get('listed', {})
         faces = f'{listed["faces"]:,}' if listed.get('faces') else ''
         lines.append('| {} | [{}]({}) | {} | {} | {} | {} | {} | {} | {} |'.format(
             a['id'], cell(a['name']), a['source']['url'], a['kind'], STYLE.get(a['style'], a['style']),
             STATUS.get(a['status'], a['status']), cell(a['source']['author']), cell(a['license']['name']),
             faces, cell(listed.get('rig', ''))))
+    anims = [a for a in data['assets'] if a.get('category')]
+    if anims:
+        lines += ['', '## 動畫庫（依類別）', '',
+                  '檔名規則：`mx-<類別>-<動作>.fbx`（Mixamo）。原始下載檔名保留於「原始檔名」欄，原檔不進 Git。', '',
+                  '| ID | 類別 | 動作 | 整理後檔名 | 原始檔名 | 影格 | 原地 | 根位移 | 狀態 |', '|---|---|---|---|---|---|---|---|---|']
+        order = ['移動', '跳躍', '攻擊', '施法', '受擊', '死亡']
+        for a in sorted(anims, key=lambda x: (order.index(x['category']) if x['category'] in order else 99, x['id'])):
+            f = a['files'][0] if a['files'] else {}
+            L = a.get('listed', {})
+            lines.append('| {} | {} | {} | `{}` | {} | {} | {} | {} | {} |'.format(
+                a['id'], a['category'], cell(a['name']), f.get('path', '').split('/')[-1], cell(f.get('original_name', '')),
+                L.get('frames', ''), '是' if L.get('in_place') else '否',
+                f'{L["root_travel_cm"]:.0f} cm' if L.get('root_travel_cm') else '—', STATUS.get(a['status'], a['status'])))
     lines += ['', '## 逐項明細', '']
     for a in data['assets']:
         src, lic = a['source'], a['license']

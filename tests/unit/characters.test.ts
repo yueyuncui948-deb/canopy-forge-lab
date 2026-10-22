@@ -46,13 +46,13 @@ for (const c of characters) {
       assert.ok(bones.has(sanitize(name)), `${c.id} 缺骨頭 ${name}（hero.ts 會在載入時丟錯）`);
     }
     const clips = new Map(gltf.animations.map(clip => [clip.name, clip]));
-    for (const name of [c.idle, c.walk, c.run, c.jump, c.fall]) assert.ok(clips.has(name), `${c.id} 缺動畫 ${name}`);
+    for (const name of [c.idle, c.walk, c.run, c.jump, c.fall, ...Object.values(c.moves?.clips ?? {})]) assert.ok(clips.has(name), `${c.id} 缺動畫 ${name}`);
 
     const bone = (name: string) => bones.get(sanitize(name))!;
     const forward = anatomicalForward(bone(c.legs.thighL), bone(c.legs.thighR));
     assert.ok(forward.z > Math.cos(Math.PI / 12), `${c.id} 靜止正面偏離 +Z：${forward.toArray().map(v => v.toFixed(2))}`);
 
-    for (const clipName of new Set([c.walk, c.run])) {
+    for (const clipName of new Set([c.walk, c.run, ...(c.moves ? [c.moves.clips.crouch] : [])])) {
       for (const calf of [c.legs.calfL, c.legs.calfR]) {
         const { contactVz, lift } = footContact(model, clips.get(clipName)!, footOf(bone(calf)));
         assert.ok(lift > 0.05, `${c.id} ${clipName} 腳沒有抬起`);
@@ -62,13 +62,15 @@ for (const c of characters) {
   });
 }
 
-test('重新綁定角色的走跑播放倍率與移動速度一致（著地腳速度誤差 < 20%，避免滑步）', async () => {
+test('重新綁定角色的走、跑、蹲走播放倍率與移動速度一致（著地腳速度誤差 < 20%，避免滑步）', async () => {
   for (const c of characters.filter(c => c.file.startsWith('models/sketchfab/'))) {
     const gltf = await loadCharacterGlb(pub(c.file));
     normalizeHeight(gltf.scene);
     const bones = boneMap(gltf.scene);
     const clips = new Map(gltf.animations.map(clip => [clip.name, clip]));
-    for (const [clip, scale, speed] of [[c.walk, c.walkScale, c.walkSpeed], [c.run, c.runScale, c.runSpeed]] as const) {
+    const rows: [string, number, number][] = [[c.walk, c.walkScale, c.walkSpeed], [c.run, c.runScale, c.runSpeed]];
+    if (c.moves) rows.push([c.moves.clips.crouch, c.crouchScale!, c.crouchSpeed!]);
+    for (const [clip, scale, speed] of rows) {
       const feet = [c.legs.calfL, c.legs.calfR].map(n => footContact(gltf.scene, clips.get(clip)!, footOf(bones.get(sanitize(n))!)).contactVz);
       const groundSpeed = -Math.max(...feet) * scale; // 取較慢的一腳，偏保守
       const fastest = -Math.min(...feet) * scale;
@@ -83,4 +85,28 @@ test('素材總表：ID 唯一、必填欄位齊全、CATALOG.md 與 catalog.jso
   const script = new URL('../../scripts/assets/catalog.py', import.meta.url).pathname;
   const output = execFileSync('python3', [script, 'check'], { encoding: 'utf8' });
   assert.match(output, /通過/);
+});
+
+test('Mixamo 攻擊擊中時刻落在揮劍高峰（右手相對骨盆速度 ≥ 該動作峰值 45%），且在動作長度內', async () => {
+  const THREE = await import('three');
+  for (const c of characters.filter(c => c.moves)) {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    normalizeHeight(gltf.scene);
+    const bones = boneMap(gltf.scene);
+    const hand = bones.get(sanitize(c.hand))!, hips = bones.get(sanitize(c.legs.thighL))!.parent!;
+    for (const kind of ['attack', 'combo2', 'combo3'] as const) {
+      const clip = gltf.animations.find(a => a.name === c.moves!.clips[kind])!;
+      const mixer = new THREE.AnimationMixer(gltf.scene); mixer.clipAction(clip).play();
+      const at = (t: number) => { mixer.setTime(t); gltf.scene.updateMatrixWorld(true); return hand.getWorldPosition(new THREE.Vector3()).sub(hips.getWorldPosition(new THREE.Vector3())); };
+      const speed = (t: number) => at(t + 1 / 60).distanceTo(at(t - 1 / 60)) * 30;
+      const samples = Array.from({ length: Math.floor(clip.duration * 30) - 2 }, (_, i) => speed((i + 1) / 30)).sort((a, b) => a - b);
+      const peak = samples[Math.floor(samples.length * 0.95)];
+      for (const t of c.moves!.hits[kind]) {
+        assert.ok(t < clip.duration, `${c.id} ${kind} 擊中時刻 ${t} 超出動作長度 ${clip.duration.toFixed(2)}`);
+        const best = Math.max(...[-0.1, -0.05, 0, 0.05, 0.1].map(d => speed(t + d)));
+        assert.ok(best >= 0.45 * peak, `${c.id} ${kind} 在 ${t}s 手未在揮動（${best.toFixed(2)} / 峰值 ${peak.toFixed(2)}）`);
+      }
+      mixer.stopAllAction(); mixer.uncacheRoot(gltf.scene);
+    }
+  }
 });

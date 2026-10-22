@@ -35,3 +35,5 @@ Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 1
 - [task-005](research/task-005/SUMMARY.md)：六位 Sketchfab 暗黑寫實／日式候選人物導入，六種骨架重新綁定走跑、朝向與移動方向經離線及遊戲內測試通過；素材總表建立。既有 9 項瀏覽器回歸未重跑。
 
 - [task-006](research/task-006/SUMMARY.md)：測試瘦身與補齊（瀏覽器 15 項約 30 分鐘 → 9 項約 11 分鐘、smoke 約 3 分鐘；單元 8 → 32 項、約 3 秒）；修正揮劍在新骨架上往後甩與疊加累加問題。
+
+- [task-007](research/task-007/SUMMARY.md)：Mixamo 17 段動作整理入素材總表並套用到 6 位人物；新增連擊、施法、蹲走、受擊、倒地與重生操作。

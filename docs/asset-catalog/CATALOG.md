@@ -13,9 +13,33 @@
 | B2 | [samurai](https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa) | character | 日式／東方 | 已測試 | Xiaoyuyao | CC BY 4.0 | 63,331 | 搜尋結果標示 rigged，未說明骨架類型 |
 | B3 | [Spirit Realm Slayer](https://sketchfab.com/3d-models/28d4526546bc43c6b8cacb40c71739c0) | character | 日式／東方 | 暫緩 | Blue-Spirit | CC BY 4.0 | 237,915 | Sketchfab 版本無 |
 | B4 | [Death Samurai Character](https://sketchfab.com/3d-models/6e0a7667723747e0972488085f877bd6) | character | 日式／東方 | 暫緩 | Alexandru Jardan | CC BY 4.0 | 194,259 | 無；T-pose 可交 Mixamo 自動綁定 |
-| M1 | [Mixamo 刀劍動作包（待選定）](https://www.mixamo.com) | animation | 通用 | 暫緩 | Adobe | Mixamo / Adobe 使用條款 |  |  |
+| M1 | [Mixamo 刀劍動作包（占位）](https://www.mixamo.com) | animation | 通用 | 淘汰 | Adobe | Adobe Mixamo 使用條款 |  |  |
 | M2 | [Universal Animation Library 2（Standard）](https://quaternius.itch.io/universal-animation-library-2) | animation | 通用 | 暫緩 | Quaternius | CC0 1.0 |  | Quaternius 通用人形骨架，可重新綁定 |
-| M0 | [Xbot.glb（three.js r180 範例，Mixamo 骨架 idle/walk/run）](https://github.com/mrdoob/three.js/blob/r180/examples/models/gltf/Xbot.glb) | animation | 通用 | 採用 | three.js 範例（動作源自 Adobe Mixamo） | three.js 範例素材（Mixamo 內容） |  | Mixamo |
+| M0 | [Xbot.glb（three.js r180 範例，Mixamo 骨架 idle/walk/run）](https://github.com/mrdoob/three.js/blob/r180/examples/models/gltf/Xbot.glb) | animation | 通用 | 淘汰 | three.js 範例（動作源自 Adobe Mixamo） | three.js 範例素材（Mixamo 內容） |  | Mixamo |
+
+## 動畫庫（依類別）
+
+檔名規則：`mx-<類別>-<動作>.fbx`（Mixamo）。原始下載檔名保留於「原始檔名」欄，原檔不進 Git。
+
+| ID | 類別 | 動作 | 整理後檔名 | 原始檔名 | 影格 | 原地 | 根位移 | 狀態 |
+|---|---|---|---|---|---|---|---|---|
+| MX01 | 移動 | 持劍待機（Sword And Shield Idle） | `mx-move-idle.fbx` | Sword And Shield Idle.fbx | 77 | 否 | — | 採用 |
+| MX02 | 移動 | 持劍走路（Sword And Shield Walk） | `mx-move-walk.fbx` | Sword And Shield Walk.fbx | 34 | 是 | — | 採用 |
+| MX03 | 移動 | 持劍跑步（Sword And Shield Run） | `mx-move-run.fbx` | Sword And Shield Run.fbx | 22 | 是 | — | 採用 |
+| MX04 | 移動 | 蹲下慢走（Walking Forward While Crouched） | `mx-move-crouch-walk.fbx` | Crouch Walk Forward.fbx | 35 | 是 | — | 採用 |
+| MX05 | 跳躍 | 原地起跳（Sword And Shield Jump From Idle） | `mx-jump-stand.fbx` | Sword And Shield Jump.fbx | 30 | 否 | — | 採用 |
+| MX06 | 跳躍 | 跑步跳（Sword And Shield Running Jump） | `mx-jump-run.fbx` | Sword And Shield Jump (1).fbx | 26 | 是 | — | 採用 |
+| MX07 | 攻擊 | 單擊：下劈（Sword And Shield Downward Slash） | `mx-attack-slash-down.fbx` | Sword And Shield Slash.fbx | 46 | 否 | — | 採用 |
+| MX08 | 攻擊 | 單擊：橫斬（Sword And Shield Cross Slash） | `mx-attack-slash-cross.fbx` | Sword And Shield Slash (1).fbx | 51 | 否 | — | 採用 |
+| MX09 | 攻擊 | 連擊（劍盾）（Sword And Shield Slash Combo） | `mx-attack-combo-slash.fbx` | Sword And Shield Slash (2).fbx | 107 | 否 | 245 cm | 採用 |
+| MX10 | 攻擊 | 單手劍連擊（One Handed Sword Combo Attack） | `mx-attack-combo-1h.fbx` | One Hand Sword Combo.fbx | 137 | 否 | 116 cm | 採用 |
+| MX11 | 攻擊 | 雙手劍連擊（Two Handed Sword Combo Attack） | `mx-attack-combo-2h.fbx` | Two Hand Sword Combo.fbx | 99 | 否 | 188 cm | 採用 |
+| MX12 | 施法 | 持劍短施法（Sword And Shield Spell Casting） | `mx-cast-quick.fbx` | Sword And Shield Casting.fbx | 32 | 否 | — | 採用 |
+| MX13 | 施法 | 單手向前施法（Standing 1H Magic Attack 01） | `mx-cast-forward.fbx` | Standing 1H Magic Attack 01.fbx | 70 | 否 | — | 採用 |
+| MX14 | 受擊 | 身體受擊（Sword And Shield Unblocked Impact） | `mx-hit-body.fbx` | Sword And Shield Impact.fbx | 30 | 否 | — | 採用 |
+| MX15 | 受擊 | 頭部受擊（Sword And Shield Head Impact） | `mx-hit-head.fbx` | Sword And Shield Impact (1).fbx | 22 | 否 | — | 採用 |
+| MX16 | 死亡 | 往前倒地（Sword And Shield Falling Forward Death） | `mx-death-forward.fbx` | Sword And Shield Death.fbx | 118 | 否 | 104 cm | 採用 |
+| MX17 | 死亡 | 往後倒地（Sword And Shield Falling Back Death） | `mx-death-back.fbx` | Sword And Shield Death (1).fbx | 70 | 否 | 126 cm | 採用 |
 
 ## 逐項明細
 
@@ -31,10 +55,11 @@
 - 檔案：
   - `A1/cursed_knight_-_ue5_character_game_ready.glb` — 52,177,624 bytes，下載 2026-10-22，SHA-256 `dc6a643a02e3f5fcb2799507fcf15a65ac77eee7eef5fc0899903590f9d2ccd1`
 - 實測骨架：UE5 Mannequin（89 骨）；道具處理：護手、胸甲、褲、短劍、背負巨劍、盾、腰劍、劍鞘原未綁骨，已掛至 hand_l／spine／pelvis；處理後三角形 129,554
-- 遊戲用檔：`public/models/sketchfab/a1/model.glb` — 7,696,824 bytes，SHA-256 `2ea3d8ea01afbb828f0e3435976b75b28ef3b65f367538e03857820270e9af09`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/a1/model.glb` — 8,031,584 bytes，SHA-256 `e87c707dd7bb580c4c467c6641dbf7cde5c93bc2bf42e9a68213dc139f5f1528`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### A2 · Medieval Knight | Sculpture | Game ready
 
@@ -47,10 +72,11 @@
 - 檔案：
   - `A2/medieval_knight__sculpture__game_ready.zip` — 48,722,376 bytes，下載 2026-10-22，SHA-256 `6086c10d3949c19ff7a8406c8c28feefff2cbc46026ffbc496c7e544a0107310`
 - 實測骨架：Mixamo（58 骨）；道具處理：無；處理後三角形 41,654
-- 遊戲用檔：`public/models/sketchfab/a2/model.glb` — 5,895,716 bytes，SHA-256 `0fb42ccd61ad09f8645c1208af9c3c3ac1b1854d74753b51054a8c3dc289d050`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/a2/model.glb` — 6,232,220 bytes，SHA-256 `6078e5880cabcec513b1c87d367c52fdf882d3726352135453988b5864fc1e58`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### A3 · Stelae knight
 
@@ -64,10 +90,11 @@
 - 檔案：
   - `A3/stelae_knight.glb` — 36,121,400 bytes，下載 2026-10-22，SHA-256 `6ca6c6d2eb619fe36fdc718c191ecbef10b42a9a72c3269bac6af51515e8bc61`
 - 實測骨架：Maya QuickRig／HumanIK（23 骨，無手指）；道具處理：立地巨劍（獨立 2 骨架）已移出；處理後三角形 18,826
-- 遊戲用檔：`public/models/sketchfab/a3/model.glb` — 3,042,680 bytes，SHA-256 `034186c02a2dbb98c85dd5d017df62ef72e1832d1c5baa74a943fdddde8100cc`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/a3/model.glb` — 3,376,188 bytes，SHA-256 `02737b539c66f5beb83a753dff0a0da9d1f594219a5ea3c04608ea7629c8839d`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### A4 · Knight
 
@@ -80,10 +107,11 @@
 - 檔案：
   - `A4/knight.glb` — 103,368,052 bytes，下載 2026-10-22，SHA-256 `d97677713e61eaac444836bdd7a185a211f80c76e2cdd5370ae2b15cc4a5b808`
 - 實測骨架：Blender IK 骨架（100 骨；手掌、腳趾由 IK 控制，已改跟隨烘焙）；道具處理：腰前長劍未綁骨，已移出；處理後三角形 43,998
-- 遊戲用檔：`public/models/sketchfab/a4/model.glb` — 8,805,776 bytes，SHA-256 `d6eba1374989c665a7e4430817d383875cb19676fc3e8ec1ddc3f2ba71bdf75a`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/a4/model.glb` — 9,172,448 bytes，SHA-256 `20b5ce4e5c5ea7c12eb1fca9180772ff5fdcffea5b50520acec3dba93b19614f`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### B1 · Shadowflame Samurai
 
@@ -96,10 +124,11 @@
 - 檔案：
   - `B1/shadowflame_samurai.glb` — 29,006,916 bytes，下載 2026-10-22，SHA-256 `eeb6e04ec7f7abfdd5043ff134464ab377612fdb4a2b7fce93495dbf40be5e9a`
 - 實測骨架：Reallusion Character Creator（147 骨）；道具處理：手持武士刀未綁骨，已移出；腰間刀鞘為綁骨網格保留；處理後三角形 72,759
-- 遊戲用檔：`public/models/sketchfab/b1/model.glb` — 5,215,844 bytes，SHA-256 `e376a620eae92797c273f72bc6adbef574f90381b1befefe610bc8d46e9fbaf3`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/b1/model.glb` — 5,552,116 bytes，SHA-256 `53249eb907ac6d8f281213605a765f03a7967561d550f0eb9ca5c2f1d4d36842`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### B2 · samurai
 
@@ -113,10 +142,11 @@
 - 檔案：
   - `B2/samurai.glb` — 96,769,644 bytes，下載 2026-10-22，SHA-256 `fa5d3fba1780a859e0618ad468fb6af6047baaeada8bad4c68e4b21519551082`
 - 實測骨架：自訂（96 骨，含甲冑與繩結骨）；道具處理：兩把刀與展示底座已移出；處理後三角形 54,741
-- 遊戲用檔：`public/models/sketchfab/b2/model.glb` — 12,832,012 bytes，SHA-256 `66d97ec79cc1cc7fde4dad938457b68a0e556690a07a25a546b2c0c15e7cbf5a`（Idle/Walk/Run 測試動畫、朝向 +Z、WebP≤2048、meshopt）
+- 遊戲用檔：`public/models/sketchfab/b2/model.glb` — 13,151,052 bytes，SHA-256 `aa5d1efd9cc387e5c37f50a7e218d3f69ca2cad7fb1ba6c4eda682be5fa20c78`（Mixamo MX01–MX17 共 17 段動作、朝向 +Z、WebP≤2048、meshopt（task-007））
 - 測試：
   - 2026-10-22 task-005：離線步態檢查 Walk/Run 著地腳 contactVz<0（向前走）
   - 2026-10-22 task-005：遊戲內 W/S/A/D 正面與移動方向 cos 0.988（>0.866 門檻）通過；SwiftShader 軟體渲染
+  - 2026-10-22 task-007：改烘焙 Mixamo 17 段動作；走跑蹲步態、方向、擊中時刻於單元測試通過
 
 ### B3 · Spirit Realm Slayer
 
@@ -135,13 +165,12 @@
 - 署名文字："Death Samurai Character" (https://sketchfab.com/3d-models/6e0a7667723747e0972488085f877bd6) by Alexandru Jardan, licensed under CC BY 4.0
 - 備註：暫緩；本輪未下載。
 
-### M1 · Mixamo 刀劍動作包（待選定）
+### M1 · Mixamo 刀劍動作包（占位）
 
 - 來源：Adobe Mixamo — https://www.mixamo.com
 - 作者：[Adobe](https://www.mixamo.com)
-- 授權：[Mixamo / Adobe 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
-- 注意：一般理解為可用於個人與商業專案、但不得單獨再散布動畫原檔；下載前須核對 Adobe 條款原文並記錄於此。下載需 Adobe 帳號。
-- 備註：待使用者登入 Adobe 後下載 FBX Without Skin。
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 備註：占位紀錄；2026-10-22 由實際下載的 MX01–MX17 取代。
 
 ### M2 · Universal Animation Library 2（Standard）
 
@@ -157,4 +186,213 @@
 - 作者：[three.js 範例（動作源自 Adobe Mixamo）](https://github.com/mrdoob/three.js)
 - 授權：[three.js 範例素材（Mixamo 內容）](https://github.com/mrdoob/three.js/blob/r180/LICENSE)，商用：否／待確認
 - 注意：僅作 task-005 測試用重新綁定來源；Mixamo 內容不宜視為一般 MIT 授權。正式版改用使用者自行下載的 Mixamo（M1）或 CC0 UAL2（M2）。
-- 備註：已烘焙進 A1–A4、B1、B2 測試版 GLB；不單獨提交原檔。
+- 備註：task-005 測試用；task-007 起由 Mixamo MX01–MX17 取代，已不再烘焙進遊戲模型。
+
+### MX01 · 持劍待機（Sword And Shield Idle）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-move-idle.fbx` — 536,016 bytes，下載 2026-10-22，SHA-256 `7084c39e3155a233856080faa4b2c5a764618b50f0ad0edc12b2d19f68b4876b`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX02 · 持劍走路（Sword And Shield Walk）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-move-walk.fbx` — 383,600 bytes，下載 2026-10-22，SHA-256 `8fa46df23ca6d8bb969d5d53f01fcb79a03e0b3136faa0236d31d087b27a4b5f`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX03 · 持劍跑步（Sword And Shield Run）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-move-run.fbx` — 319,120 bytes，下載 2026-10-22，SHA-256 `469c976bc6eab8b0ff08ef05df09f3a5161e93938a9b9d3213bf8b9b687aa583`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX04 · 蹲下慢走（Walking Forward While Crouched）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-move-crouch-walk.fbx` — 390,944 bytes，下載 2026-10-22，SHA-256 `a46a438fc9ff1381abfc04b0cc991880149a65814984a8b05d472dd4e3d9a3f7`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX05 · 原地起跳（Sword And Shield Jump From Idle）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-jump-stand.fbx` — 357,424 bytes，下載 2026-10-22，SHA-256 `229b752d68b3cb4dc5cbf63b0e14bbc8a24f149eebe08b66d9f596d80ce2f86f`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX06 · 跑步跳（Sword And Shield Running Jump）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-jump-run.fbx` — 329,920 bytes，下載 2026-10-22，SHA-256 `30c8c8db7b298d4036909cb8ab4d423134e755958b330f8d83b2ccbe22ae86ea`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX07 · 單擊：下劈（Sword And Shield Downward Slash）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-attack-slash-down.fbx` — 387,664 bytes，下載 2026-10-22，SHA-256 `66d43d78a98a9d36850cbd7a6b9e196768fe4228d7be0590026e7a6d01741db9`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX08 · 單擊：橫斬（Sword And Shield Cross Slash）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-attack-slash-cross.fbx` — 397,424 bytes，下載 2026-10-22，SHA-256 `cc4f3f4cb8363556c369c3b33c1b9dd45d127031ea6491008b0b377a005deaac`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX09 · 連擊（劍盾）（Sword And Shield Slash Combo）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 備註：含根位移（向前移動），整合時需決定原地化或套用根位移。
+- 檔案：
+  - `MX/mx-attack-combo-slash.fbx` — 606,064 bytes，下載 2026-10-22，SHA-256 `82d2ce273568a708df1f93d64f822010c6c1ba5305f3f5944c677c8ac9fc0c33`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX10 · 單手劍連擊（One Handed Sword Combo Attack）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 備註：含根位移（向前移動），整合時需決定原地化或套用根位移。
+- 檔案：
+  - `MX/mx-attack-combo-1h.fbx` — 622,448 bytes，下載 2026-10-22，SHA-256 `5218fa2709170411503f9a60b9bc0519e691f8574867636eeb432fe4642ab965`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX11 · 雙手劍連擊（Two Handed Sword Combo Attack）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 備註：含根位移（向前移動），整合時需決定原地化或套用根位移。
+- 檔案：
+  - `MX/mx-attack-combo-2h.fbx` — 589,312 bytes，下載 2026-10-22，SHA-256 `ba29d2f95cd4ce1867243a451743300f0fea660ae2c5bd4d2e21867256cd74f7`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX12 · 持劍短施法（Sword And Shield Spell Casting）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-cast-quick.fbx` — 361,312 bytes，下載 2026-10-22，SHA-256 `97229c6ad6c9b4f70d033398ec831affac6f5b76629edc1adcda44709322aab0`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX13 · 單手向前施法（Standing 1H Magic Attack 01）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-cast-forward.fbx` — 522,048 bytes，下載 2026-10-22，SHA-256 `5e63cc06b91a82a55d615f431d87653f2c20111beae1950ecabd38d4f43f8a6f`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX14 · 身體受擊（Sword And Shield Unblocked Impact）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-hit-body.fbx` — 340,720 bytes，下載 2026-10-22，SHA-256 `fb93c144f2bc7a40f56ddce2205ea8d3efd7ce4e5a0e53f6c4bfd9867a971cdf`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX15 · 頭部受擊（Sword And Shield Head Impact）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 檔案：
+  - `MX/mx-hit-head.fbx` — 321,376 bytes，下載 2026-10-22，SHA-256 `5afe02a88cf18a49489c24cb8a8ba32ee9787cccc65988f03ec5ad8916b0ee7b`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX16 · 往前倒地（Sword And Shield Falling Forward Death）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 備註：含根位移（向前移動），整合時需決定原地化或套用根位移。
+- 檔案：
+  - `MX/mx-death-forward.fbx` — 578,400 bytes，下載 2026-10-22，SHA-256 `04fbc8631e32c4a651cc4e038f282b86739a0518184c84ae2e47e741d9afbbb7`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
+
+### MX17 · 往後倒地（Sword And Shield Falling Back Death）
+
+- 來源：Adobe Mixamo — https://www.mixamo.com
+- 作者：[Adobe Mixamo](https://www.mixamo.com)
+- 授權：[Adobe Mixamo 使用條款](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)，商用：可
+- 署名文字：Animations from Adobe Mixamo (mixamo.com)
+- 注意：可用於專案（含商業）；原始 FBX 不單獨散布，不進公開 Git，只烘焙進角色模型。
+- 備註：含根位移（向前移動），整合時需決定原地化或套用根位移。
+- 檔案：
+  - `MX/mx-death-back.fbx` — 448,720 bytes，下載 2026-10-22，SHA-256 `d93e8e543ebf2a6653209ae79951a5b81b28b5d1c859de43e8486607fb935fd0`
+- 測試：
+  - 2026-10-22 task-007：重新綁定至 A1–A4、B1、B2；朝向與步態／擊中時刻單元測試通過
