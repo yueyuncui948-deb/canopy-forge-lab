@@ -18,4 +18,4 @@
 
 ## Git 交付
 
-直接在 main，沒有分支或 PR。完成本地驗收後提交並推送，交付 commit 與遠端核對結果將追加於此。
+直接在 main，沒有分支或 PR。功能提交 [f7e7301](https://github.com/yueyuncui948-deb/canopy-forge-lab/commit/f7e730137cbe567248ba2636cfe542f1e1dbe02a) 已推送 origin/main，git ls-remote 核對一致。後續僅追加本交付紀錄；遠端 Actions 未取得結果，不宣稱 CI 通過。
