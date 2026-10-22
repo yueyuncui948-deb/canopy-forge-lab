@@ -9,6 +9,7 @@
 | task-003 | 骨架人物質感與近距離鏡頭 | [計畫](task-003/PLAN.md)、[執行](task-003/EXECUTION.md)、[測試](task-003/TEST_REPORT.md)、[審查](task-003/REVIEW.md)、[摘要](task-003/SUMMARY.md) |
 
 | task-004 | 寫實男女、三角色選擇與人物展示 | [計畫](task-004/PLAN.md)、[執行](task-004/EXECUTION.md)、[測試](task-004/TEST_REPORT.md)、[審查](task-004/REVIEW.md)、[摘要](task-004/SUMMARY.md) |
+| task-010 | 連擊收勢修正 | [計畫](task-010/PLAN.md)、[執行](task-010/EXECUTION.md)、[測試](task-010/TEST_REPORT.md)、[審查](task-010/REVIEW.md)、[摘要](task-010/SUMMARY.md) |
 | task-009 | 握劍方向校正與攻擊段數更正 | [計畫](task-009/PLAN.md)、[執行](task-009/EXECUTION.md)、[測試](task-009/TEST_REPORT.md)、[審查](task-009/REVIEW.md)、[摘要](task-009/SUMMARY.md) |
 | task-008 | 動作手感：面向、根位移、連段、取消 | [計畫](task-008/PLAN.md)、[執行](task-008/EXECUTION.md)、[測試](task-008/TEST_REPORT.md)、[審查](task-008/REVIEW.md)、[摘要](task-008/SUMMARY.md) |
 | task-007 | Mixamo 動作庫導入與動作層 | [計畫](task-007/PLAN.md)、[執行](task-007/EXECUTION.md)、[測試](task-007/TEST_REPORT.md)、[審查](task-007/REVIEW.md)、[摘要](task-007/SUMMARY.md) |

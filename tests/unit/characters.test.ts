@@ -95,7 +95,7 @@ test('攻擊擊中時刻落在刀尖揮砍高峰（刀尖速度 ≥ 該區段峰
     const grip = gltf.scene.getObjectByName('SwordGrip')!;
     const tip = () => { const s = grip.getWorldScale(new THREE.Vector3()).x; return grip.localToWorld(new THREE.Vector3(0, 1 / s, 0)); };
     const cases = [
-      ...(['attack', 'combo2', 'combo3'] as const).map(kind => ({ label: kind, clip: c.moves!.clips[kind], range: c.moves!.ranges[kind] ?? [0, Infinity], hits: c.moves!.hits[kind] })),
+      ...(['attack', 'combo3'] as const).map(kind => ({ label: kind, clip: c.moves!.clips[kind], range: c.moves!.ranges[kind] ?? [0, Infinity], hits: c.moves!.hits[kind] })),
       ...c.moves!.chain.map((seg, i) => ({ label: `J 連段第 ${i + 1} 段`, clip: seg.clip, range: [seg.from, seg.to], hits: seg.hits })),
     ];
     for (const { label, clip: clipName, range, hits } of cases) {
@@ -156,7 +156,7 @@ test('握劍角度：待機時刀尖朝上，擊中瞬間刀尖掃過速度明�
     const up = tipOf().sub(gripPos()).normalize().y;
     assert.ok(up > 0.5, `${c.id} 待機時刀尖未朝上（y=${up.toFixed(2)}）`);
     idle.stopAllAction(); idle.uncacheRoot(gltf.scene);
-    for (const kind of ['attack', 'combo2', 'combo3'] as const) {
+    for (const kind of ['attack', 'combo3'] as const) {
       const m = play(c.moves!.clips[kind]);
       // 檢查各動作的擊中瞬間
       const at = (t: number) => { m.setTime(t); gltf.scene.updateMatrixWorld(true); return { tip: tipOf(), hand: hand.getWorldPosition(new THREE.Vector3()) }; };
@@ -166,6 +166,38 @@ test('握劍角度：待機時刀尖朝上，擊中瞬間刀尖掃過速度明�
         assert.ok(ratio > 1.3, `${c.id} ${kind} @${t}s 刀尖／手速度比 ${ratio.toFixed(2)}，刀身未順著揮砍弧線`);
       }
       m.stopAllAction(); m.uncacheRoot(gltf.scene);
+    }
+  }
+});
+
+test('一次性動作與連段都收在接近待機的姿勢（避免在動作半途截斷，回待機時姿勢突然跳動）', async () => {
+  const THREE = await import('three');
+  for (const c of characters.filter(c => c.moves)) {
+    const gltf = await loadCharacterGlb(pub(c.file));
+    normalizeHeight(gltf.scene);
+    const bones = boneMap(gltf.scene);
+    const hips = bones.get(sanitize(c.legs.thighL))!.parent!;
+    const keys = [c.hand, c.forearm, c.arm, c.chest, c.legs.calfL, c.legs.calfR].map(n => bones.get(sanitize(n))!);
+    keys.push(gltf.scene.getObjectByName('SwordGrip')!);
+    const pose = (clip: string, t: number) => {
+      const m = new THREE.AnimationMixer(gltf.scene); const a = m.clipAction(gltf.animations.find(x => x.name === clip)!);
+      a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; a.play(); m.setTime(t); gltf.scene.updateMatrixWorld(true);
+      const h = hips.getWorldPosition(new THREE.Vector3());
+      const v = keys.map(k => k.getWorldPosition(new THREE.Vector3()).sub(h)); m.stopAllAction(); m.uncacheRoot(gltf.scene); return v;
+    };
+    const idle = pose(c.idle, 0.5);
+    const distance = (v: THREE.Vector3[]) => v.reduce((s, p, i) => s + p.distanceTo(idle[i]), 0) / v.length;
+    const M = c.moves!;
+    const endings: [string, string, number][] = [
+      ...(['attack', 'combo3', 'cast', 'hit'] as const).map(k => [k, M.clips[k], M.ranges[k]?.[1] ?? Infinity] as [string, string, number]),
+      ...M.chain.map((s, i) => [`J 連段第 ${i + 1} 段`, s.clip, s.to] as [string, string, number]),
+    ];
+    for (const [label, clip, to] of endings) {
+      const duration = gltf.animations.find(x => x.name === clip)!.duration;
+      const d = distance(pose(clip, Math.min(to, duration)));
+      // 施法來自魔法系列，收勢為空手站姿而非持劍待機；以 0.35 秒淡出銜接，門檻放寬至 0.3
+      const limit = label === 'cast' ? 0.3 : 0.15;
+      assert.ok(d < limit, `${c.id} ${label} 結束姿勢離待機 ${d.toFixed(2)}（> ${limit}），會在半途姿勢切回待機`);
     }
   }
 });

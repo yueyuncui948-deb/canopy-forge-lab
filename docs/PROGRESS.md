@@ -41,3 +41,5 @@ Node 24.19.0、npm 11.9.0；專案依賴未安裝，沒有 lockfile。Chromium 1
 - [task-008](research/task-008/SUMMARY.md)：動作手感改善（自動面向、根位移、J 三段連擊、收招取消），修正一次性動作片尾跳回首格。
 
 - [task-009](research/task-009/SUMMARY.md)：握劍方向依手部解剖校正；以刀尖速度更正二連擊／三連擊對應。
+
+- [task-010](research/task-010/SUMMARY.md)：修正二連擊／三連擊在動作半途截斷的收勢，新增結束姿勢測試。

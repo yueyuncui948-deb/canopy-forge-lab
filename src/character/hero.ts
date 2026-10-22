@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { createSword } from './sword';
-import { findCharacter, type Character, type HeroAction } from './catalog';
+import { findCharacter, type Character, type ClipAction, type HeroAction } from './catalog';
 import { applySwing, createPoseGuard, swingPose } from './swing';
 
 export type HeroMotion = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'attack' | 'crouch' | HeroAction;
@@ -84,6 +84,8 @@ export async function loadHero(config: Character = findCharacter(null)) {
   const poseGuard = createPoseGuard();
   const fingers = config.id === 'sophia' ? ['index', 'middle', 'ring', 'pinky'].flatMap(d => [bone(`DEF-f_${d}.01.R`), bone(`DEF-f_${d}.02.R`)]) : [];
 
+  // 下一次切換的淡入時間；收勢與待機姿勢差異較大的動作（施法）結束時拉長，避免跳動
+  let nextFade = 0.16;
   function setAction(name: string, timeScale = 1, once = false, startAt = 0) {
     const next = actions.get(name)!;
     if (active !== next || once) {
@@ -93,7 +95,8 @@ export async function loadHero(config: Character = findCharacter(null)) {
       next.clampWhenFinished = once;
       next.time = startAt;
       next.play();
-      if (previous !== next) previous.crossFadeTo(next, once ? 0.1 : 0.16, false);
+      if (previous !== next) previous.crossFadeTo(next, once ? 0.1 : nextFade, false);
+      nextFade = 0.16;
       active = next;
     }
     active.setEffectiveTimeScale(timeScale);
@@ -105,16 +108,18 @@ export async function loadHero(config: Character = findCharacter(null)) {
   // 一次性動作的水平根位移（重新綁定時存於 RootMotion 節點，角色座標 +Z 為前）
   const rootMotion = model.getObjectByName('RootMotion') ?? null;
   let preview: PreviewMotion | null = null;
+  // 展示模式中依序循環播放的連段（二連擊）
+  let previewSeq: { stages: number[]; index: number; left: number } | null = null;
   let airborne = false;
   function startOnce(kind: HeroAction, segment?: { clip: string; from: number; to: number; hits: number[] }) {
-    const name = segment?.clip ?? moves!.clips[kind];
+    const name = segment?.clip ?? moves!.clips[kind as ClipAction];
     const clip = actions.get(name)!.getClip();
-    const range = segment ? [segment.from, segment.to] : moves!.ranges[kind] ?? [0, clip.duration];
+    const range = segment ? [segment.from, segment.to] : moves!.ranges[kind as ClipAction] ?? [0, clip.duration];
     const from = range[0], to = Math.min(range[1], clip.duration);
     const scale = kind === 'death' || kind === 'hit' ? 1 : moves!.actionScale;
     setAction(name, scale, true, from);
     performing = { kind, elapsed: 0, duration: (to - from) / scale, rootPrev: null };
-    return { duration: performing.duration, hits: (segment?.hits ?? moves!.hits[kind]).map(t => (t - from) / scale) };
+    return { duration: performing.duration, hits: (segment?.hits ?? moves!.hits[kind as ClipAction]).map(t => (t - from) / scale) };
   }
 
   return {
@@ -146,7 +151,7 @@ export async function loadHero(config: Character = findCharacter(null)) {
     supports() { return !!moves; },
     /** 開始一次性動作；回傳持續時間與擊中時刻（秒，已套倍率）。不支援時回傳 null。 */
     perform(kind: HeroAction) {
-      if (!moves) return null;
+      if (!moves || kind === 'combo2') return null; // 二連擊由 main 以 chain 段落組成
       if (performing?.kind === 'death' && kind !== 'death') return null;
       return startOnce(kind);
     },
@@ -161,19 +166,32 @@ export async function loadHero(config: Character = findCharacter(null)) {
     cancel() { if (performing?.kind !== 'death') performing = null; },
     /** 展示模式循環預覽；null 回到一般狀態機。 */
     preview(kind: PreviewMotion | null) {
-      preview = moves ? kind : null; performing = null;
+      preview = moves ? kind : null; performing = null; previewSeq = null;
       if (preview === 'crouch') setAction(moves!.clips.crouch, config.crouchScale ?? 1);
+      else if (preview === 'combo2') { previewSeq = { stages: moves!.sequences.combo2, index: 0, left: 0 }; }
       else if (preview) setAction(moves!.clips[preview], preview === 'death' || preview === 'hit' ? 1 : moves!.actionScale, preview === 'death');
     },
     revive() { performing = null; setAction(config.idle); },
     update(dt: number, moving: boolean, running: boolean, jumpHeight: number, jumpVelocity: number, attackTime: number, crouching = false) {
+      if (previewSeq) {
+        previewSeq.left -= dt;
+        if (previewSeq.left <= 0) {
+          const stage = previewSeq.stages[previewSeq.index % previewSeq.stages.length];
+          previewSeq.left = startOnce('attack', moves!.chain[stage]).duration + (previewSeq.index % previewSeq.stages.length === previewSeq.stages.length - 1 ? 0.6 : 0);
+          previewSeq.index++;
+          performing = null; // 展示不套根位移
+        }
+      }
       if (preview) {
         motion = preview;
         if (preview === 'death' && !active.isRunning()) { active.reset().play(); }
       } else if (performing) {
         motion = performing.kind;
         performing.elapsed += dt;
-        if (performing.elapsed >= performing.duration && performing.kind !== 'death') performing = null;
+        if (performing.elapsed >= performing.duration && performing.kind !== 'death') {
+          if (performing.kind === 'cast') nextFade = 0.35;
+          performing = null;
+        }
       }
       if (!preview && !performing) {
         motion = attackTime > 0 ? 'attack' : jumpHeight > 0.02 ? (jumpVelocity > 0 ? 'jump' : 'fall') : crouching && moves ? 'crouch' : moving ? (running ? 'run' : 'walk') : 'idle';

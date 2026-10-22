@@ -81,7 +81,7 @@ const monsterLife = createMonsterLife();
 let renderedFrames = 0;
 let showcase = false, previewMotion: HeroMotion = 'idle', previewTime = 0, loadRequest = 0;
 // Mixamo 動作層：一次性動作期間鎖定移動，依擊中時刻判定傷害（task-007）
-let heroAction: { kind: HeroAction; t: number; duration: number; hits: number[]; next: number; stage: number | null; queued: boolean; faceYaw: number | null } | null = null;
+let heroAction: { kind: HeroAction; t: number; duration: number; hits: number[]; next: number; stage: number | null; queued: boolean; faceYaw: number | null; autoUntil: number | null } | null = null;
 let heroDead = false, reviveAt = 0;
 createGallery(app, hero.config, {
  async select(character) {
@@ -135,16 +135,18 @@ function startAttack(){
  if(attackCooldown>0||heroAction)return;attackT=.32;attackCooldown=.5;hitDone=false;}
 /** 攻擊時若怪物在 7 公尺內，轉向怪物（ARPG 軟鎖定）。 */
 function targetYaw(){ if(!monster.root.visible)return null; const dx=monster.root.position.x-hero.root.position.x, dz=monster.root.position.z-hero.root.position.z; return Math.hypot(dx,dz)<7?Math.atan2(dx,dz):null; }
-function startChain(stage:number){
+function startChain(stage:number,autoUntil:number|null=null){
  if(showcase||heroDead||jumpY>0.02)return false;
  const timing=hero.performChain(stage); if(!timing)return false;
- heroAction={kind:'attack',t:0,duration:timing.duration,hits:timing.hits,next:0,stage,queued:false,faceYaw:targetYaw()};
+ heroAction={kind:autoUntil!==null?'combo2':'attack',t:0,duration:timing.duration,hits:timing.hits,next:0,stage,queued:false,faceYaw:targetYaw(),autoUntil};
  attackCooldown=timing.duration; return true;
 }
 function startAction(kind: HeroAction){
+ // 二連擊：自動接續 chain 的第 1、2 段（下劈 → 橫斬）
+ if(kind==='combo2'&&hero.supports()){if(heroAction||heroDead)return false;return startChain(0,1)?1:false;}
  if(showcase || (heroDead && kind!=='death') || (heroAction && kind!=='hit' && kind!=='death') || jumpY>0.02)return false;
  const timing=hero.perform(kind); if(!timing)return false;
- heroAction={kind,t:0,duration:timing.duration,hits:timing.hits,next:0,stage:null,queued:false,faceYaw:kind==='hit'||kind==='death'?null:targetYaw()};
+ heroAction={kind,t:0,duration:timing.duration,hits:timing.hits,next:0,stage:null,queued:false,faceYaw:kind==='hit'||kind==='death'?null:targetYaw(),autoUntil:null};
  if(kind!=='hit'&&kind!=='death')attackCooldown=timing.duration;
  return timing.duration;
 }
@@ -170,7 +172,8 @@ function tick(now:number){requestAnimationFrame(tick);const dt=frameDelta(now,la
      if(dist<3.2&&hitMonster(monsterLife,gameT)){status.textContent=monsterLife.hp===0?'成功擊敗怪物！3 秒後重新生成':`命中怪物！剩餘生命：${monsterLife.hp}`;monster.root.scale.x=1.4;}}
    const lastHit=heroAction.hits.at(-1)??0;
    // J 連段：最後一刀後 0.12 秒接下一段
-   if(heroAction.stage!==null&&heroAction.queued&&heroAction.t>=lastHit+0.12&&heroAction.stage<2){const s=heroAction.stage+1;heroAction=null;startChain(s);}
+   const auto=heroAction.autoUntil!==null&&heroAction.stage!==null&&heroAction.stage<heroAction.autoUntil;
+   if(heroAction.stage!==null&&(heroAction.queued&&heroAction.autoUntil===null||auto)&&heroAction.t>=lastHit+0.12&&heroAction.stage<2){const s=heroAction.stage+1,u=heroAction.autoUntil;heroAction=null;startChain(s,u);}
    // 收招取消：最後一刀後 0.25 秒按方向即可移動
    else if(heroAction.kind!=='death'&&heroAction.kind!=='hit'&&heroAction.next>=heroAction.hits.length&&heroAction.t>=lastHit+0.25&&(dx!==0||dz!==0)){hero.cancel();heroAction=null;attackCooldown=0;}
    else if(heroAction.t>=heroAction.duration&&heroAction.kind!=='death')heroAction=null;}
