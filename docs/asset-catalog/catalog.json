@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "updated": "2026-10-22",
+  "note": "素材總表唯一資料來源。修改後執行 python3 scripts/assets/catalog.py render 重新產生 CATALOG.md；下載檔放入 asset-library/raw/<id>/ 後執行 verify 填入雜湊。",
+  "assets": [
+    {
+      "id": "A1",
+      "name": "Cursed Knight - UE5 Character (Game Ready)",
+      "kind": "character",
+      "style": "dark-realism",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/f204e0ad3af645bcb0ecffd9e9ae9a15",
+        "uid": "f204e0ad3af645bcb0ecffd9e9ae9a15",
+        "author": "Blue-Spirit",
+        "author_url": "https://sketchfab.com/Blue-Spirit",
+        "published": "2024-02-02"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Cursed Knight - UE5 Character (Game Ready)\" (https://sketchfab.com/3d-models/f204e0ad3af645bcb0ecffd9e9ae9a15) by Blue-Spirit, licensed under CC BY 4.0",
+        "caveats": "原創設計；標籤提及 darksouls/bloodborne 僅為風格參考。作者另售付費變體，不在本授權內。"
+      },
+      "listed": {"faces": 130898, "animations": 0, "rig": "作者聲明以 UE5 骨架完整綁定與刷權重"},
+      "files": [],
+      "tests": [],
+      "notes": "暗黑寫實首選；面數偏高，預計減面至約 5 萬。"
+    },
+    {
+      "id": "A2",
+      "name": "Medieval Knight | Sculpture | Game ready",
+      "kind": "character",
+      "style": "dark-realism",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10",
+        "uid": "6cdd055b4afa41eb9360dbbfe75c7f10",
+        "author": "by__Rx",
+        "author_url": "https://sketchfab.com/by__Rx",
+        "published": "2023-12-22"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Medieval Knight | Sculpture | Game ready\" (https://sketchfab.com/3d-models/6cdd055b4afa41eb9360dbbfe75c7f10) by by__Rx, licensed under CC BY 4.0",
+        "caveats": ""
+      },
+      "listed": {"faces": 41654, "animations": 1, "rig": "Mixamo（作者說明 idle 動畫來自 Mixamo）", "glb_bytes": 50416480, "texture_max": 4096},
+      "files": [],
+      "tests": [],
+      "notes": "面數最輕；最可能直接相容 Mixamo 動畫。"
+    },
+    {
+      "id": "A3",
+      "name": "Stelae knight",
+      "kind": "character",
+      "style": "dark-realism",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/0a795ae613f2496e955974ca37bf1e94",
+        "uid": "0a795ae613f2496e955974ca37bf1e94",
+        "author": "Muru (muru)",
+        "author_url": "https://sketchfab.com/muru",
+        "published": "2021-10-08"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Stelae knight\" (https://sketchfab.com/3d-models/0a795ae613f2496e955974ca37bf1e94) by Muru, licensed under CC BY 4.0. Concept art by Shuohan (https://www.artstation.com/artwork/KE3Yr)",
+        "caveats": "外觀依 Shuohan 概念圖製作；模型為 CC BY，但商業使用前宜確認概念設計權利。"
+      },
+      "listed": {"faces": 20060, "animations": 1, "rig": "有骨架與 1 段動畫", "glb_bytes": 36121400, "texture_max": 2048},
+      "files": [],
+      "tests": [],
+      "notes": "不死騎士與巨劍，輪廓強烈。"
+    },
+    {
+      "id": "A4",
+      "name": "Knight",
+      "kind": "character",
+      "style": "dark-realism",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/5a8eb53bbdee49b3906bf5decadb6c2b",
+        "uid": "5a8eb53bbdee49b3906bf5decadb6c2b",
+        "author": "sanyaork",
+        "author_url": "https://sketchfab.com/sanyaork",
+        "published": "2021-07-19"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Knight\" (https://sketchfab.com/3d-models/5a8eb53bbdee49b3906bf5decadb6c2b) by sanyaork, licensed under CC BY 4.0",
+        "caveats": ""
+      },
+      "listed": {"faces": 52492, "animations": 0, "rig": "標籤標示 rigged，未說明骨架類型"},
+      "files": [],
+      "tests": [],
+      "notes": "盔甲有髒污與血跡。"
+    },
+    {
+      "id": "B1",
+      "name": "Shadowflame Samurai",
+      "kind": "character",
+      "style": "eastern",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/03def921ed814b3a9de5c5962b86a45c",
+        "uid": "03def921ed814b3a9de5c5962b86a45c",
+        "author": "dark_igorek",
+        "author_url": "https://sketchfab.com/dark_igorek",
+        "published": "2026-04-07"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Shadowflame Samurai\" (https://sketchfab.com/3d-models/03def921ed814b3a9de5c5962b86a45c) by dark_igorek, licensed under CC BY 4.0",
+        "caveats": ""
+      },
+      "listed": {"faces": 74032, "animations": 0, "rig": "Blender 製作並綁骨架（標籤 rig / rigged-character）"},
+      "files": [],
+      "tests": [],
+      "notes": "使用者指定參考角色。"
+    },
+    {
+      "id": "B2",
+      "name": "samurai",
+      "kind": "character",
+      "style": "eastern",
+      "status": "candidate",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa",
+        "uid": "3876ba2ad649407a9fcdc30f9484c2aa",
+        "author": "Xiaoyuyao",
+        "author_url": "https://sketchfab.com/Xiaoyuyao",
+        "published": "2018-09-01"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"samurai\" (https://sketchfab.com/3d-models/3876ba2ad649407a9fcdc30f9484c2aa) by Xiaoyuyao, licensed under CC BY 4.0",
+        "caveats": "作者註明參考 @bookoflor 的設計、武士刀使用 @Glennosaurus 模型；商業使用前宜確認。"
+      },
+      "listed": {"faces": 63331, "animations": 0, "rig": "搜尋結果標示 rigged，未說明骨架類型"},
+      "files": [],
+      "tests": [],
+      "notes": "紅色武士鎧甲，介面暱稱暫定 Red Samurai。"
+    },
+    {
+      "id": "B3",
+      "name": "Spirit Realm Slayer",
+      "kind": "character",
+      "style": "eastern",
+      "status": "backlog",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/28d4526546bc43c6b8cacb40c71739c0",
+        "uid": "28d4526546bc43c6b8cacb40c71739c0",
+        "author": "Blue-Spirit",
+        "author_url": "https://sketchfab.com/Blue-Spirit",
+        "published": "2023-08-17"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Spirit Realm Slayer\" (https://sketchfab.com/3d-models/28d4526546bc43c6b8cacb40c71739c0) by Blue-Spirit, licensed under CC BY 4.0",
+        "caveats": "Sketchfab 版本無骨架；作者 ArtStation 另有免費綁骨架版（https://artstn.co/m/Jpern），其授權需另外確認。"
+      },
+      "listed": {"faces": 237915, "animations": 0, "rig": "Sketchfab 版本無"},
+      "files": [],
+      "tests": [],
+      "notes": "暫緩；本輪未下載。"
+    },
+    {
+      "id": "B4",
+      "name": "Death Samurai Character",
+      "kind": "character",
+      "style": "eastern",
+      "status": "backlog",
+      "source": {
+        "platform": "Sketchfab",
+        "url": "https://sketchfab.com/3d-models/6e0a7667723747e0972488085f877bd6",
+        "uid": "6e0a7667723747e0972488085f877bd6",
+        "author": "Alexandru Jardan",
+        "author_url": "https://sketchfab.com/AlexandruJardan",
+        "published": "2023-08-24"
+      },
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercial": true,
+        "attribution": "\"Death Samurai Character\" (https://sketchfab.com/3d-models/6e0a7667723747e0972488085f877bd6) by Alexandru Jardan, licensed under CC BY 4.0",
+        "caveats": ""
+      },
+      "listed": {"faces": 194259, "animations": 0, "rig": "無；T-pose 可交 Mixamo 自動綁定"},
+      "files": [],
+      "tests": [],
+      "notes": "暫緩；本輪未下載。"
+    },
+    {
+      "id": "M1",
+      "name": "Mixamo 刀劍動作包（待選定）",
+      "kind": "animation",
+      "style": "any",
+      "status": "backlog",
+      "source": {
+        "platform": "Adobe Mixamo",
+        "url": "https://www.mixamo.com",
+        "uid": "",
+        "author": "Adobe",
+        "author_url": "https://www.mixamo.com",
+        "published": ""
+      },
+      "license": {
+        "name": "Mixamo / Adobe 使用條款",
+        "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+        "commercial": true,
+        "attribution": "",
+        "caveats": "一般理解為可用於個人與商業專案、但不得單獨再散布動畫原檔；下載前須核對 Adobe 條款原文並記錄於此。下載需 Adobe 帳號。"
+      },
+      "listed": {},
+      "files": [],
+      "tests": [],
+      "notes": "待使用者登入 Adobe 後下載 FBX Without Skin。"
+    },
+    {
+      "id": "M2",
+      "name": "Universal Animation Library 2（Standard）",
+      "kind": "animation",
+      "style": "any",
+      "status": "backlog",
+      "source": {
+        "platform": "itch.io",
+        "url": "https://quaternius.itch.io/universal-animation-library-2",
+        "uid": "",
+        "author": "Quaternius",
+        "author_url": "https://quaternius.com",
+        "published": ""
+      },
+      "license": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "commercial": true,
+        "attribution": "Universal Animation Library 2 by Quaternius (CC0)",
+        "caveats": ""
+      },
+      "listed": {"animations": 42, "rig": "Quaternius 通用人形骨架，可重新綁定"},
+      "files": [],
+      "tests": [],
+      "notes": "免費版 42 段，含 3/4 段近戰連擊。"
+    }
+  ]
+}

@@ -6,3 +6,7 @@ dist/
 *.tsbuildinfo
 playwright-report/
 test-results/
+
+# 素材原始下載檔（體積大、部分授權不允許單獨再散布）；來源與雜湊記錄於 docs/asset-catalog
+asset-library/raw/
+asset-library/work/
